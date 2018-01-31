@@ -524,7 +524,8 @@ set to either @samp{emacs} or @samp{vi}.
 
 @item emacs-mode-string
 @vindex emacs-mode-string
-This string is displayed immediately before the last line of the primary
+If the @var{show-mode-in-prompt} variable is enabled,
+this string is displayed immediately before the last line of the primary
 prompt when emacs editing mode is active.  The value is expanded like a
 key binding, so the standard set of meta- and control prefixes and
 backslash escape sequences is available.
@@ -714,9 +715,9 @@ The default value is @samp{off}.
 
 @item show-mode-in-prompt
 @vindex show-mode-in-prompt
-If set to @samp{on}, add a character to the beginning of the prompt
+If set to @samp{on}, add a string to the beginning of the prompt
 indicating the editing mode: emacs, vi command, or vi insertion.
-The mode strings are user-settable.
+The mode strings are user-settable (e.g., @var{emacs-mode-string}).
 The default value is @samp{off}.
 
 @item skip-completed-text
@@ -735,7 +736,8 @@ The default value is @samp{off}.
 
 @item vi-cmd-mode-string
 @vindex vi-cmd-mode-string
-This string is displayed immediately before the last line of the primary
+If the @var{show-mode-in-prompt} variable is enabled,
+this string is displayed immediately before the last line of the primary
 prompt when vi editing mode is active and in command mode.
 The value is expanded like a
 key binding, so the standard set of meta- and control prefixes and
@@ -747,7 +749,8 @@ The default is @samp{(cmd)}.
 
 @item vi-ins-mode-string
 @vindex vi-ins-mode-string
-This string is displayed immediately before the last line of the primary
+If the @var{show-mode-in-prompt} variable is enabled,
+this string is displayed immediately before the last line of the primary
 prompt when vi editing mode is active and in insertion mode.
 The value is expanded like a
 key binding, so the standard set of meta- and control prefixes and
@@ -914,8 +917,9 @@ of tests.  There are four parser directives used.
 @item $if
 The @code{$if} construct allows bindings to be made based on the
 editing mode, the terminal being used, or the application using
-Readline.  The text of the test extends to the end of the line;
-no characters are required to isolate it.
+Readline.  The text of the test, after any comparison operator,
+extends to the end of the line;
+unless otherwise noted, no characters are required to isolate it.
 
 @table @code
 @item mode
@@ -935,6 +939,27 @@ the portion of the terminal name before the first @samp{-}.  This
 allows @code{sun} to match both @code{sun} and @code{sun-cmd},
 for instance.
 
+@item version
+The @code{version} test may be used to perform comparisons against
+specific Readline versions.
+The @code{version} expands to the current Readline version.
+The set of comparison operators includes
+@samp{=} (and @samp{==}), @samp{!=}, @samp{<=}, @samp{>=}, @samp{<},
+and @samp{>}.
+The version number supplied on the right side of the operator consists
+of a major version number, an optional decimal point, and an optional
+minor version (e.g., @samp{7.1}). If the minor version is omitted, it
+is assumed to be @samp{0}.
+The operator may be separated from the string @code{version} and
+from the version number argument by whitespace.
+The following example sets a variable if the Readline version being used
+is 7.0 or newer:
+@example
+$if version >= 7.0
+set show-mode-in-prompt on
+$endif
+@end example
+
 @item application
 The @var{application} construct is used to include
 application-specific settings.  Each program using the Readline
@@ -947,6 +972,23 @@ key sequence that quotes the current or previous word in Bash:
 $if Bash
 # Quote the current or previous word
 "\C-xq": "\eb\"\ef\""
+$endif
+@end example
+
+@item variable
+The @var{variable} construct provides simple equality tests for Readline
+variables and values.
+The permitted comparison operators are @samp{=}, @samp{==}, and @samp{!=}.
+The variable name must be separated from the comparison operator by
+whitespace; the operator may be separated from the value on the right hand
+side by whitespace.
+Both string and boolean variables may be tested. Boolean variables must be
+tested against the values @var{on} and @var{off}.
+The following example is equivalent to the @code{mode=emacs} test described
+above:
+@example
+$if editing-mode == emacs
+set show-mode-in-prompt on
 $endif
 @end example
 @end table
