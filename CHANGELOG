@@ -1316,3 +1316,14 @@ configure.ac,config.h.in
 Makefile.in,examples/Makefile.in
 	- add support for building with address sanitizer, using new target
 	  `asan'
+
+				 4/23/2018
+				 ---------
+configure.ac
+	- TERMCAP_PKG_CONFIG_LIB: new variable, defined from TERMCAP_LIB,
+	  defaults to termcap
+
+readline.pc.in
+	- change Requires.private to use TERMCAP_PKG_CONFIG_LIB instead of
+	  hardcoded `tinfo'. Report and fix from Thomas Petazzoni
+	  <thomas.petazzoni@bootlin.com>

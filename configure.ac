@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 7.0, version 2.82])
+AC_REVISION([for Readline 7.0, version 2.83])
 
 AC_INIT(readline, 7.0, bug-readline@gnu.org)
 
@@ -196,6 +196,14 @@ if test "$TERMCAP_LIB" = "-lncurses"; then
 	AC_CHECK_HEADERS(ncurses/termcap.h)
 fi
 
+case "$TERMCAP_LIB" in
+-ltinfo)  TERMCAP_PKG_CONFIG_LIB=tinfo ;;
+-lcurses) TERMCAP_PKG_CONFIG_LIB=ncurses ;;
+-lncurses) TERMCAP_PKG_CONFIG_LIB=ncurses ;;
+-ltermcap) TERMCAP_PKG_CONFIG_LIB=termcap ;;
+*) TERMCAP_PKG_CONFIG_LIB=termcap ;;
+esac
+
 BASH_CHECK_MULTIBYTE
 
 case "$host_cpu" in
@@ -292,6 +300,7 @@ AC_SUBST(host_os)
 AC_SUBST(LIBVERSION)
 
 AC_SUBST(TERMCAP_LIB)
+AC_SUBST(TERMCAP_PKG_CONFIG_LIB)
 
 AC_OUTPUT([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc],
 [
