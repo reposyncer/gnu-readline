@@ -1,9 +1,9 @@
-This is history.info, produced by makeinfo version 6.1 from
+This is history.info, produced by makeinfo version 6.5 from
 history.texi.
 
-This document describes the GNU History library (version 7.0, 16 July
-2016), a programming tool that provides a consistent user interface for
-recalling lines of previously typed input.
+This document describes the GNU History library (version 7.0, 28
+December 2017), a programming tool that provides a consistent user
+interface for recalling lines of previously typed input.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -381,7 +381,10 @@ parameters managing the list itself.
 
  -- Function: void add_history (const char *string)
      Place STRING at the end of the history list.  The associated data
-     field (if any) is set to 'NULL'.
+     field (if any) is set to 'NULL'.  If the maximum number of history
+     entries has been set using 'stifle_history()', and the new number
+     of history entries would exceed that maximum, the oldest history
+     entry is removed.
 
  -- Function: void add_history_time (const char *string)
      Change the time stamp associated with the most recent history entry
@@ -409,6 +412,7 @@ parameters managing the list itself.
 
  -- Function: void stifle_history (int max)
      Stifle the history list, remembering only the last MAX entries.
+     The history list will contain only MAX entries at a time.
 
  -- Function: int unstifle_history (void)
      Stop stifling the history.  This returns the previously-set maximum
@@ -442,9 +446,10 @@ individual list entries.
      pointer.
 
  -- Function: HIST_ENTRY * history_get (int offset)
-     Return the history entry at position OFFSET, starting from
-     'history_base' (*note History Variables::).  If there is no entry
-     there, or if OFFSET is greater than the history length, return a
+     Return the history entry at position OFFSET.  The range of valid
+     values of OFFSET starts at 'history_base' and ends at
+     HISTORY_LENGTH - 1 (*note History Variables::).  If there is no
+     entry there, or if OFFSET is outside the valid range, return a
      'NULL' pointer.
 
  -- Function: time_t history_get_time (HIST_ENTRY *entry)
@@ -1282,15 +1287,15 @@ Appendix C Function and Variable Index
 * add_history:                           History List Management.
                                                                (line  9)
 * add_history_time:                      History List Management.
-                                                               (line 13)
+                                                               (line 16)
 * append_history:                        Managing the History File.
                                                                (line 28)
 * clear_history:                         History List Management.
-                                                               (line 34)
+                                                               (line 37)
 * current_history:                       Information About the History List.
                                                                (line 17)
 * free_history_entry:                    History List Management.
-                                                               (line 22)
+                                                               (line 25)
 * get_history_event:                     History Expansion.    (line 26)
 * history_arg_extract:                   History Expansion.    (line 41)
 * history_base:                          History Variables.    (line  9)
@@ -1302,10 +1307,10 @@ Appendix C Function and Variable Index
 * history_get_history_state:             Initializing History and State Management.
                                                                (line 14)
 * history_get_time:                      Information About the History List.
-                                                               (line 28)
+                                                               (line 29)
 * history_inhibit_expansion_function:    History Variables.    (line 62)
 * history_is_stifled:                    History List Management.
-                                                               (line 46)
+                                                               (line 50)
 * history_length:                        History Variables.    (line 12)
 * history_list:                          Information About the History List.
                                                                (line  9)
@@ -1326,7 +1331,7 @@ Appendix C Function and Variable Index
 * history_subst_char:                    History Variables.    (line 33)
 * history_tokenize:                      History Expansion.    (line 35)
 * history_total_bytes:                   Information About the History List.
-                                                               (line 32)
+                                                               (line 33)
 * history_truncate_file:                 Managing the History File.
                                                                (line 33)
 * history_word_delimiters:               History Variables.    (line 43)
@@ -1340,13 +1345,13 @@ Appendix C Function and Variable Index
 * read_history_range:                    Managing the History File.
                                                                (line 14)
 * remove_history:                        History List Management.
-                                                               (line 17)
+                                                               (line 20)
 * replace_history_entry:                 History List Management.
-                                                               (line 27)
+                                                               (line 30)
 * stifle_history:                        History List Management.
-                                                               (line 37)
-* unstifle_history:                      History List Management.
                                                                (line 40)
+* unstifle_history:                      History List Management.
+                                                               (line 44)
 * using_history:                         Initializing History and State Management.
                                                                (line 10)
 * where_history:                         Information About the History List.
@@ -1357,27 +1362,27 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top845
-Node: Using History Interactively1490
-Node: History Interaction1998
-Node: Event Designators3422
-Node: Word Designators4561
-Node: Modifiers6198
-Node: Programming with GNU History7421
-Node: Introduction to History8165
-Node: History Storage9855
-Node: History Functions10990
-Node: Initializing History and State Management11979
-Node: History List Management12791
-Node: Information About the History List14824
-Node: Moving Around the History List16377
-Node: Searching the History List17470
-Node: Managing the History File19395
-Node: History Expansion21215
-Node: History Variables23125
-Node: History Programming Example26195
-Node: GNU Free Documentation License28872
-Node: Concept Index54044
-Node: Function and Variable Index54749
+Node: Top849
+Node: Using History Interactively1494
+Node: History Interaction2002
+Node: Event Designators3426
+Node: Word Designators4565
+Node: Modifiers6202
+Node: Programming with GNU History7425
+Node: Introduction to History8169
+Node: History Storage9859
+Node: History Functions10994
+Node: Initializing History and State Management11983
+Node: History List Management12795
+Node: Information About the History List15089
+Node: Moving Around the History List16703
+Node: Searching the History List17796
+Node: Managing the History File19721
+Node: History Expansion21541
+Node: History Variables23451
+Node: History Programming Example26521
+Node: GNU Free Documentation License29198
+Node: Concept Index54370
+Node: Function and Variable Index55075
 
 End Tag Table

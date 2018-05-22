@@ -20,9 +20,9 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 7.0, version 2.81])
+AC_REVISION([for Readline 8.0, version 2.85])
 
-AC_INIT(readline, 7.0, bug-readline@gnu.org)
+AC_INIT(readline, 8.0, bug-readline@gnu.org)
 
 dnl make sure we are using a recent autoconf version
 AC_PREREQ(2.50)
@@ -32,7 +32,7 @@ AC_CONFIG_AUX_DIR(./support)
 AC_CONFIG_HEADERS(config.h)
 
 dnl update the value of RL_READLINE_VERSION in readline.h when this changes
-LIBVERSION=7.0
+LIBVERSION=8.0
 
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
@@ -51,10 +51,12 @@ dnl option parsing for optional features
 opt_multibyte=yes
 opt_static_libs=yes
 opt_shared_libs=yes
+opt_install_examples=yes
 
 AC_ARG_ENABLE(multibyte, AC_HELP_STRING([--enable-multibyte], [enable multibyte characters if OS supports them]), opt_multibyte=$enableval)
 AC_ARG_ENABLE(shared, AC_HELP_STRING([--enable-shared], [build shared libraries [[default=YES]]]), opt_shared_libs=$enableval)
 AC_ARG_ENABLE(static, AC_HELP_STRING([--enable-static], [build static libraries [[default=YES]]]), opt_static_libs=$enableval)
+AC_ARG_ENABLE(install-examples, AC_HELP_STRING([--disable-install-examples], [don't install examples [[default=install]]]), opt_install_examples=$enableval)
 
 if test $opt_multibyte = no; then
 AC_DEFINE(NO_MULTIBYTE_SUPPORT)
@@ -132,7 +134,7 @@ AC_HEADER_STAT
 AC_HEADER_DIRENT
 
 AC_CHECK_FUNCS(fcntl kill lstat readlink)
-AC_CHECK_FUNCS(memmove pselect putenv select setenv setlocale \
+AC_CHECK_FUNCS(fnmatch memmove pselect putenv select setenv setlocale \
 		strcasecmp strpbrk tcgetattr vsnprintf)
 AC_CHECK_FUNCS(isascii isxdigit)
 AC_CHECK_FUNCS(getpwent getpwnam getpwuid)
@@ -195,6 +197,14 @@ fi
 if test "$TERMCAP_LIB" = "-lncurses"; then
 	AC_CHECK_HEADERS(ncurses/termcap.h)
 fi
+
+case "$TERMCAP_LIB" in
+-ltinfo)  TERMCAP_PKG_CONFIG_LIB=tinfo ;;
+-lcurses) TERMCAP_PKG_CONFIG_LIB=ncurses ;;
+-lncurses) TERMCAP_PKG_CONFIG_LIB=ncurses ;;
+-ltermcap) TERMCAP_PKG_CONFIG_LIB=termcap ;;
+*) TERMCAP_PKG_CONFIG_LIB=termcap ;;
+esac
 
 BASH_CHECK_MULTIBYTE
 
@@ -266,6 +276,11 @@ AC_SUBST(SHARED_TARGET)
 AC_SUBST(STATIC_INSTALL_TARGET)
 AC_SUBST(SHARED_INSTALL_TARGET)
 
+if test "$opt_install_examples" = "yes"; then
+	EXAMPLES_INSTALL_TARGET=install-examples
+fi
+AC_SUBST(EXAMPLES_INSTALL_TARGET)
+
 case "$build_os" in
 msdosdjgpp*)	BUILD_DIR=`pwd.exe` ;;	# to prevent //d/path/file
 *)		BUILD_DIR=`pwd` ;;
@@ -292,6 +307,7 @@ AC_SUBST(host_os)
 AC_SUBST(LIBVERSION)
 
 AC_SUBST(TERMCAP_LIB)
+AC_SUBST(TERMCAP_PKG_CONFIG_LIB)
 
 AC_OUTPUT([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc],
 [

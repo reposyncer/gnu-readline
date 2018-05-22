@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Creator: groff version 1.22.3
-%%CreationDate: Wed Jul  1 10:32:47 2015
+%%CreationDate: Thu Dec 14 11:39:35 2017
 %%DocumentNeededResources: font Times-Roman
 %%+ font Times-Bold
 %%+ font Times-Italic
@@ -240,7 +240,7 @@ BP
 10.95/Times-Bold@0 SF -.219(NA)72 84 S(ME).219 E F0
 (history \255 GNU History Library)108 96 Q F1(COPYRIGHT)72 112.8 Q F0
 (The GNU History Library is Cop)108 124.8 Q
-(yright \251 1989-2014 by the Free Softw)-.1 E(are F)-.1 E
+(yright \251 1989-2017 by the Free Softw)-.1 E(are F)-.1 E
 (oundation, Inc.)-.15 E F1(DESCRIPTION)72 141.6 Q F0(Man)108 153.6 Q
 2.81(yp)-.15 G .31(rograms read input from the user a line at a time.)
 -2.81 F .309(The GNU History library is able to k)5.309 F .309
@@ -332,7 +332,7 @@ F2(^)108 691.2 Q F0(The \214rst ar)144 691.2 Q 2.5(gument. That)-.18 F
 R 2.564(ord. This)-.1 F .064(is usually the last ar)2.564 F .064
 (gument, b)-.18 F .064(ut will e)-.2 F .064(xpand to the zeroth w)-.15 F
 .063(ord if there is only)-.1 F(one w)144 715.2 Q(ord in the line.)-.1 E
-(GNU History 6.3)72 768 Q(2015 May 24)138.175 E(1)202.335 E 0 Cg EP
+(GNU History 6.3)72 768 Q(2017 October 8)133.735 E(1)197.895 E 0 Cg EP
 %%Page: 2 2
 %%BeginPageSetup
 BP
@@ -442,8 +442,8 @@ G .066(le that uses the History library')-2.566 F 2.566(sf)-.55 G
 -.25 F(public data structures.)108 662.4 Q F1(History Storage)87 691.2 Q
 F0(The history list is an array of history entries.)108 703.2 Q 2.5(Ah)5
 G(istory entry is declared as follo)-2.5 E(ws:)-.25 E F2(typedef void *)
-108 720 Q F1(histdata_t;)2.5 E F0(GNU History 6.3)72 768 Q(2015 May 24)
-138.175 E(2)202.335 E 0 Cg EP
+108 720 Q F1(histdata_t;)2.5 E F0(GNU History 6.3)72 768 Q
+(2017 October 8)133.735 E(2)197.895 E 0 Cg EP
 %%Page: 3 3
 %%BeginPageSetup
 BP
@@ -491,379 +491,389 @@ E F0(.)A F2(History List Management)87 530.4 Q F0
 (These functions manage indi)108 542.4 Q(vidual entries on the history \
 list, or set parameters managing the list itself.)-.25 E F1(void)108
 566.4 Q F2(add_history)2.5 E F0(\()4.166 E F1(const c)A(har *string)-.15
-E F0(\))1.666 E(Place)108 578.4 Q F1(string)2.5 E F0
-(at the end of the history list.)2.5 E
-(The associated data \214eld \(if an)5 E(y\) is set to)-.15 E F2(NULL)
-2.5 E F0(.)A F1(void)108 602.4 Q F2(add_history_time)2.5 E F0(\()4.166 E
-F1(const c)A(har *string)-.15 E F0(\))1.666 E
+E F0(\))1.666 E(Place)108 578.4 Q F1(string)3.279 E F0 .779
+(at the end of the history list.)3.279 F .779
+(The associated data \214eld \(if an)5.779 F .779(y\) is set to)-.15 F
+F2(NULL)3.279 E F0 5.779(.I)C 3.279(ft)-5.779 G .78(he maxi-)-3.279 F
+.787(mum number of history entries has been set using)108 590.4 R F2
+(sti\215e_history\(\))3.286 E F0 3.286(,a)C .786(nd the ne)-3.286 F
+3.286(wn)-.25 G .786(umber of history entries)-3.286 F -.1(wo)108 602.4
+S(uld e).1 E(xceed that maximum, the oldest history entry is remo)-.15 E
+-.15(ve)-.15 G(d.).15 E F1(void)108 626.4 Q F2(add_history_time)2.5 E F0
+(\()4.166 E F1(const c)A(har *string)-.15 E F0(\))1.666 E
 (Change the time stamp associated with the most recent history entry to)
-108 614.4 Q F1(string)2.5 E F0(.)A F1(HIST_ENTR)108 638.4 Q 2.5(Y*)-.18
+108 638.4 Q F1(string)2.5 E F0(.)A F1(HIST_ENTR)108 662.4 Q 2.5(Y*)-.18
 G F2 -.18(re)C(mo).18 E -.1(ve)-.1 G(_history).1 E F0(\()4.166 E F1
-(int whic)A(h)-.15 E F0(\))1.666 E(Remo)108 650.4 Q .352 -.15(ve h)-.15
+(int whic)A(h)-.15 E F0(\))1.666 E(Remo)108 674.4 Q .352 -.15(ve h)-.15
 H .052(istory entry at of).15 F(fset)-.25 E F1(whic)2.553 E(h)-.15 E F0
 .053(from the history)2.553 F 5.053(.T)-.65 G .053(he remo)-5.053 F -.15
 (ve)-.15 G 2.553(de).15 G .053(lement is returned so you can free the)
--2.553 F(line, data, and containing structure.)108 662.4 Q F1
-(histdata_t)108 686.4 Q F2(fr)2.5 E(ee_history_entry)-.18 E F0(\()4.166
-E F1(HIST_ENTR)A 2.5(Y*)-.18 G(histent)-2.5 E F0(\))1.666 E .934
-(Free the history entry)108 698.4 R F1(histent)3.433 E F0 .933(and an)
-3.433 F 3.433(yh)-.15 G .933(istory library pri)-3.433 F -.25(va)-.25 G
-.933(te data associated with it.).25 F .933(Returns the applica-)5.933 F
-(tion-speci\214c data so the caller can dispose of it.)108 710.4 Q
-(GNU History 6.3)72 768 Q(2015 May 24)138.175 E(3)202.335 E 0 Cg EP
+-2.553 F(line, data, and containing structure.)108 686.4 Q F1
+(histdata_t)108 710.4 Q F2(fr)2.5 E(ee_history_entry)-.18 E F0(\()4.166
+E F1(HIST_ENTR)A 2.5(Y*)-.18 G(histent)-2.5 E F0(\))1.666 E 3.31
+(Free the history entry)108 722.4 R F1(histent)5.81 E F0 3.309(and an)
+5.81 F 5.809(yh)-.15 G 3.309(istory library pri)-5.809 F -.25(va)-.25 G
+3.309(te data associated with it.).25 F 3.309(Returns the)8.309 F
+(GNU History 6.3)72 768 Q(2017 October 8)133.735 E(3)197.895 E 0 Cg EP
 %%Page: 4 4
 %%BeginPageSetup
 BP
 %%EndPageSetup
 /F0 10/Times-Roman@0 SF(HIST)72 48 Q(OR)-.18 E 124.845(Y\(3\) Library)
--.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E/F1
-10/Times-Italic@0 SF(HIST_ENTR)108 84 Q 2.5(Y*)-.18 G/F2 10/Times-Bold@0
-SF -.18(re)C(place_history_entry).18 E F0(\()4.166 E F1(int whic)A -.834
-(h, const)-.15 F -.15(ch)2.5 G(ar *line).15 E 1.666(,h)-.1 G
-(istdata_t data)-1.666 E F0(\))3.332 E(Mak)108 96 Q 3.062(et)-.1 G .562
-(he history entry at of)-3.062 F(fset)-.25 E F1(whic)3.062 E(h)-.15 E F0
-(ha)3.062 E -.15(ve)-.2 G F1(line)3.212 E F0(and)3.062 E F1(data)3.062 E
-F0 5.563(.T)C .563(his returns the old entry so the caller can dis-)
--5.563 F(pose of an)108 108 Q 2.5(ya)-.15 G(pplication-speci\214c data.)
--2.5 E(In the case of an in)5 E -.25(va)-.4 G(lid).25 E F1(whic)2.5 E(h)
--.15 E F0 2.5(,a)C F2(NULL)A F0(pointer is returned.)2.5 E F1(void)108
-132 Q F2(clear_history)2.5 E F0(\()4.166 E F1(void)A F0(\))1.666 E
-(Clear the history list by deleting all the entries.)108 144 Q F1(void)
-108 168 Q F2(sti\215e_history)2.5 E F0(\()4.166 E F1(int max)A F0(\))
-1.666 E(Sti\215e the history list, remembering only the last)108 180 Q
-F1(max)2.5 E F0(entries.)2.5 E F1(int)108 204 Q F2(unsti\215e_history)
-2.5 E F0(\()4.166 E F1(void)A F0(\))1.666 E .46
-(Stop sti\215ing the history)108 216 R 5.46(.T)-.65 G .46
-(his returns the pre)-5.46 F .46
+-.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E
+(application-speci\214c data so the caller can dispose of it.)108 84 Q
+/F1 10/Times-Italic@0 SF(HIST_ENTR)108 108 Q 2.5(Y*)-.18 G/F2 10
+/Times-Bold@0 SF -.18(re)C(place_history_entry).18 E F0(\()4.166 E F1
+(int whic)A -.834(h, const)-.15 F -.15(ch)2.5 G(ar *line).15 E 1.666(,h)
+-.1 G(istdata_t data)-1.666 E F0(\))3.332 E(Mak)108 120 Q 3.062(et)-.1 G
+.562(he history entry at of)-3.062 F(fset)-.25 E F1(whic)3.062 E(h)-.15
+E F0(ha)3.062 E -.15(ve)-.2 G F1(line)3.212 E F0(and)3.062 E F1(data)
+3.062 E F0 5.563(.T)C .563
+(his returns the old entry so the caller can dis-)-5.563 F(pose of an)
+108 132 Q 2.5(ya)-.15 G(pplication-speci\214c data.)-2.5 E
+(In the case of an in)5 E -.25(va)-.4 G(lid).25 E F1(whic)2.5 E(h)-.15 E
+F0 2.5(,a)C F2(NULL)A F0(pointer is returned.)2.5 E F1(void)108 156 Q F2
+(clear_history)2.5 E F0(\()4.166 E F1(void)A F0(\))1.666 E
+(Clear the history list by deleting all the entries.)108 168 Q F1(void)
+108 192 Q F2(sti\215e_history)2.5 E F0(\()4.166 E F1(int max)A F0(\))
+1.666 E .38(Sti\215e the history list, remembering only the last)108 204
+R F1(max)2.88 E F0 2.88(entries. The)2.88 F .38
+(history list will contain only)2.88 F F1(max)2.88 E F0(entries)2.88 E
+(at a time.)108 216 Q F1(int)108 240 Q F2(unsti\215e_history)2.5 E F0
+(\()4.166 E F1(void)A F0(\))1.666 E .46(Stop sti\215ing the history)108
+252 R 5.46(.T)-.65 G .46(his returns the pre)-5.46 F .46
 (viously-set maximum number of history entries \(as set by)-.25 F F2
-(sti-)2.96 E(\215e_history\(\))108 228 Q F0 2.5(\). history)B -.1(wa)2.5
+(sti-)2.96 E(\215e_history\(\))108 264 Q F0 2.5(\). history)B -.1(wa)2.5
 G 2.5(ss).1 G 2.5(ti\215ed. The)-2.5 F -.25(va)2.5 G(lue is positi).25 E
 .3 -.15(ve i)-.25 H 2.5(ft).15 G(he history w)-2.5 E(as sti\215ed, ne)
 -.1 E -.05(ga)-.15 G(ti).05 E .3 -.15(ve i)-.25 H 2.5(fi).15 G 2.5(tw)
--2.5 G(asn')-2.6 E(t.)-.18 E F1(int)108 252 Q F2(history_is_sti\215ed)
+-2.5 G(asn')-2.6 E(t.)-.18 E F1(int)108 288 Q F2(history_is_sti\215ed)
 2.5 E F0(\()4.166 E F1(void)A F0(\))1.666 E
 (Returns non-zero if the history is sti\215ed, zero if it is not.)108
-264 Q F2(Inf)87 292.8 Q(ormation About the History List)-.25 E F0(These\
+300 Q F2(Inf)87 328.8 Q(ormation About the History List)-.25 E F0(These\
  functions return information about the entire history list or indi)108
-304.8 Q(vidual list entries.)-.25 E F1(HIST_ENTR)108 328.8 Q 2.5(Y*)-.18
+340.8 Q(vidual list entries.)-.25 E F1(HIST_ENTR)108 364.8 Q 2.5(Y*)-.18
 G(*)-2.5 E F2(history_list)2.5 E F0(\()4.166 E F1(void)A F0(\))1.666 E
-.707(Return a)108 340.8 R F2(NULL)3.207 E F0 .707(terminated array of)
-3.207 F F1(HIST_ENTR)3.207 E 3.208(Y*)-.18 G F0 .708
-(which is the current input history)B 5.708(.E)-.65 G .708
-(lement 0 of this)-5.708 F(list is the be)108 352.8 Q(ginning of time.)
+.708(Return a)108 376.8 R F2(NULL)3.208 E F0 .708(terminated array of)
+3.208 F F1(HIST_ENTR)3.208 E 3.208(Y*)-.18 G F0 .708
+(which is the current input history)B 5.707(.E)-.65 G .707
+(lement 0 of this)-5.707 F(list is the be)108 388.8 Q(ginning of time.)
 -.15 E(If there is no history)5 E 2.5(,r)-.65 G(eturn)-2.5 E F2(NULL)2.5
-E F0(.)A F1(int)108 376.8 Q F2(wher)2.5 E(e_history)-.18 E F0(\()4.166 E
-F1(void)A F0(\))1.666 E(Returns the of)108 388.8 Q
-(fset of the current history element.)-.25 E F1(HIST_ENTR)108 412.8 Q
+E F0(.)A F1(int)108 412.8 Q F2(wher)2.5 E(e_history)-.18 E F0(\()4.166 E
+F1(void)A F0(\))1.666 E(Returns the of)108 424.8 Q
+(fset of the current history element.)-.25 E F1(HIST_ENTR)108 448.8 Q
 2.5(Y*)-.18 G F2(curr)A(ent_history)-.18 E F0(\()4.166 E F1(void)A F0
 (\))1.666 E 1.373
 (Return the history entry at the current position, as determined by)108
-424.8 R F2(wher)3.873 E(e_history\(\))-.18 E F0 6.373(.I)C 3.873(ft)
--6.373 G 1.373(here is no entry)-3.873 F(there, return a)108 436.8 Q F2
-(NULL)2.5 E F0(pointer)2.5 E(.)-.55 E F1(HIST_ENTR)108 460.8 Q 2.5(Y*)
+460.8 R F2(wher)3.873 E(e_history\(\))-.18 E F0 6.373(.I)C 3.873(ft)
+-6.373 G 1.374(here is no entry)-3.873 F(there, return a)108 472.8 Q F2
+(NULL)2.5 E F0(pointer)2.5 E(.)-.55 E F1(HIST_ENTR)108 496.8 Q 2.5(Y*)
 -.18 G F2(history_get)A F0(\()4.166 E F1(int of)A(fset)-.18 E F0(\))
-1.666 E .287(Return the history entry at position)108 472.8 R F1(of)
-2.787 E(fset)-.18 E F0 2.787(,s)C .287(tarting from)-2.787 F F2
-(history_base)2.787 E F0 5.287(.I)C 2.787(ft)-5.287 G .287
-(here is no entry there, or if)-2.787 F F1(of)2.788 E(fset)-.18 E F0
-(is greater than the history length, return a)108 484.8 Q F2(NULL)2.5 E
-F0(pointer)2.5 E(.)-.55 E F1(time_t)108 508.8 Q F2(history_get_time)2.5
-E F0(\()4.166 E F1(HIST_ENTR)A 2.5(Y*)-.18 G F0(\))-.834 E(Return the t\
-ime stamp associated with the history entry passed as the ar)108 520.8 Q
-(gument.)-.18 E F1(int)108 544.8 Q F2(history_total_bytes)2.5 E F0(\()
-4.166 E F1(void)A F0(\))1.666 E .392
+1.666 E 1.069(Return the history entry at position)108 508.8 R F1(of)
+3.569 E(fset)-.18 E F0 6.069(.T)C 1.069(he range of v)-6.069 F 1.069
+(alid v)-.25 F 1.069(alues of)-.25 F F1(of)3.569 E(fset)-.18 E F0 1.068
+(starts at)3.569 F F2(history_base)3.568 E F0(and)3.568 E .286(ends at)
+108 520.8 R F2(history_length)2.786 E F0 2.786<ad31>2.786 G 5.286(.I)
+-2.786 G 2.786(ft)-5.286 G .286(here is no entry there, or if)-2.786 F
+F1(of)2.786 E(fset)-.18 E F0 .286(is outside the v)2.786 F .287
+(alid range, return a)-.25 F F2(NULL)2.787 E F0(pointer)108 532.8 Q(.)
+-.55 E F1(time_t)108 556.8 Q F2(history_get_time)2.5 E F0(\()4.166 E F1
+(HIST_ENTR)A 2.5(Y*)-.18 G F0(\))-.834 E(Return the time stamp associat\
+ed with the history entry passed as the ar)108 568.8 Q(gument.)-.18 E F1
+(int)108 592.8 Q F2(history_total_bytes)2.5 E F0(\()4.166 E F1(void)A F0
+(\))1.666 E .392
 (Return the number of bytes that the primary history entries are using.)
-108 556.8 R .391(This function returns the sum of the)5.392 F
-(lengths of all the lines in the history)108 568.8 Q(.)-.65 E F2(Mo)87
-597.6 Q(ving Ar)-.1 E(ound the History List)-.18 E F0
-(These functions allo)108 609.6 Q 2.5(wt)-.25 G(he current inde)-2.5 E
+108 604.8 R .391(This function returns the sum of the)5.392 F
+(lengths of all the lines in the history)108 616.8 Q(.)-.65 E F2(Mo)87
+645.6 Q(ving Ar)-.1 E(ound the History List)-.18 E F0
+(These functions allo)108 657.6 Q 2.5(wt)-.25 G(he current inde)-2.5 E
 2.5(xi)-.15 G(nto the history list to be set or changed.)-2.5 E F1(int)
-108 633.6 Q F2(history_set_pos)2.5 E F0(\()4.166 E F1(int pos)A F0(\))
-1.666 E .79(Set the current history of)108 645.6 R .79(fset to)-.25 F F1
+108 681.6 Q F2(history_set_pos)2.5 E F0(\()4.166 E F1(int pos)A F0(\))
+1.666 E .79(Set the current history of)108 693.6 R .79(fset to)-.25 F F1
 (pos)3.29 E F0 3.29(,a)C 3.29(na)-3.29 G .79(bsolute inde)-3.29 F 3.29
 (xi)-.15 G .79(nto the list.)-3.29 F .79(Returns 1 on success, 0 if)5.79
 F F1(pos)3.29 E F0 .79(is less)3.29 F
-(than zero or greater than the number of history entries.)108 657.6 Q F1
-(HIST_ENTR)108 681.6 Q 2.5(Y*)-.18 G F2(pr)A -.15(ev)-.18 G
-(ious_history).15 E F0(\()4.166 E F1(void)A F0(\))1.666 E .208
-(Back up the current history of)108 693.6 R .208(fset to the pre)-.25 F
-.208(vious history entry)-.25 F 2.707(,a)-.65 G .207
-(nd return a pointer to that entry)-2.707 F 5.207(.I)-.65 G 2.707(ft)
--5.207 G .207(here is)-2.707 F(no pre)108 705.6 Q(vious entry)-.25 E 2.5
-(,r)-.65 G(eturn a)-2.5 E F2(NULL)2.5 E F0(pointer)2.5 E(.)-.55 E F1
-(HIST_ENTR)108 729.6 Q 2.5(Y*)-.18 G F2(next_history)A F0(\()4.166 E F1
-(void)A F0(\))1.666 E(GNU History 6.3)72 768 Q(2015 May 24)138.175 E(4)
-202.335 E 0 Cg EP
+(than zero or greater than the number of history entries.)108 705.6 Q F1
+(HIST_ENTR)108 729.6 Q 2.5(Y*)-.18 G F2(pr)A -.15(ev)-.18 G
+(ious_history).15 E F0(\()4.166 E F1(void)A F0(\))1.666 E
+(GNU History 6.3)72 768 Q(2017 October 8)133.735 E(4)197.895 E 0 Cg EP
 %%Page: 5 5
 %%BeginPageSetup
 BP
 %%EndPageSetup
 /F0 10/Times-Roman@0 SF(HIST)72 48 Q(OR)-.18 E 124.845(Y\(3\) Library)
 -.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E
-.332(If the current history of)108 84 R .333(fset refers to a v)-.25 F
-.333(alid history entry)-.25 F 2.833(,i)-.65 G .333
+.208(Back up the current history of)108 84 R .208(fset to the pre)-.25 F
+.208(vious history entry)-.25 F 2.707(,a)-.65 G .207
+(nd return a pointer to that entry)-2.707 F 5.207(.I)-.65 G 2.707(ft)
+-5.207 G .207(here is)-2.707 F(no pre)108 96 Q(vious entry)-.25 E 2.5
+(,r)-.65 G(eturn a)-2.5 E/F1 10/Times-Bold@0 SF(NULL)2.5 E F0(pointer)
+2.5 E(.)-.55 E/F2 10/Times-Italic@0 SF(HIST_ENTR)108 120 Q 2.5(Y*)-.18 G
+F1(next_history)A F0(\()4.166 E F2(void)A F0(\))1.666 E .332
+(If the current history of)108 132 R .333(fset refers to a v)-.25 F .333
+(alid history entry)-.25 F 2.833(,i)-.65 G .333
 (ncrement the current history of)-2.833 F 2.833(fset. If)-.25 F .333
-(the possi-)2.833 F .202(bly-incremented history of)108 96 R .202
+(the possi-)2.833 F .202(bly-incremented history of)108 144 R .202
 (fset refers to a v)-.25 F .202(alid history entry)-.25 F 2.702(,r)-.65
 G .202(eturn a pointer to that entry; otherwise, return)-2.702 F(a)108
-108 Q/F1 10/Times-Bold@0 SF(NULL)2.5 E F0(pointer)2.5 E(.)-.55 E F1
-(Sear)87 136.8 Q(ching the History List)-.18 E F0 .005
-(These functions allo)108 148.8 R 2.505(ws)-.25 G .006(earching of the \
-history list for entries containing a speci\214c string.)-2.505 F .006
-(Searching may be)5.006 F 1.452(performed both forw)108 160.8 R 1.452
-(ard and backw)-.1 F 1.451(ard from the current history position.)-.1 F
-1.451(The search may be)6.451 F/F2 10/Times-Italic@0 SF(anc)3.951 E(hor)
--.15 E(ed)-.37 E F0(,)A(meaning that the string must match at the be)108
-172.8 Q(ginning of the history entry)-.15 E(.)-.65 E F2(int)108 196.8 Q
-F1(history_sear)2.5 E(ch)-.18 E F0(\()4.166 E F2(const c)A(har *string)
+156 Q F1(NULL)2.5 E F0(pointer)2.5 E(.)-.55 E F1(Sear)87 184.8 Q
+(ching the History List)-.18 E F0 .005(These functions allo)108 196.8 R
+2.505(ws)-.25 G .006(earching of the history list for entries containin\
+g a speci\214c string.)-2.505 F .006(Searching may be)5.006 F 1.452
+(performed both forw)108 208.8 R 1.452(ard and backw)-.1 F 1.451
+(ard from the current history position.)-.1 F 1.451(The search may be)
+6.451 F F2(anc)3.951 E(hor)-.15 E(ed)-.37 E F0(,)A
+(meaning that the string must match at the be)108 220.8 Q
+(ginning of the history entry)-.15 E(.)-.65 E F2(int)108 244.8 Q F1
+(history_sear)2.5 E(ch)-.18 E F0(\()4.166 E F2(const c)A(har *string)
 -.15 E 1.666(,i)-.1 G(nt dir)-1.666 E(ection)-.37 E F0(\))1.666 E .155
-(Search the history for)108 208.8 R F2(string)2.655 E F0 2.656(,s)C .156
+(Search the history for)108 256.8 R F2(string)2.655 E F0 2.656(,s)C .156
 (tarting at the current history of)-2.656 F 2.656(fset. If)-.25 F F2
 (dir)2.656 E(ection)-.37 E F0 .156(is less than 0, then the search)2.656
-F .802(is through pre)108 220.8 R .802
+F .802(is through pre)108 268.8 R .802
 (vious entries, otherwise through subsequent entries.)-.25 F(If)5.801 E
 F2(string)3.301 E F0 .801(is found, then the current his-)3.301 F .064
-(tory inde)108 232.8 R 2.564(xi)-.15 G 2.564(ss)-2.564 G .064
+(tory inde)108 280.8 R 2.564(xi)-.15 G 2.564(ss)-2.564 G .064
 (et to that history entry)-2.564 F 2.564(,a)-.65 G .064(nd the v)-2.564
 F .064(alue returned is the of)-.25 F .064
 (fset in the line of the entry where)-.25 F F2(string)2.565 E F0 -.1(wa)
-108 244.8 S 2.5(sf).1 G 2.5(ound. Otherwise,)-2.5 F
-(nothing is changed, and a -1 is returned.)2.5 E F2(int)108 268.8 Q F1
+108 292.8 S 2.5(sf).1 G 2.5(ound. Otherwise,)-2.5 F
+(nothing is changed, and a -1 is returned.)2.5 E F2(int)108 316.8 Q F1
 (history_sear)2.5 E(ch_pr)-.18 E(e\214x)-.18 E F0(\()4.166 E F2(const c)
 A(har *string)-.15 E 1.666(,i)-.1 G(nt dir)-1.666 E(ection)-.37 E F0(\))
-1.666 E .684(Search the history for)108 280.8 R F2(string)3.183 E F0
+1.666 E .684(Search the history for)108 328.8 R F2(string)3.183 E F0
 3.183(,s)C .683(tarting at the current history of)-3.183 F 3.183
 (fset. The)-.25 F .683(search is anchored: matching lines)3.183 F 1.063
-(must be)108 292.8 R 1.063(gin with)-.15 F F2(string)3.563 E F0 6.063
+(must be)108 340.8 R 1.063(gin with)-.15 F F2(string)3.563 E F0 6.063
 (.I)C(f)-6.063 E F2(dir)3.563 E(ection)-.37 E F0 1.064
 (is less than 0, then the search is through pre)3.563 F 1.064
 (vious entries, otherwise)-.25 F 1.115(through subsequent entries.)108
-304.8 R(If)6.115 E F2(string)3.615 E F0 1.115
+352.8 R(If)6.115 E F2(string)3.615 E F0 1.115
 (is found, then the current history inde)3.615 F 3.614(xi)-.15 G 3.614
 (ss)-3.614 G 1.114(et to that entry)-3.614 F 3.614(,a)-.65 G 1.114
-(nd the)-3.614 F(return v)108 316.8 Q(alue is 0.)-.25 E
+(nd the)-3.614 F(return v)108 364.8 Q(alue is 0.)-.25 E
 (Otherwise, nothing is changed, and a -1 is returned.)5 E F2(int)108
-340.8 Q F1(history_sear)2.5 E(ch_pos)-.18 E F0(\()4.166 E F2(const c)A
+388.8 Q F1(history_sear)2.5 E(ch_pos)-.18 E F0(\()4.166 E F2(const c)A
 (har *string)-.15 E 1.666(,i)-.1 G(nt dir)-1.666 E -.834(ection, int)
--.37 F(pos)2.5 E F0(\))3.332 E .603(Search for)108 352.8 R F2(string)
+-.37 F(pos)2.5 E F0(\))3.332 E .603(Search for)108 400.8 R F2(string)
 3.103 E F0 .603(in the history list, starting at)3.103 F F2(pos)3.104 E
 F0 3.104(,a)C 3.104(na)-3.104 G .604(bsolute inde)-3.104 F 3.104(xi)-.15
 G .604(nto the list.)-3.104 F(If)5.604 E F2(dir)3.104 E(ection)-.37 E F0
 .604(is ne)3.104 F -.05(ga)-.15 G(ti).05 E -.15(ve)-.25 G(,).15 E .608
-(the search proceeds backw)108 364.8 R .608(ard from)-.1 F F2(pos)3.108
+(the search proceeds backw)108 412.8 R .608(ard from)-.1 F F2(pos)3.108
 E F0 3.108(,o)C .608(therwise forw)-3.108 F 3.108(ard. Returns)-.1 F
 .608(the absolute inde)3.108 F 3.108(xo)-.15 G 3.108(ft)-3.108 G .608
-(he history ele-)-3.108 F(ment where)108 376.8 Q F2(string)2.5 E F0 -.1
+(he history ele-)-3.108 F(ment where)108 424.8 Q F2(string)2.5 E F0 -.1
 (wa)2.5 G 2.5(sf).1 G(ound, or -1 otherwise.)-2.5 E F1
-(Managing the History File)87 405.6 Q F0 .035(The History library can r\
-ead the history from and write it to a \214le.)108 417.6 R .036
+(Managing the History File)87 453.6 Q F0 .035(The History library can r\
+ead the history from and write it to a \214le.)108 465.6 R .036
 (This section documents the functions for)5.035 F
-(managing a history \214le.)108 429.6 Q F2(int)108 453.6 Q F1 -.18(re)
+(managing a history \214le.)108 477.6 Q F2(int)108 501.6 Q F1 -.18(re)
 2.5 G(ad_history).18 E F0(\()4.166 E F2(const c)A(har *\214lename)-.15 E
-F0(\))1.666 E .151(Add the contents of)108 465.6 R F2(\214lename)2.651 E
+F0(\))1.666 E .151(Add the contents of)108 513.6 R F2(\214lename)2.651 E
 F0 .151(to the history list, a line at a time.)2.651 F(If)5.15 E F2
 (\214lename)2.65 E F0(is)2.65 E F1(NULL)2.65 E F0 2.65(,t)C .15
-(hen read from)-2.65 F F2(~/.his-)2.65 E(tory)108 477.6 Q F0 5(.R)C
+(hen read from)-2.65 F F2(~/.his-)2.65 E(tory)108 525.6 Q F0 5(.R)C
 (eturns 0 if successful, or)-5 E F1(err)2.5 E(no)-.15 E F0(if not.)2.5 E
-F2(int)108 501.6 Q F1 -.18(re)2.5 G(ad_history_range).18 E F0(\()4.166 E
+F2(int)108 549.6 Q F1 -.18(re)2.5 G(ad_history_range).18 E F0(\()4.166 E
 F2(const c)A(har *\214lename)-.15 E 1.666(,i)-.1 G(nt fr)-1.666 E -.834
 (om, int)-.45 F(to)2.5 E F0(\))3.332 E .052(Read a range of lines from)
-108 513.6 R F2(\214lename)2.553 E F0 2.553(,a)C .053
+108 561.6 R F2(\214lename)2.553 E F0 2.553(,a)C .053
 (dding them to the history list.)-2.553 F .053(Start reading at line)
 5.053 F F2(fr)2.553 E(om)-.45 E F0 .053(and end at)2.553 F F2(to)2.553 E
-F0(.)A(If)108 525.6 Q F2(fr)2.889 E(om)-.45 E F0 .389
+F0(.)A(If)108 573.6 Q F2(fr)2.889 E(om)-.45 E F0 .389
 (is zero, start at the be)2.889 F 2.889(ginning. If)-.15 F F2(to)2.889 E
 F0 .389(is less than)2.889 F F2(fr)2.889 E(om)-.45 E F0 2.889(,t)C .388
 (hen read until the end of the \214le.)-2.889 F(If)5.388 E F2
-(\214lename)2.888 E F0(is)108 537.6 Q F1(NULL)2.5 E F0 2.5(,t)C
+(\214lename)2.888 E F0(is)108 585.6 Q F1(NULL)2.5 E F0 2.5(,t)C
 (hen read from)-2.5 E F2(~/.history)2.5 E F0 5(.R)C
 (eturns 0 if successful, or)-5 E F1(err)2.5 E(no)-.15 E F0(if not.)2.5 E
-F2(int)108 561.6 Q F1(write_history)2.5 E F0(\()4.166 E F2(const c)A
+F2(int)108 609.6 Q F1(write_history)2.5 E F0(\()4.166 E F2(const c)A
 (har *\214lename)-.15 E F0(\))1.666 E .961(Write the current history to)
-108 573.6 R F2(\214lename)3.461 E F0 3.461(,o)C -.15(ve)-3.611 G
+108 621.6 R F2(\214lename)3.461 E F0 3.461(,o)C -.15(ve)-3.611 G
 (rwriting).15 E F2(\214lename)3.461 E F0 .961(if necessary)3.461 F 5.961
 (.I)-.65 G(f)-5.961 E F2(\214lename)3.462 E F0(is)3.462 E F1(NULL)3.462
-E F0 3.462(,t)C .962(hen write)-3.462 F(the history list to)108 585.6 Q
+E F0 3.462(,t)C .962(hen write)-3.462 F(the history list to)108 633.6 Q
 F2(~/.history)2.5 E F0 5(.R)C(eturns 0 on success, or)-5 E F1(err)2.5 E
-(no)-.15 E F0(on a read or write error)2.5 E(.)-.55 E F2(int)108 621.6 Q
+(no)-.15 E F0(on a read or write error)2.5 E(.)-.55 E F2(int)108 669.6 Q
 F1(append_history)2.5 E F0(\()4.166 E F2(int nelements,)A(const c)1.666
-E(har *\214lename)-.15 E F0(\))1.666 E .839(Append the last)108 633.6 R
+E(har *\214lename)-.15 E F0(\))1.666 E .839(Append the last)108 681.6 R
 F2(nelements)3.339 E F0 .839(of the history list to)3.339 F F2
 (\214lename)3.339 E F0 5.839(.I)C(f)-5.839 E F2(\214lename)3.339 E F0
 (is)3.339 E F1(NULL)3.339 E F0 3.339(,t)C .838(hen append to)-3.339 F F2
-(~/.history)3.338 E F0(.)A(Returns 0 on success, or)108 645.6 Q F1(err)
+(~/.history)3.338 E F0(.)A(Returns 0 on success, or)108 693.6 Q F1(err)
 2.5 E(no)-.15 E F0(on a read or write error)2.5 E(.)-.55 E F2(int)108
-669.6 Q F1(history_truncate_\214le)2.5 E F0(\()4.166 E F2(const c)A
+717.6 Q F1(history_truncate_\214le)2.5 E F0(\()4.166 E F2(const c)A
 (har *\214lename)-.15 E 1.666(,i)-.1 G(nt nlines)-1.666 E F0(\))1.666 E
--.35(Tr)108 681.6 S .38(uncate the history \214le).35 F F2(\214lename)
+-.35(Tr)108 729.6 S .38(uncate the history \214le).35 F F2(\214lename)
 2.88 E F0 2.88(,l)C(ea)-2.88 E .38(ving only the last)-.2 F F2(nlines)
 2.881 E F0 2.881(lines. If)2.881 F F2(\214lename)2.881 E F0(is)2.881 E
 F1(NULL)2.881 E F0 2.881(,t)C(hen)-2.881 E F2(~/.history)2.881 E F0(is)
-2.881 E 2.5(truncated. Returns)108 693.6 R 2.5(0o)2.5 G 2.5(ns)-2.5 G
-(uccess, or)-2.5 E F1(err)2.5 E(no)-.15 E F0(on f)2.5 E(ailure.)-.1 E
-(GNU History 6.3)72 768 Q(2015 May 24)138.175 E(5)202.335 E 0 Cg EP
+2.881 E(GNU History 6.3)72 768 Q(2017 October 8)133.735 E(5)197.895 E 0
+Cg EP
 %%Page: 6 6
 %%BeginPageSetup
 BP
 %%EndPageSetup
 /F0 10/Times-Roman@0 SF(HIST)72 48 Q(OR)-.18 E 124.845(Y\(3\) Library)
--.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E/F1
-10/Times-Bold@0 SF(History Expansion)87 84 Q F0
-(These functions implement history e)108 96 Q(xpansion.)-.15 E/F2 10
-/Times-Italic@0 SF(int)108 120 Q F1(history_expand)2.5 E F0(\()4.166 E
-F2 -.15(ch)C(ar *string).15 E 1.666(,c)-.1 G(har **output)-1.816 E F0
-(\))1.666 E(Expand)108 132 Q F2(string)2.5 E F0 2.5(,p)C
-(lacing the result into)-2.5 E F2(output)2.5 E F0 2.5(,ap)C
-(ointer to a string.)-2.5 E(Returns:)5 E(0)144 144 Q .566(If no e)180
-144 R .566(xpansions took place \(or)-.15 F 3.065(,i)-.4 G 3.065(ft)
--3.065 G .565(he only change in the te)-3.065 F .565(xt w)-.15 F .565
-(as the remo)-.1 F -.25(va)-.15 G 3.065(lo).25 G 3.065(fe)-3.065 G
-(scape)-3.065 E(characters preceding the history e)180 156 Q
-(xpansion character\);)-.15 E(1)144 168 Q(if e)180 168 Q
-(xpansions did tak)-.15 E 2.5(ep)-.1 G(lace;)-2.5 E(-1)144 180 Q
-(if there w)180 180 Q(as an error in e)-.1 E(xpansion;)-.15 E(2)144 192
-Q(if the returned line should be displayed, b)180 192 Q(ut not e)-.2 E
--.15(xe)-.15 G(cuted, as with the).15 E F1(:p)2.5 E F0(modi\214er)2.5 E
-(.)-.55 E(If an error ocurred in e)108 204 Q(xpansion, then)-.15 E F2
-(output)2.5 E F0(contains a descripti)2.5 E .3 -.15(ve e)-.25 H
-(rror message.).15 E F2 -.15(ch)108 228 S(ar *).15 E F1(get_history_e)
-2.5 E -.1(ve)-.15 G(nt).1 E F0(\()4.166 E F2(const c)A(har *string)-.15
-E 1.666(,i)-.1 G(nt *cinde)-1.666 E -.834(x, int)-.2 F(qc)2.5 E(har)-.15
-E F0(\))3.332 E .262(Returns the te)108 240 R .262(xt of the history e)
--.15 F -.15(ve)-.25 G .262(nt be).15 F .263(ginning at)-.15 F F2(string)
-2.763 E F0(+)2.763 E F2(*cinde)2.763 E(x)-.2 E F0(.)A F2(*cinde)5.263 E
-(x)-.2 E F0 .263(is modi\214ed to point to after the)2.763 F -2.15 -.25
-(ev e)108 252 T .71(nt speci\214er).25 F 5.71(.A)-.55 G 3.21(tf)-5.71 G
-.71(unction entry)-3.21 F(,)-.65 E F2(cinde)3.21 E(x)-.2 E F0 .709
+-.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E 2.5
+(truncated. Returns)108 84 R 2.5(0o)2.5 G 2.5(ns)-2.5 G(uccess, or)-2.5
+E/F1 10/Times-Bold@0 SF(err)2.5 E(no)-.15 E F0(on f)2.5 E(ailure.)-.1 E
+F1(History Expansion)87 112.8 Q F0(These functions implement history e)
+108 124.8 Q(xpansion.)-.15 E/F2 10/Times-Italic@0 SF(int)108 148.8 Q F1
+(history_expand)2.5 E F0(\()4.166 E F2 -.15(ch)C(ar *string).15 E 1.666
+(,c)-.1 G(har **output)-1.816 E F0(\))1.666 E(Expand)108 160.8 Q F2
+(string)2.5 E F0 2.5(,p)C(lacing the result into)-2.5 E F2(output)2.5 E
+F0 2.5(,ap)C(ointer to a string.)-2.5 E(Returns:)5 E(0)144 172.8 Q .566
+(If no e)180 172.8 R .566(xpansions took place \(or)-.15 F 3.065(,i)-.4
+G 3.065(ft)-3.065 G .565(he only change in the te)-3.065 F .565(xt w)
+-.15 F .565(as the remo)-.1 F -.25(va)-.15 G 3.065(lo).25 G 3.065(fe)
+-3.065 G(scape)-3.065 E(characters preceding the history e)180 184.8 Q
+(xpansion character\);)-.15 E(1)144 196.8 Q(if e)180 196.8 Q
+(xpansions did tak)-.15 E 2.5(ep)-.1 G(lace;)-2.5 E(-1)144 208.8 Q
+(if there w)180 208.8 Q(as an error in e)-.1 E(xpansion;)-.15 E(2)144
+220.8 Q(if the returned line should be displayed, b)180 220.8 Q
+(ut not e)-.2 E -.15(xe)-.15 G(cuted, as with the).15 E F1(:p)2.5 E F0
+(modi\214er)2.5 E(.)-.55 E(If an error ocurred in e)108 232.8 Q
+(xpansion, then)-.15 E F2(output)2.5 E F0(contains a descripti)2.5 E .3
+-.15(ve e)-.25 H(rror message.).15 E F2 -.15(ch)108 256.8 S(ar *).15 E
+F1(get_history_e)2.5 E -.1(ve)-.15 G(nt).1 E F0(\()4.166 E F2(const c)A
+(har *string)-.15 E 1.666(,i)-.1 G(nt *cinde)-1.666 E -.834(x, int)-.2 F
+(qc)2.5 E(har)-.15 E F0(\))3.332 E .262(Returns the te)108 268.8 R .262
+(xt of the history e)-.15 F -.15(ve)-.25 G .262(nt be).15 F .263
+(ginning at)-.15 F F2(string)2.763 E F0(+)2.763 E F2(*cinde)2.763 E(x)
+-.2 E F0(.)A F2(*cinde)5.263 E(x)-.2 E F0 .263
+(is modi\214ed to point to after the)2.763 F -2.15 -.25(ev e)108 280.8 T
+.71(nt speci\214er).25 F 5.71(.A)-.55 G 3.21(tf)-5.71 G .71
+(unction entry)-3.21 F(,)-.65 E F2(cinde)3.21 E(x)-.2 E F0 .709
 (points to the inde)3.21 F 3.209(xi)-.15 G(nto)-3.209 E F2(string)3.209
 E F0 .709(where the history e)3.209 F -.15(ve)-.25 G .709
-(nt speci\214ca-).15 F .527(tion be)108 264 R(gins.)-.15 E F2(qc)5.527 E
-(har)-.15 E F0 .527(is a character that is allo)3.027 F .527
+(nt speci\214ca-).15 F .527(tion be)108 292.8 R(gins.)-.15 E F2(qc)5.527
+E(har)-.15 E F0 .527(is a character that is allo)3.027 F .527
 (wed to end the e)-.25 F -.15(ve)-.25 G .528
 (nt speci\214cation in addition to the `).15 F(`normal')-.74 E(')-.74 E
-(terminating characters.)108 276 Q F2 -.15(ch)108 300 S(ar **).15 E F1
-(history_tok)2.5 E(enize)-.1 E F0(\()4.166 E F2(const c)A(har *string)
--.15 E F0(\))1.666 E .239(Return an array of tok)108 312 R .239
+(terminating characters.)108 304.8 Q F2 -.15(ch)108 328.8 S(ar **).15 E
+F1(history_tok)2.5 E(enize)-.1 E F0(\()4.166 E F2(const c)A(har *string)
+-.15 E F0(\))1.666 E .239(Return an array of tok)108 340.8 R .239
 (ens parsed out of)-.1 F F2(string)2.739 E F0 2.739(,m)C .238
 (uch as the shell might.)-2.739 F .238(The tok)5.238 F .238
-(ens are split on the charac-)-.1 F(ters in the)108 324 Q F1(history_w)
-2.5 E(ord_delimiters)-.1 E F0 -.25(va)2.5 G
+(ens are split on the charac-)-.1 F(ters in the)108 352.8 Q F1
+(history_w)2.5 E(ord_delimiters)-.1 E F0 -.25(va)2.5 G
 (riable, and shell quoting con).25 E -.15(ve)-.4 G(ntions are obe).15 E
-(yed.)-.15 E F2 -.15(ch)108 348 S(ar *).15 E F1(history_ar)2.5 E
+(yed.)-.15 E F2 -.15(ch)108 376.8 S(ar *).15 E F1(history_ar)2.5 E
 (g_extract)-.1 E F0(\()4.166 E F2(int \214r)A -.834(st, int)-.1 F -.834
 (last, const)2.5 F -.15(ch)2.5 G(ar *string).15 E F0(\))3.332 E .025
-(Extract a string se)108 360 R .025(gment consisting of the)-.15 F F2
+(Extract a string se)108 388.8 R .025(gment consisting of the)-.15 F F2
 <8c72>2.526 E(st)-.1 E F0(through)2.526 E F2(last)2.526 E F0(ar)2.526 E
 .026(guments present in)-.18 F F2(string)2.526 E F0 5.026(.A)C -.18(rg)
--5.026 G .026(uments are split).18 F(using)108 372 Q F1(history_tok)2.5
-E(enize\(\))-.1 E F0(.)A F1(History V)87 400.8 Q(ariables)-.92 E F0
-(This section describes the e)108 412.8 Q(xternally-visible v)-.15 E
+-5.026 G .026(uments are split).18 F(using)108 400.8 Q F1(history_tok)
+2.5 E(enize\(\))-.1 E F0(.)A F1(History V)87 429.6 Q(ariables)-.92 E F0
+(This section describes the e)108 441.6 Q(xternally-visible v)-.15 E
 (ariables e)-.25 E(xported by the GNU History Library)-.15 E(.)-.65 E F2
-(int)108 436.8 Q F1(history_base)2.5 E F0(The logical of)108 448.8 Q
-(fset of the \214rst entry in the history list.)-.25 E F2(int)108 472.8
+(int)108 465.6 Q F1(history_base)2.5 E F0(The logical of)108 477.6 Q
+(fset of the \214rst entry in the history list.)-.25 E F2(int)108 501.6
 Q F1(history_length)2.5 E F0
-(The number of entries currently stored in the history list.)108 484.8 Q
-F2(int)108 508.8 Q F1(history_max_entries)2.5 E F0
-(The maximum number of history entries.)108 520.8 Q
+(The number of entries currently stored in the history list.)108 513.6 Q
+F2(int)108 537.6 Q F1(history_max_entries)2.5 E F0
+(The maximum number of history entries.)108 549.6 Q
 (This must be changed using)5 E F1(sti\215e_history\(\))2.5 E F0(.)A F2
-(int)108 544.8 Q F1(history_wite_timestamps)2.5 E F0 1.468
+(int)108 573.6 Q F1(history_wite_timestamps)2.5 E F0 1.468
 (If non-zero, timestamps are written to the history \214le, so the)108
-556.8 R 3.968(yc)-.15 G 1.468(an be preserv)-3.968 F 1.468
-(ed between sessions.)-.15 F(The)6.468 E(def)108 568.8 Q .438(ault v)-.1
+585.6 R 3.968(yc)-.15 G 1.468(an be preserv)-3.968 F 1.468
+(ed between sessions.)-.15 F(The)6.468 E(def)108 597.6 Q .438(ault v)-.1
 F .439(alue is 0, meaning that timestamps are not sa)-.25 F -.15(ve)-.2
 G 2.939(d. The).15 F .439(current timestamp format uses the v)2.939 F
-.439(alue of)-.25 F F2(history_comment_c)108 580.8 Q(har)-.15 E F0 .051
+.439(alue of)-.25 F F2(history_comment_c)108 609.6 Q(har)-.15 E F0 .051
 (to delimit timestamp entries in the history \214le.)2.552 F .051
 (If that v)5.051 F .051(ariable does not ha)-.25 F .351 -.15(ve a v)-.2
-H(alue)-.1 E(\(the def)108 592.8 Q
-(ault\), timestamps will not be written.)-.1 E F2 -.15(ch)108 616.8 S
+H(alue)-.1 E(\(the def)108 621.6 Q
+(ault\), timestamps will not be written.)-.1 E F2 -.15(ch)108 645.6 S
 (ar).15 E F1(history_expansion_char)2.5 E F0
-(The character that introduces a history e)108 628.8 Q -.15(ve)-.25 G
+(The character that introduces a history e)108 657.6 Q -.15(ve)-.25 G
 2.5(nt. The).15 F(def)2.5 E(ault is)-.1 E F1(!)2.5 E F0 5(.S)C
 (etting this to 0 inhibits history e)-5 E(xpansion.)-.15 E F2 -.15(ch)
-108 652.8 S(ar).15 E F1(history_subst_char)2.5 E F0
-(The character that in)108 664.8 Q -.2(vo)-.4 G -.1(ke).2 G 2.5(sw).1 G
+108 681.6 S(ar).15 E F1(history_subst_char)2.5 E F0
+(The character that in)108 693.6 Q -.2(vo)-.4 G -.1(ke).2 G 2.5(sw).1 G
 (ord substitution if found at the start of a line.)-2.6 E(The def)5 E
-(ault is)-.1 E F1(^)2.5 E F0(.)A F2 -.15(ch)108 688.8 S(ar).15 E F1
-(history_comment_char)2.5 E F0 .116(During tok)108 700.8 R .117
+(ault is)-.1 E F1(^)2.5 E F0(.)A F2 -.15(ch)108 717.6 S(ar).15 E F1
+(history_comment_char)2.5 E F0 1.392(During tok)108 729.6 R 1.392
 (enization, if this character is seen as the \214rst character of a w)
--.1 F .117(ord, then it and all subsequent char)-.1 F(-)-.2 E .277
-(acters up to a ne)108 712.8 R .276
-(wline are ignored, suppressing history e)-.25 F .276
-(xpansion for the remainder of the line.)-.15 F .276(This is dis-)5.276
-F(abled by def)108 724.8 Q(ault.)-.1 E(GNU History 6.3)72 768 Q
-(2015 May 24)138.175 E(6)202.335 E 0 Cg EP
+-.1 F 1.393(ord, then it and all subsequent)-.1 F(GNU History 6.3)72 768
+Q(2017 October 8)133.735 E(6)197.895 E 0 Cg EP
 %%Page: 7 7
 %%BeginPageSetup
 BP
 %%EndPageSetup
 /F0 10/Times-Roman@0 SF(HIST)72 48 Q(OR)-.18 E 124.845(Y\(3\) Library)
--.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E/F1
-10/Times-Italic@0 SF -.15(ch)108 84 S(ar *).15 E/F2 10/Times-Bold@0 SF
-(history_w)2.5 E(ord_delimiters)-.1 E F0
-(The characters that separate tok)108 96 Q(ens for)-.1 E F2(history_tok)
-2.5 E(enize\(\))-.1 E F0 5(.T)C(he def)-5 E(ault v)-.1 E(alue is)-.25 E
-F2 2.5("\\)2.5 G(t\\n\(\)<>;&|")-2.5 E F0(.)A F1 -.15(ch)108 120 S(ar *)
-.15 E F2(history_no_expand_chars)2.5 E F0 2.054
-(The list of characters which inhibit history e)108 132 R 2.054
+-.65 F(Functions Manual)2.5 E(HIST)127.345 E(OR)-.18 E(Y\(3\))-.65 E .31
+(characters up to a ne)108 84 R .31
+(wline are ignored, suppressing history e)-.25 F .309
+(xpansion for the remainder of the line.)-.15 F .309(This is)5.309 F
+(disabled by def)108 96 Q(ault.)-.1 E/F1 10/Times-Italic@0 SF -.15(ch)
+108 120 S(ar *).15 E/F2 10/Times-Bold@0 SF(history_w)2.5 E
+(ord_delimiters)-.1 E F0(The characters that separate tok)108 132 Q
+(ens for)-.1 E F2(history_tok)2.5 E(enize\(\))-.1 E F0 5(.T)C(he def)-5
+E(ault v)-.1 E(alue is)-.25 E F2 2.5("\\)2.5 G(t\\n\(\)<>;&|")-2.5 E F0
+(.)A F1 -.15(ch)108 156 S(ar *).15 E F2(history_no_expand_chars)2.5 E F0
+2.054(The list of characters which inhibit history e)108 168 R 2.054
 (xpansion if found immediately follo)-.15 F(wing)-.25 E F2
-(history_expan-)4.555 E(sion_char)108 144 Q F0 5(.T)C(he def)-5 E
+(history_expan-)4.555 E(sion_char)108 180 Q F0 5(.T)C(he def)-5 E
 (ault is space, tab, ne)-.1 E(wline,)-.25 E F2(\\r)2.5 E F0 2.5(,a)C(nd)
--2.5 E F2(=)2.5 E F0(.)A F1 -.15(ch)108 168 S(ar *).15 E F2
+-2.5 E F2(=)2.5 E F0(.)A F1 -.15(ch)108 204 S(ar *).15 E F2
 (history_sear)2.5 E(ch_delimiter_chars)-.18 E F0 .401(The list of addit\
 ional characters which can delimit a history search string, in addition\
- to space, tab,)108 180 R F1(:)2.901 E F0(and)2.901 E F1(?)2.901 E F0
-(in the case of a substring search.)108 192 Q(The def)5 E(ault is empty)
--.1 E(.)-.65 E F1(int)108 216 Q F2(history_quotes_inhibit_expansion)2.5
-E F0 .86(If non-zero, double-quoted w)108 228 R .861
+ to space, tab,)108 216 R F1(:)2.901 E F0(and)2.901 E F1(?)2.901 E F0
+(in the case of a substring search.)108 228 Q(The def)5 E(ault is empty)
+-.1 E(.)-.65 E F1(int)108 252 Q F2(history_quotes_inhibit_expansion)2.5
+E F0 .86(If non-zero, double-quoted w)108 264 R .861
 (ords are not scanned for the history e)-.1 F .861
-(xpansion character or the history com-)-.15 F(ment character)108 240 Q
+(xpansion character or the history com-)-.15 F(ment character)108 276 Q
 5(.T)-.55 G(he def)-5 E(ault v)-.1 E(alue is 0.)-.25 E F1(rl_lineb)108
-264 Q(uf_func_t *)-.2 E F2(history_inhibit_expansion_function)2.5 E F0
-.348(This should be set to the address of a function that tak)108 276 R
+300 Q(uf_func_t *)-.2 E F2(history_inhibit_expansion_function)2.5 E F0
+.348(This should be set to the address of a function that tak)108 312 R
 .348(es tw)-.1 F 2.848(oa)-.1 G -.18(rg)-2.848 G .347(uments: a).18 F F2
 .347(char *)2.847 F F0(\()2.847 E F1(string)A F0 2.847(\)a)C .347(nd an)
 -2.847 F F2(int)2.847 E F0(inde)2.847 E(x)-.15 E .227
-(into that string \()108 288 R F1(i)A F0 2.727(\). It)B .227
+(into that string \()108 324 R F1(i)A F0 2.727(\). It)B .227
 (should return a non-zero v)2.727 F .227(alue if the history e)-.25 F
 .227(xpansion starting at)-.15 F F1(string[i])2.728 E F0 .228
-(should not)2.728 F .019(be performed; zero if the e)108 300 R .019
+(should not)2.728 F .019(be performed; zero if the e)108 336 R .019
 (xpansion should be done.)-.15 F .019
 (It is intended for use by applications lik)5.019 F(e)-.1 E F2(bash)
-2.519 E F0 .018(that use)2.519 F(the history e)108 312 Q
+2.519 E F0 .018(that use)2.519 F(the history e)108 348 Q
 (xpansion character for additional purposes.)-.15 E(By def)5 E
 (ault, this v)-.1 E(ariable is set to)-.25 E F2(NULL)2.5 E F0(.)A/F3
-10.95/Times-Bold@0 SF(FILES)72 328.8 Q F1(~/.history)109.666 340.8 Q F0
-(Def)144 352.8 Q(ault \214lename for reading and writing sa)-.1 E -.15
-(ve)-.2 G 2.5(dh).15 G(istory)-2.5 E F3(SEE ALSO)72 369.6 Q F1
-(The Gnu Readline Libr)108 381.6 Q(ary)-.15 E F0 2.5(,B)C(rian F)-2.5 E
-(ox and Chet Rame)-.15 E(y)-.15 E F1(The Gnu History Libr)108 393.6 Q
+10.95/Times-Bold@0 SF(FILES)72 364.8 Q F1(~/.history)109.666 376.8 Q F0
+(Def)144 388.8 Q(ault \214lename for reading and writing sa)-.1 E -.15
+(ve)-.2 G 2.5(dh).15 G(istory)-2.5 E F3(SEE ALSO)72 405.6 Q F1
+(The Gnu Readline Libr)108 417.6 Q(ary)-.15 E F0 2.5(,B)C(rian F)-2.5 E
+(ox and Chet Rame)-.15 E(y)-.15 E F1(The Gnu History Libr)108 429.6 Q
 (ary)-.15 E F0 2.5(,B)C(rian F)-2.5 E(ox and Chet Rame)-.15 E(y)-.15 E
-F1(bash)108 405.6 Q F0(\(1\))A F1 -.37(re)108 417.6 S(adline).37 E F0
-(\(3\))A F3 -.548(AU)72 434.4 S(THORS).548 E F0(Brian F)108 446.4 Q
+F1(bash)108 441.6 Q F0(\(1\))A F1 -.37(re)108 453.6 S(adline).37 E F0
+(\(3\))A F3 -.548(AU)72 470.4 S(THORS).548 E F0(Brian F)108 482.4 Q
 (ox, Free Softw)-.15 E(are F)-.1 E(oundation)-.15 E(bfox@gnu.or)108
-458.4 Q(g)-.18 E(Chet Rame)108 475.2 Q 1.3 -.65(y, C)-.15 H(ase W).65 E
+494.4 Q(g)-.18 E(Chet Rame)108 511.2 Q 1.3 -.65(y, C)-.15 H(ase W).65 E
 (estern Reserv)-.8 E 2.5(eU)-.15 G(ni)-2.5 E -.15(ve)-.25 G(rsity).15 E
-(chet.rame)108 487.2 Q(y@case.edu)-.15 E F3 -.11(BU)72 504 S 2.738(GR)
-.11 G(EPOR)-2.738 E(TS)-.438 E F0 .16(If you \214nd a b)108 516 R .16
+(chet.rame)108 523.2 Q(y@case.edu)-.15 E F3 -.11(BU)72 540 S 2.738(GR)
+.11 G(EPOR)-2.738 E(TS)-.438 E F0 .16(If you \214nd a b)108 552 R .16
 (ug in the)-.2 F F2(history)2.66 E F0(library)2.66 E 2.66(,y)-.65 G .16
 (ou should report it.)-2.66 F .16(But \214rst, you should mak)5.16 F
-2.66(es)-.1 G .16(ure that it really is)-2.66 F 2.5(ab)108 528 S
+2.66(es)-.1 G .16(ure that it really is)-2.66 F 2.5(ab)108 564 S
 (ug, and that it appears in the latest v)-2.7 E(ersion of the)-.15 E F2
 (history)2.5 E F0(library that you ha)2.5 E -.15(ve)-.2 G(.).15 E .705
-(Once you ha)108 544.8 R 1.005 -.15(ve d)-.2 H .705(etermined that a b)
+(Once you ha)108 580.8 R 1.005 -.15(ve d)-.2 H .705(etermined that a b)
 .15 F .704(ug actually e)-.2 F .704(xists, mail a b)-.15 F .704
 (ug report to)-.2 F F1 -.2(bu)3.204 G(g\255r).2 E(eadline)-.37 E F0(@)A
 F1(gnu.or)A(g)-.37 E F0 5.704(.I)C 3.204(fy)-5.704 G(ou)-3.204 E(ha)108
-556.8 Q 1.809 -.15(ve a \214)-.2 H 1.509
+592.8 Q 1.809 -.15(ve a \214)-.2 H 1.509
 (x, you are welcome to mail that as well!).15 F 1.51
 (Suggestions and `philosophical' b)6.51 F 1.51(ug reports may be)-.2 F
-(mailed to)108 568.8 Q F1 -.2(bu)2.5 G(g-r).2 E(eadline)-.37 E F0(@)A F1
+(mailed to)108 604.8 Q F1 -.2(bu)2.5 G(g-r).2 E(eadline)-.37 E F0(@)A F1
 (gnu.or)A(g)-.37 E F0(or posted to the Usenet ne)2.5 E(wsgroup)-.25 E F2
-(gnu.bash.b)2.5 E(ug)-.2 E F0(.)A(Comments and b)108 585.6 Q
+(gnu.bash.b)2.5 E(ug)-.2 E F0(.)A(Comments and b)108 621.6 Q
 (ug reports concerning this manual page should be directed to)-.2 E F1
 -.15(ch)2.5 G(et.r).15 E(ame)-.15 E(y@case)-.3 E(.edu)-.15 E F0(.).25 E
-(GNU History 6.3)72 768 Q(2015 May 24)138.175 E(7)202.335 E 0 Cg EP
+(GNU History 6.3)72 768 Q(2017 October 8)133.735 E(7)197.895 E 0 Cg EP
 %%Trailer
 end
 %%EOF

@@ -245,169 +245,173 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               Controls whether readline begins with a set of key bindings sim-
               ilar to [4mEmacs[24m or [4mvi[24m.  [1mediting-mode [22mcan be set to either [1memacs [22mor
               [1mvi[22m.
+       [1memacs-mode-string (@)[0m
+              If the [4mshow-mode-in-prompt[24m variable is enabled, this  string  is
+              displayed immediately before the last line of the primary prompt
+              when emacs editing mode is active.  The value is expanded like a
+              key  binding,  so the standard set of meta- and control prefixes
+              and backslash escape sequences is available.  Use the \1 and  \2
+              escapes  to  begin and end sequences of non-printing characters,
+              which can be used to embed a terminal control sequence into  the
+              mode string.
        [1menable-bracketed-paste (Off)[0m
-              When set to [1mOn[22m, readline will configure the terminal  in  a  way
+              When  set  to  [1mOn[22m, readline will configure the terminal in a way
               that will enable it to insert each paste into the editing buffer
               as a single string of characters, instead of treating each char-
-              acter  as  if it had been read from the keyboard.  This can pre-
-              vent pasted characters from being interpreted  as  editing  com-
+              acter as if it had been read from the keyboard.  This  can  pre-
+              vent  pasted  characters  from being interpreted as editing com-
               mands.
        [1menable-keypad (Off)[0m
               When set to [1mOn[22m, readline will try to enable the application key-
-              pad when it is called.  Some systems need  this  to  enable  the
+              pad  when  it  is  called.  Some systems need this to enable the
               arrow keys.
        [1menable-meta-key (On)[0m
-              When  set  to  [1mOn[22m, readline will try to enable any meta modifier
-              key the terminal claims to support when it is called.   On  many
+              When set to [1mOn[22m, readline will try to enable  any  meta  modifier
+              key  the  terminal claims to support when it is called.  On many
               terminals, the meta key is used to send eight-bit characters.
        [1mexpand-tilde (Off)[0m
-              If  set  to  [1mOn[22m,  tilde  expansion  is  performed  when readline
+              If set  to  [1mOn[22m,  tilde  expansion  is  performed  when  readline
               attempts word completion.
        [1mhistory-preserve-point (Off)[0m
-              If set to [1mOn[22m, the history code attempts to place  point  at  the
-              same  location on each history line retrieved with [1mprevious-his-[0m
+              If  set  to  [1mOn[22m, the history code attempts to place point at the
+              same location on each history line retrieved with  [1mprevious-his-[0m
               [1mtory [22mor [1mnext-history[22m.
        [1mhistory-size (unset)[0m
-              Set the maximum number of history entries saved in  the  history
-              list.   If set to zero, any existing history entries are deleted
+              Set  the  maximum number of history entries saved in the history
+              list.  If set to zero, any existing history entries are  deleted
               and no new entries are saved.  If set to a value less than zero,
-              the  number  of history entries is not limited.  By default, the
+              the number of history entries is not limited.  By  default,  the
               number of history entries is not limited.  If an attempt is made
-              to  set  [4mhistory-size[24m to a non-numeric value, the maximum number
+              to set [4mhistory-size[24m to a non-numeric value, the  maximum  number
               of history entries will be set to 500.
        [1mhorizontal-scroll-mode (Off)[0m
-              When set to [1mOn[22m, makes readline use a single  line  for  display,
+              When  set  to  [1mOn[22m, makes readline use a single line for display,
               scrolling the input horizontally on a single screen line when it
-              becomes longer than the screen width rather than wrapping  to  a
+              becomes  longer  than the screen width rather than wrapping to a
               new line.
        [1minput-meta (Off)[0m
-              If  set to [1mOn[22m, readline will enable eight-bit input (that is, it
-              will not clear the eighth  bit  in  the  characters  it  reads),
+              If set to [1mOn[22m, readline will enable eight-bit input (that is,  it
+              will  not  clear  the  eighth  bit  in the characters it reads),
               regardless of what the terminal claims it can support.  The name
-              [1mmeta-flag [22mis a synonym for this variable.  The default  is  [4mOff[24m,
-              but  readline will set it to [4mOn[24m if the locale contains eight-bit
+              [1mmeta-flag  [22mis  a synonym for this variable.  The default is [4mOff[24m,
+              but readline will set it to [4mOn[24m if the locale contains  eight-bit
               characters.
        [1misearch-terminators (``C-[ C-J'')[0m
-              The string of characters that should  terminate  an  incremental
-              search  without  subsequently  executing the character as a com-
-              mand.  If this variable has not been given a value, the  charac-
+              The  string  of  characters that should terminate an incremental
+              search without subsequently executing the character  as  a  com-
+              mand.   If this variable has not been given a value, the charac-
               ters [4mESC[24m and [4mC-J[24m will terminate an incremental search.
        [1mkeymap (emacs)[0m
-              Set  the current readline keymap.  The set of legal keymap names
-              is [4memacs,[24m [4memacs-standard,[24m [4memacs-meta,[24m [4memacs-ctlx,[24m  [4mvi,[24m  [4mvi-move,[0m
-              [4mvi-command[24m,  and  [4mvi-insert[24m.   [4mvi[24m  is  equivalent to [4mvi-command[24m;
-              [4memacs[24m is equivalent to [4memacs-standard[24m.   The  default  value  is
-              [4memacs[24m.   The  value  of  [1mediting-mode  [22malso  affects the default
+              Set the current readline keymap.  The set of legal keymap  names
+              is  [4memacs,[24m  [4memacs-standard,[24m [4memacs-meta,[24m [4memacs-ctlx,[24m [4mvi,[24m [4mvi-move,[0m
+              [4mvi-command[24m, and [4mvi-insert[24m.   [4mvi[24m  is  equivalent  to  [4mvi-command[24m;
+              [4memacs[24m  is  equivalent  to  [4memacs-standard[24m.  The default value is
+              [4memacs[24m.  The value  of  [1mediting-mode  [22malso  affects  the  default
               keymap.
-       [1memacs-mode-string (@)[0m
-              This string is displayed immediately before the last line of the
-              primary  prompt when emacs editing mode is active.  The value is
-              expanded like a key binding, so the standard set  of  meta-  and
-              control  prefixes  and  backslash escape sequences is available.
-              Use the \1 and \2 escapes to begin and  end  sequences  of  non-
-              printing  characters, which can be used to embed a terminal con-
-              trol sequence into the mode string.
        [1mkeyseq-timeout (500)[0m
-              Specifies the duration [4mreadline[24m will wait for a  character  when
-              reading  an ambiguous key sequence (one that can form a complete
+              Specifies  the  duration [4mreadline[24m will wait for a character when
+              reading an ambiguous key sequence (one that can form a  complete
               key sequence using the input read so far, or can take additional
-              input  to  complete  a  longer  key  sequence).   If no input is
-              received within the timeout, [4mreadline[24m will use the  shorter  but
-              complete  key sequence.  The value is specified in milliseconds,
-              so a value of 1000 means that [4mreadline[24m will wait one second  for
-              additional  input.  If this variable is set to a value less than
-              or equal to zero, or to a non-numeric value, [4mreadline[24m will  wait
-              until  another  key  is  pressed to decide which key sequence to
+              input to complete a  longer  key  sequence).   If  no  input  is
+              received  within  the timeout, [4mreadline[24m will use the shorter but
+              complete key sequence.  The value is specified in  milliseconds,
+              so  a value of 1000 means that [4mreadline[24m will wait one second for
+              additional input.  If this variable is set to a value less  than
+              or  equal to zero, or to a non-numeric value, [4mreadline[24m will wait
+              until another key is pressed to decide  which  key  sequence  to
               complete.
        [1mmark-directories (On)[0m
               If set to [1mOn[22m, completed directory names have a slash appended.
        [1mmark-modified-lines (Off)[0m
-              If set to [1mOn[22m, history lines that have  been  modified  are  dis-
+              If  set  to  [1mOn[22m,  history lines that have been modified are dis-
               played with a preceding asterisk ([1m*[22m).
        [1mmark-symlinked-directories (Off)[0m
               If set to [1mOn[22m, completed names which are symbolic links to direc-
-              tories  have  a  slash  appended  (subject  to  the   value   of
+              tories   have   a  slash  appended  (subject  to  the  value  of
               [1mmark-directories[22m).
        [1mmatch-hidden-files (On)[0m
-              This  variable,  when  set to [1mOn[22m, causes readline to match files
-              whose names begin with a  `.'  (hidden  files)  when  performing
-              filename  completion.   If  set  to [1mOff[22m, the leading `.' must be
+              This variable, when set to [1mOn[22m, causes readline  to  match  files
+              whose  names  begin  with  a  `.' (hidden files) when performing
+              filename completion.  If set to [1mOff[22m, the  leading  `.'  must  be
               supplied by the user in the filename to be completed.
        [1mmenu-complete-display-prefix (Off)[0m
-              If set to [1mOn[22m, menu completion displays the common prefix of  the
+              If  set to [1mOn[22m, menu completion displays the common prefix of the
               list of possible completions (which may be empty) before cycling
               through the list.
        [1moutput-meta (Off)[0m
-              If set to [1mOn[22m, readline will display characters with  the  eighth
+              If  set  to [1mOn[22m, readline will display characters with the eighth
               bit set directly rather than as a meta-prefixed escape sequence.
               The default is [4mOff[24m, but readline will set it to [4mOn[24m if the locale
               contains eight-bit characters.
        [1mpage-completions (On)[0m
-              If  set to [1mOn[22m, readline uses an internal [4mmore[24m-like pager to dis-
+              If set to [1mOn[22m, readline uses an internal [4mmore[24m-like pager to  dis-
               play a screenful of possible completions at a time.
        [1mprint-completions-horizontally (Off)[0m
-              If set to [1mOn[22m, readline will  display  completions  with  matches
-              sorted  horizontally in alphabetical order, rather than down the
+              If  set  to  [1mOn[22m,  readline will display completions with matches
+              sorted horizontally in alphabetical order, rather than down  the
               screen.
        [1mrevert-all-at-newline (Off)[0m
-              If set to [1mOn[22m, readline will undo all changes  to  history  lines
+              If  set  to  [1mOn[22m, readline will undo all changes to history lines
               before returning when [1maccept-line [22mis executed.  By default, his-
-              tory lines may be modified  and  retain  individual  undo  lists
+              tory  lines  may  be  modified  and retain individual undo lists
               across calls to [1mreadline[22m.
        [1mshow-all-if-ambiguous (Off)[0m
-              This  alters  the  default behavior of the completion functions.
+              This alters the default behavior of  the  completion  functions.
               If set to [1mOn[22m, words which have more than one possible completion
-              cause  the  matches  to be listed immediately instead of ringing
+              cause the matches to be listed immediately  instead  of  ringing
               the bell.
        [1mshow-all-if-unmodified (Off)[0m
-              This alters the default behavior of the completion functions  in
+              This  alters the default behavior of the completion functions in
               a fashion similar to [1mshow-all-if-ambiguous[22m.  If set to [1mOn[22m, words
-              which have more than one possible completion without any  possi-
-              ble  partial  completion (the possible completions don't share a
-              common prefix)  cause  the  matches  to  be  listed  immediately
+              which  have more than one possible completion without any possi-
+              ble partial completion (the possible completions don't  share  a
+              common  prefix)  cause  the  matches  to  be  listed immediately
               instead of ringing the bell.
        [1mshow-mode-in-prompt (Off)[0m
-              If  set  to  [1mOn[22m,  add a character to the beginning of the prompt
-              indicating the editing mode: emacs, vi command, or vi insertion.
-              The mode strings are user-settable.
+              If set to [1mOn[22m, add a string to the beginning of the prompt  indi-
+              cating  the  editing  mode:  emacs, vi command, or vi insertion.
+              The mode strings are user-settable (e.g., [4memacs-mode-string[24m).
        [1mskip-completed-text (Off)[0m
-              If  set  to [1mOn[22m, this alters the default completion behavior when
-              inserting a single match into the line.  It's only  active  when
-              performing  completion  in  the  middle  of a word.  If enabled,
-              readline does not insert characters  from  the  completion  that
-              match  characters  after  point  in the word being completed, so
+              If set to [1mOn[22m, this alters the default completion  behavior  when
+              inserting  a  single match into the line.  It's only active when
+              performing completion in the middle  of  a  word.   If  enabled,
+              readline  does  not  insert  characters from the completion that
+              match characters after point in the  word  being  completed,  so
               portions of the word following the cursor are not duplicated.
        [1mvi-cmd-mode-string ((cmd))[0m
-              This string is displayed immediately before the last line of the
-              primary  prompt  when  vi  editing mode is active and in command
-              mode.  The value is expanded like a key binding, so the standard
-              set of meta- and control prefixes and backslash escape sequences
-              is available.  Use the \1  and  \2  escapes  to  begin  and  end
-              sequences of non-printing characters, which can be used to embed
-              a terminal control sequence into the mode string.
+              If  the  [4mshow-mode-in-prompt[24m variable is enabled, this string is
+              displayed immediately before the last line of the primary prompt
+              when  vi  editing mode is active and in command mode.  The value
+              is expanded like a key binding, so the standard set of meta- and
+              control  prefixes  and  backslash escape sequences is available.
+              Use the \1 and \2 escapes to begin and  end  sequences  of  non-
+              printing  characters, which can be used to embed a terminal con-
+              trol sequence into the mode string.
        [1mvi-ins-mode-string ((ins))[0m
-              This string is displayed immediately before the last line of the
-              primary  prompt  when vi editing mode is active and in insertion
-              mode.  The value is expanded like a key binding, so the standard
-              set of meta- and control prefixes and backslash escape sequences
-              is available.  Use the \1  and  \2  escapes  to  begin  and  end
-              sequences of non-printing characters, which can be used to embed
-              a terminal control sequence into the mode string.
+              If the [4mshow-mode-in-prompt[24m variable is enabled, this  string  is
+              displayed immediately before the last line of the primary prompt
+              when vi editing mode is active and in insertion mode.  The value
+              is expanded like a key binding, so the standard set of meta- and
+              control prefixes and backslash escape  sequences  is  available.
+              Use  the  \1  and  \2 escapes to begin and end sequences of non-
+              printing characters, which can be used to embed a terminal  con-
+              trol sequence into the mode string.
        [1mvisible-stats (Off)[0m
-              If set to [1mOn[22m, a character denoting a file's type as reported  by
-              [4mstat[24m(2)  is  appended to the filename when listing possible com-
+              If  set to [1mOn[22m, a character denoting a file's type as reported by
+              [4mstat[24m(2) is appended to the filename when listing  possible  com-
               pletions.
 
    [1mConditional Constructs[0m
-       Readline implements a facility similar in  spirit  to  the  conditional
-       compilation  features  of  the C preprocessor which allows key bindings
-       and variable settings to be performed as the result  of  tests.   There
+       Readline  implements  a  facility  similar in spirit to the conditional
+       compilation features of the C preprocessor which  allows  key  bindings
+       and  variable  settings  to be performed as the result of tests.  There
        are four parser directives used.
 
-       [1m$if    [22mThe  [1m$if [22mconstruct allows bindings to be made based on the edit-
-              ing mode, the terminal being  used,  or  the  application  using
-              readline.   The text of the test extends to the end of the line;
-              no characters are required to isolate it.
+       [1m$if    [22mThe [1m$if [22mconstruct allows bindings to be made based on the  edit-
+              ing  mode,  the  terminal  being  used, or the application using
+              readline.  The text of the test, after any comparison  operator,
+              extends to the end of the line; unless otherwise noted, no char-
+              acters are required to isolate it.
 
               [1mmode   [22mThe [1mmode= [22mform of the  [1m$if  [22mdirective  is  used  to  test
                      whether  readline  is  in  emacs or vi mode.  This may be
@@ -424,20 +428,42 @@ READLINE(3)                Library Functions Manual                READLINE(3)
                      This allows [4msun[24m  to  match  both  [4msun[24m  and  [4msun-cmd[24m,  for
                      instance.
 
+              [1mversion[0m
+                     The  [1mversion  [22mtest  may  be  used  to perform comparisons
+                     against specific readline versions.  The [1mversion  [22mexpands
+                     to  the  current readline version.  The set of comparison
+                     operators includes [1m=[22m, (and [1m==[22m), [1m!=[22m, [1m<=[22m,  [1m>=[22m,  [1m<[22m,  and  [1m>[22m.
+                     The  version  number  supplied  on  the right side of the
+                     operator consists of a major version number, an  optional
+                     decimal point, and an optional minor version (e.g., [1m7.1[22m).
+                     If the minor version is omitted, it is assumed to  be  [1m0[22m.
+                     The operator may be separated from the string [1mversion [22mand
+                     from the version number argument by whitespace.
+
               [1mapplication[0m
                      The [1mapplication [22mconstruct is used to include application-
                      specific  settings.   Each  program  using  the  readline
-                     library  sets the [4mapplication[24m [4mname[24m, and an initialization
+                     library sets the [4mapplication[24m [4mname[24m, and an  initialization
                      file can test for a particular value.  This could be used
-                     to  bind key sequences to functions useful for a specific
-                     program.  For instance, the following command adds a  key
-                     sequence  that  quotes  the  current  or previous word in
+                     to bind key sequences to functions useful for a  specific
+                     program.   For instance, the following command adds a key
+                     sequence that quotes the  current  or  previous  word  in
                      [1mbash[22m:
 
                      [1m$if [22mBash
                      # Quote the current or previous word
                      "\C-xq": "\eb\"\ef\""
                      [1m$endif[0m
+
+              [4mvariable[0m
+                     The [4mvariable[24m construct provides simple equality tests for
+                     readline variables and values.  The permitted  comparison
+                     operators  are  [4m=[24m, [4m==[24m, and [4m!=[24m.  The variable name must be
+                     separated from the comparison operator by whitespace; the
+                     operator  may  be  separated  from the value on the right
+                     hand side by whitespace.  Both string and  boolean  vari-
+                     ables  may  be  tested.  Boolean variables must be tested
+                     against the values [4mon[24m and [4moff[24m.
 
        [1m$endif [22mThis command, as seen in the previous example, terminates an [1m$if[0m
               command.
@@ -509,6 +535,18 @@ READLINE(3)                Library Functions Manual                READLINE(3)
        [1mbackward-word (M-b)[0m
               Move  back  to the start of the current or previous word.  Words
               are composed of alphanumeric characters (letters and digits).
+       [1mprevious-screen-line[0m
+              Attempt to move point to the same physical screen column on  the
+              previous  physical  screen  line. This will not have the desired
+              effect if the current Readline line does not take up  more  than
+              one  physical line or if point is not greater than the length of
+              the prompt plus the screen width.
+       [1mnext-screen-line[0m
+              Attempt to move point to the same physical screen column on  the
+              next physical screen line. This will not have the desired effect
+              if the current Readline line does not  take  up  more  than  one
+              physical  line  or if the length of the current Readline line is
+              not greater than the length of the prompt plus the screen width.
        [1mclear-screen (C-l)[0m
               Clear the screen leaving the current line  at  the  top  of  the
               screen.   With  an  argument,  refresh  the current line without
@@ -752,20 +790,22 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               and store the definition.
        [1mcall-last-kbd-macro (C-x e)[0m
               Re-execute  the last keyboard macro defined, by making the char-
-              acters in  the  macro  appear  as  if  typed  at  the  keyboard.
-              [1mprint-last-kbd-macro () [22mPrint the last keyboard macro defined in
-              a format suitable for the [4minputrc[24m file.
+              acters in the macro appear as if typed at the keyboard.
+       [1mprint-last-kbd-macro ()[0m
+              Print the last keyboard macro defined in a format  suitable  for
+              the [4minputrc[24m file.
 
    [1mMiscellaneous[0m
        [1mre-read-init-file (C-x C-r)[0m
-              Read in the contents of the [4minputrc[24m file,  and  incorporate  any
+              Read  in  the  contents of the [4minputrc[24m file, and incorporate any
               bindings or variable assignments found there.
        [1mabort (C-g)[0m
-              Abort  the  current editing command and ring the terminal's bell
+              Abort the current editing command and ring the  terminal's  bell
               (subject to the setting of [1mbell-style[22m).
-       [1mdo-uppercase-version (M-a, M-b, M-[4m[22mx[24m[1m, ...)[0m
-              If the metafied character [4mx[24m is lowercase, run the  command  that
-              is bound to the corresponding uppercase character.
+       [1mdo-lowercase-version (M-A, M-B, M-[4m[22mx[24m[1m, ...)[0m
+              If  the  metafied character [4mx[24m is uppercase, run the command that
+              is bound to the corresponding metafied lowercase character.  The
+              behavior is undefined if [4mx[24m is already lowercase.
        [1mprefix-meta (ESC)[0m
               Metafy the next character typed.  [1mESC f [22mis equivalent to [1mMeta-f[22m.
        [1mundo (C-_, C-x C-u)[0m
@@ -1076,4 +1116,4 @@ READLINE(3)                Library Functions Manual                READLINE(3)
 
 
 
-GNU Readline 7.0               2016 February 28                    READLINE(3)
+GNU Readline 7.0               2017 December 28                    READLINE(3)
