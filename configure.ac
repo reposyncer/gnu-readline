@@ -5,7 +5,7 @@ dnl report bugs to chet@po.cwru.edu
 dnl
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 1987-2016 Free Software Foundation, Inc.
+# Copyright (C) 1987-2018 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 7.0, version 2.83])
+AC_REVISION([for Readline 8.0, version 2.85])
 
-AC_INIT(readline, 7.0, bug-readline@gnu.org)
+AC_INIT(readline, 8.0, bug-readline@gnu.org)
 
 dnl make sure we are using a recent autoconf version
 AC_PREREQ(2.50)
@@ -32,7 +32,7 @@ AC_CONFIG_AUX_DIR(./support)
 AC_CONFIG_HEADERS(config.h)
 
 dnl update the value of RL_READLINE_VERSION in readline.h when this changes
-LIBVERSION=7.0
+LIBVERSION=8.0
 
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
@@ -51,10 +51,12 @@ dnl option parsing for optional features
 opt_multibyte=yes
 opt_static_libs=yes
 opt_shared_libs=yes
+opt_install_examples=yes
 
 AC_ARG_ENABLE(multibyte, AC_HELP_STRING([--enable-multibyte], [enable multibyte characters if OS supports them]), opt_multibyte=$enableval)
 AC_ARG_ENABLE(shared, AC_HELP_STRING([--enable-shared], [build shared libraries [[default=YES]]]), opt_shared_libs=$enableval)
 AC_ARG_ENABLE(static, AC_HELP_STRING([--enable-static], [build static libraries [[default=YES]]]), opt_static_libs=$enableval)
+AC_ARG_ENABLE(install-examples, AC_HELP_STRING([--disable-install-examples], [don't install examples [[default=install]]]), opt_install_examples=$enableval)
 
 if test $opt_multibyte = no; then
 AC_DEFINE(NO_MULTIBYTE_SUPPORT)
@@ -273,6 +275,11 @@ AC_SUBST(STATIC_TARGET)
 AC_SUBST(SHARED_TARGET)
 AC_SUBST(STATIC_INSTALL_TARGET)
 AC_SUBST(SHARED_INSTALL_TARGET)
+
+if test "$opt_install_examples" = "yes"; then
+	EXAMPLES_INSTALL_TARGET=install-examples
+fi
+AC_SUBST(EXAMPLES_INSTALL_TARGET)
 
 case "$build_os" in
 msdosdjgpp*)	BUILD_DIR=`pwd.exe` ;;	# to prevent //d/path/file

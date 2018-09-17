@@ -1,6 +1,6 @@
 /* histexpand.c -- history expansion. */
 
-/* Copyright (C) 1989-2017 Free Software Foundation, Inc.
+/* Copyright (C) 1989-2018 Free Software Foundation, Inc.
 
    This file contains the GNU History Library (History), a set of
    routines for managing the text of previously typed lines.
@@ -55,6 +55,8 @@
 
 #define slashify_in_quotes "\\`\"$"
 
+#define fielddelim(c)	(whitespace(c) || (c) == '\n')
+
 typedef int _hist_search_func_t PARAMS((const char *, int));
 
 static char error_pointer;
@@ -106,6 +108,8 @@ char *history_word_delimiters = HISTORY_WORD_DELIMITERS;
 /* If set, this points to a function that is called to verify that a
    particular history expansion should be performed. */
 rl_linebuf_func_t *history_inhibit_expansion_function;
+
+int history_quoting_state = 0;
 
 /* **************************************************************** */
 /*								    */
@@ -767,7 +771,7 @@ history_expand_internal (char *string, int start, int qc, int *end_index_ptr, ch
 		   the last time. */
 		if (subst_bywords && si > we)
 		  {
-		    for (; temp[si] && whitespace (temp[si]); si++)
+		    for (; temp[si] && fielddelim (temp[si]); si++)
 		      ;
 		    ws = si;
 		    we = history_tokenize_word (temp, si);
@@ -961,7 +965,22 @@ history_expand (char *hstring, char **output)
 
       /* `!' followed by one of the characters in history_no_expand_chars
 	 is NOT an expansion. */
-      for (i = dquote = squote = 0; string[i]; i++)
+      dquote = history_quoting_state == '"';
+      squote = history_quoting_state == '\'';
+
+      /* If the calling application tells us we are already reading a
+	 single-quoted string, consume the rest of the string right now
+	 and then go on. */
+      i = 0;
+      if (squote && history_quotes_inhibit_expansion)
+	{
+	  hist_string_extract_single_quoted (string, &i, 0);
+	  squote = 0;
+	  if (string[i])
+	    i++;
+	}
+
+      for ( ; string[i]; i++)
 	{
 #if defined (HANDLE_MULTIBYTE)
 	  if (MB_CUR_MAX > 1 && rl_byte_oriented == 0)
@@ -1049,7 +1068,29 @@ history_expand (char *hstring, char **output)
     }
 
   /* Extract and perform the substitution. */
-  for (passc = dquote = squote = i = j = 0; i < l; i++)
+  dquote = history_quoting_state == '"';
+  squote = history_quoting_state == '\'';
+
+  /* If the calling application tells us we are already reading a
+     single-quoted string, consume the rest of the string right now
+     and then go on. */
+  i = j = 0;
+  if (squote && history_quotes_inhibit_expansion)
+    {
+      int c;
+
+      hist_string_extract_single_quoted (string, &i, 0);
+      squote = 0;
+      for (c = 0; c < i; c++)
+	ADD_CHAR (string[c]);      
+      if (string[i])
+	{
+	  ADD_CHAR (string[i]);
+	  i++;
+	}
+    }
+
+  for (passc = 0; i < l; i++)
     {
       int qc, tchar = string[i];
 
@@ -1407,7 +1448,7 @@ history_tokenize_word (const char *string, int ind)
   i = ind;
   delimiter = nestdelim = 0;
 
-  if (member (string[i], "()\n"))
+  if (member (string[i], "()\n"))	/* XXX - included \n, but why? been here forever */
     {
       i++;
       return i;
@@ -1429,11 +1470,11 @@ history_tokenize_word (const char *string, int ind)
 	}
     }
 
-  if (member (string[i], "<>;&|$"))
+  if (member (string[i], "<>;&|"))
     {
       int peek = string[i + 1];
 
-      if (peek == string[i] && peek != '$')
+      if (peek == string[i])
 	{
 	  if (peek == '<' && string[i + 2] == '-')
 	    i++;
@@ -1456,9 +1497,8 @@ history_tokenize_word (const char *string, int ind)
 	  i += 2;
 	  return i;
 	}
-      /* XXX - separated out for later -- bash-4.2 */
-      else if ((peek == '(' && (string[i] == '>' || string[i] == '<')) || /* ) */
-	       (peek == '(' && string[i] == '$')) /*)*/
+      /* XXX - process substitution -- separated out for later -- bash-4.2 */
+      else if (peek == '(' && (string[i] == '>' || string[i] == '<')) /*)*/
 	{
 	  i += 2;
 	  delimopen = '(';
@@ -1466,34 +1506,9 @@ history_tokenize_word (const char *string, int ind)
 	  nestdelim = 1;
 	  goto get_word;
 	}
-#if 0
-      else if (peek == '\'' && string[i] == '$')
-        {
-	  i += 2;	/* XXX */
-	  return i;
-        }
-#endif
 
-      if (string[i] != '$')
-	{
-	  i++;
-	  return i;
-	}
-    }
-
-  /* same code also used for $(...)/<(...)/>(...) above */
-  if (member (string[i], "!@?+*"))
-    {
-      int peek = string[i + 1];
-
-      if (peek == '(')		/*)*/
-	{
-	  /* Shell extended globbing patterns */
-	  i += 2;
-	  delimopen = '(';
-	  delimiter = ')';	/* XXX - not perfect */
-	  nestdelim = 1;
-	}
+      i++;
+      return i;
     }
 
 get_word:
@@ -1538,6 +1553,16 @@ get_word:
 	  continue;
 	}
 
+      /* Command and process substitution; shell extended globbing patterns */
+      if (nestdelim == 0 && delimiter == 0 && member (string[i], "<>$!@?+*") && string[i+1] == '(') /*)*/
+	{
+	  i += 2;
+	  delimopen = '(';
+	  delimiter = ')';
+	  nestdelim = 1;
+	  continue;
+	}
+      
       if (delimiter == 0 && (member (string[i], history_word_delimiters)))
 	break;
 
@@ -1581,7 +1606,7 @@ history_tokenize_internal (const char *string, int wind, int *indp)
   for (i = result_index = size = 0, result = (char **)NULL; string[i]; )
     {
       /* Skip leading whitespace. */
-      for (; string[i] && whitespace (string[i]); i++)
+      for (; string[i] && fielddelim (string[i]); i++)
 	;
       if (string[i] == 0 || string[i] == history_comment_char)
 	return (result);

@@ -790,19 +790,20 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               and store the definition.
        [1mcall-last-kbd-macro (C-x e)[0m
               Re-execute  the last keyboard macro defined, by making the char-
-              acters in  the  macro  appear  as  if  typed  at  the  keyboard.
-              [1mprint-last-kbd-macro () [22mPrint the last keyboard macro defined in
-              a format suitable for the [4minputrc[24m file.
+              acters in the macro appear as if typed at the keyboard.
+       [1mprint-last-kbd-macro ()[0m
+              Print the last keyboard macro defined in a format  suitable  for
+              the [4minputrc[24m file.
 
    [1mMiscellaneous[0m
        [1mre-read-init-file (C-x C-r)[0m
-              Read in the contents of the [4minputrc[24m file,  and  incorporate  any
+              Read  in  the  contents of the [4minputrc[24m file, and incorporate any
               bindings or variable assignments found there.
        [1mabort (C-g)[0m
-              Abort  the  current editing command and ring the terminal's bell
+              Abort the current editing command and ring the  terminal's  bell
               (subject to the setting of [1mbell-style[22m).
        [1mdo-lowercase-version (M-A, M-B, M-[4m[22mx[24m[1m, ...)[0m
-              If the metafied character [4mx[24m is uppercase, run the  command  that
+              If  the  metafied character [4mx[24m is uppercase, run the command that
               is bound to the corresponding metafied lowercase character.  The
               behavior is undefined if [4mx[24m is already lowercase.
        [1mprefix-meta (ESC)[0m
@@ -810,80 +811,80 @@ READLINE(3)                Library Functions Manual                READLINE(3)
        [1mundo (C-_, C-x C-u)[0m
               Incremental undo, separately remembered for each line.
        [1mrevert-line (M-r)[0m
-              Undo all changes made to this line.  This is like executing  the
-              [1mundo  [22mcommand  enough  times  to  return the line to its initial
+              Undo  all changes made to this line.  This is like executing the
+              [1mundo [22mcommand enough times to return  the  line  to  its  initial
               state.
        [1mtilde-expand (M-&)[0m
               Perform tilde expansion on the current word.
        [1mset-mark (C-@, M-<space>)[0m
-              Set the mark to the point.  If a numeric argument  is  supplied,
+              Set  the  mark to the point.  If a numeric argument is supplied,
               the mark is set to that position.
        [1mexchange-point-and-mark (C-x C-x)[0m
-              Swap  the  point  with the mark.  The current cursor position is
-              set to the saved position, and the old cursor position is  saved
+              Swap the point with the mark.  The current  cursor  position  is
+              set  to the saved position, and the old cursor position is saved
               as the mark.
        [1mcharacter-search (C-])[0m
               A character is read and point is moved to the next occurrence of
-              that character.  A negative count searches for  previous  occur-
+              that  character.   A negative count searches for previous occur-
               rences.
        [1mcharacter-search-backward (M-C-])[0m
-              A  character  is  read and point is moved to the previous occur-
-              rence of that character.  A negative count searches  for  subse-
+              A character is read and point is moved to  the  previous  occur-
+              rence  of  that character.  A negative count searches for subse-
               quent occurrences.
        [1mskip-csi-sequence[0m
-              Read  enough  characters to consume a multi-key sequence such as
-              those defined for keys like Home and End.  Such sequences  begin
+              Read enough characters to consume a multi-key sequence  such  as
+              those  defined for keys like Home and End.  Such sequences begin
               with a Control Sequence Indicator (CSI), usually ESC-[.  If this
-              sequence is bound to "\[", keys producing  such  sequences  will
-              have  no  effect  unless explicitly bound to a readline command,
-              instead of inserting stray characters into the  editing  buffer.
+              sequence  is  bound  to "\[", keys producing such sequences will
+              have no effect unless explicitly bound to  a  readline  command,
+              instead  of  inserting stray characters into the editing buffer.
               This is unbound by default, but usually bound to ESC-[.
        [1minsert-comment (M-#)[0m
-              Without  a  numeric  argument,  the  value  of the readline [1mcom-[0m
-              [1mment-begin [22mvariable is inserted at the beginning of the  current
+              Without a numeric argument,  the  value  of  the  readline  [1mcom-[0m
+              [1mment-begin  [22mvariable is inserted at the beginning of the current
               line.  If a numeric argument is supplied, this command acts as a
-              toggle: if the characters at the beginning of the  line  do  not
-              match  the value of [1mcomment-begin[22m, the value is inserted, other-
+              toggle:  if  the  characters at the beginning of the line do not
+              match the value of [1mcomment-begin[22m, the value is inserted,  other-
               wise the characters in [1mcomment-begin [22mare deleted from the begin-
-              ning  of the line.  In either case, the line is accepted as if a
-              newline had been typed.   The  default  value  of  [1mcomment-begin[0m
-              makes  the  current line a shell comment.  If a numeric argument
-              causes the comment character to be removed,  the  line  will  be
+              ning of the line.  In either case, the line is accepted as if  a
+              newline  had  been  typed.   The  default value of [1mcomment-begin[0m
+              makes the current line a shell comment.  If a  numeric  argument
+              causes  the  comment  character  to be removed, the line will be
               executed by the shell.
        [1mdump-functions[0m
-              Print  all  of the functions and their key bindings to the read-
+              Print all of the functions and their key bindings to  the  read-
               line output stream.  If a numeric argument is supplied, the out-
-              put  is  formatted  in such a way that it can be made part of an
+              put is formatted in such a way that it can be made  part  of  an
               [4minputrc[24m file.
        [1mdump-variables[0m
-              Print all of the settable variables  and  their  values  to  the
-              readline  output stream.  If a numeric argument is supplied, the
+              Print  all  of  the  settable  variables and their values to the
+              readline output stream.  If a numeric argument is supplied,  the
               output is formatted in such a way that it can be made part of an
               [4minputrc[24m file.
        [1mdump-macros[0m
-              Print  all of the readline key sequences bound to macros and the
-              strings they output.  If a numeric  argument  is  supplied,  the
+              Print all of the readline key sequences bound to macros and  the
+              strings  they  output.   If  a numeric argument is supplied, the
               output is formatted in such a way that it can be made part of an
               [4minputrc[24m file.
        [1memacs-editing-mode (C-e)[0m
-              When in [1mvi [22mcommand mode, this causes a switch to  [1memacs  [22mediting
+              When  in  [1mvi [22mcommand mode, this causes a switch to [1memacs [22mediting
               mode.
        [1mvi-editing-mode (M-C-j)[0m
-              When  in  [1memacs [22mediting mode, this causes a switch to [1mvi [22mediting
+              When in [1memacs [22mediting mode, this causes a switch to  [1mvi  [22mediting
               mode.
 
 [1mDEFAULT KEY BINDINGS[0m
-       The following is a list of the default emacs and vi bindings.   Charac-
-       ters  with  the  eighth  bit  set are written as M-<character>, and are
+       The  following is a list of the default emacs and vi bindings.  Charac-
+       ters with the eighth bit set are  written  as  M-<character>,  and  are
        referred to as [4mmetafied[24m characters.  The printable ASCII characters not
-       mentioned  in  the  list  of  emacs  standard bindings are bound to the
-       [1mself-insert [22mfunction, which just inserts the given character  into  the
+       mentioned in the list of emacs  standard  bindings  are  bound  to  the
+       [1mself-insert  [22mfunction,  which just inserts the given character into the
        input line.  In vi insertion mode, all characters not specifically men-
        tioned are bound to [1mself-insert[22m.  Characters assigned to signal genera-
        tion by [4mstty[24m(1) or the terminal driver, such as C-Z or C-C, retain that
-       function.  Upper and lower case metafied characters are  bound  to  the
-       same  function in the emacs mode meta keymap.  The remaining characters
-       are unbound, which causes readline to ring the  bell  (subject  to  the
+       function.   Upper  and  lower case metafied characters are bound to the
+       same function in the emacs mode meta keymap.  The remaining  characters
+       are  unbound,  which  causes  readline to ring the bell (subject to the
        setting of the [1mbell-style [22mvariable).
 
    [1mEmacs Mode[0m
@@ -1097,14 +1098,14 @@ READLINE(3)                Library Functions Manual                READLINE(3)
        chet.ramey@case.edu
 
 [1mBUG REPORTS[0m
-       If  you  find  a bug in [1mreadline, [22myou should report it.  But first, you
-       should make sure that it really is a bug, and that it  appears  in  the
+       If you find a bug in [1mreadline, [22myou should report it.   But  first,  you
+       should  make  sure  that it really is a bug, and that it appears in the
        latest version of the [1mreadline [22mlibrary that you have.
 
-       Once  you have determined that a bug actually exists, mail a bug report
-       to [4mbug-readline[24m@[4mgnu.org[24m.  If you have a fix, you are  welcome  to  mail
-       that  as  well!   Suggestions  and  `philosophical'  bug reports may be
-       mailed to  [4mbug-readline[24m@[4mgnu.org[24m  or  posted  to  the  Usenet  newsgroup
+       Once you have determined that a bug actually exists, mail a bug  report
+       to  [4mbug-readline[24m@[4mgnu.org[24m.   If  you have a fix, you are welcome to mail
+       that as well!  Suggestions  and  `philosophical'  bug  reports  may  be
+       mailed  to  [4mbug-readline[24m@[4mgnu.org[24m  or  posted  to  the  Usenet newsgroup
        [1mgnu.bash.bug[22m.
 
        Comments and bug reports concerning this manual page should be directed

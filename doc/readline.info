@@ -2264,6 +2264,12 @@ associate a new function name with an arbitrary function.
      type of the object is returned in the 'int' variable it points to
      (one of 'ISFUNC', 'ISKMAP', or 'ISMACR').
 
+ -- Function: rl_command_func_t * rl_function_of_keyseq_len (const char
+          *keyseq, size_t len Keymap map, int *type)
+     Return the function invoked by KEYSEQ of length LEN in keymap MAP.
+     Equivalent to 'rl_function_of_keyseq' with the addition of the LEN
+     parameter.
+
  -- Function: char ** rl_invoking_keyseqs (rl_command_func_t *function)
      Return an array of strings representing the key sequences used to
      invoke FUNCTION in the current keymap.
@@ -4722,7 +4728,7 @@ Function and Variable Index
                                                               (line  26)
 * rl_add_defun:                          Function Naming.     (line  18)
 * rl_add_funmap_entry:                   Associating Function Names and Bindings.
-                                                              (line  45)
+                                                              (line  51)
 * rl_add_undo:                           Allowing Undoing.    (line  39)
 * rl_alphabetic:                         Utility Functions.   (line  38)
 * rl_already_prompted:                   Readline Variables.  (line  63)
@@ -4863,11 +4869,13 @@ Function and Variable Index
                                                               (line 113)
 * rl_free_undo_list:                     Allowing Undoing.    (line  44)
 * rl_function_dumper:                    Associating Function Names and Bindings.
-                                                              (line  29)
+                                                              (line  35)
 * rl_function_of_keyseq:                 Associating Function Names and Bindings.
                                                               (line  13)
+* rl_function_of_keyseq_len:             Associating Function Names and Bindings.
+                                                              (line  20)
 * rl_funmap_names:                       Associating Function Names and Bindings.
-                                                              (line  39)
+                                                              (line  45)
 * rl_generic_bind:                       Binding Keys.        (line  87)
 * rl_getc:                               Character Input.     (line  14)
 * rl_getc_function:                      Readline Variables.  (line 128)
@@ -4892,16 +4900,16 @@ Function and Variable Index
 * rl_insert_text:                        Modifying Text.      (line   6)
 * rl_instream:                           Readline Variables.  (line  96)
 * rl_invoking_keyseqs:                   Associating Function Names and Bindings.
-                                                              (line  20)
+                                                              (line  26)
 * rl_invoking_keyseqs_in_map:            Associating Function Names and Bindings.
-                                                              (line  24)
+                                                              (line  30)
 * rl_key_sequence_length:                Readline Variables.  (line 199)
 * rl_kill_text:                          Modifying Text.      (line  18)
 * rl_last_func:                          Readline Variables.  (line 109)
 * rl_library_version:                    Readline Variables.  (line  72)
 * rl_line_buffer:                        Readline Variables.  (line   8)
 * rl_list_funmap_names:                  Associating Function Names and Bindings.
-                                                              (line  35)
+                                                              (line  41)
 * rl_macro_bind:                         Miscellaneous Functions.
                                                               (line   6)
 * rl_macro_dumper:                       Miscellaneous Functions.
@@ -5070,24 +5078,24 @@ Node: Function Naming86357
 Node: Keymaps87619
 Node: Binding Keys89774
 Node: Associating Function Names and Bindings94322
-Node: Allowing Undoing96607
-Node: Redisplay99157
-Node: Modifying Text103181
-Node: Character Input104428
-Node: Terminal Management106326
-Node: Utility Functions108149
-Node: Miscellaneous Functions111477
-Node: Alternate Interface114066
-Node: A Readline Example116808
-Node: Alternate Interface Example118747
-Node: Readline Signal Handling122279
-Node: Custom Completers131328
-Node: How Completing Works132048
-Node: Completion Functions135355
-Node: Completion Variables138929
-Node: A Short Completion Example154573
-Node: GNU Free Documentation License167352
-Node: Concept Index192526
-Node: Function and Variable Index194047
+Node: Allowing Undoing96893
+Node: Redisplay99443
+Node: Modifying Text103467
+Node: Character Input104714
+Node: Terminal Management106612
+Node: Utility Functions108435
+Node: Miscellaneous Functions111763
+Node: Alternate Interface114352
+Node: A Readline Example117094
+Node: Alternate Interface Example119033
+Node: Readline Signal Handling122565
+Node: Custom Completers131614
+Node: How Completing Works132334
+Node: Completion Functions135641
+Node: Completion Variables139215
+Node: A Short Completion Example154859
+Node: GNU Free Documentation License167638
+Node: Concept Index192812
+Node: Function and Variable Index194333
 
 End Tag Table
