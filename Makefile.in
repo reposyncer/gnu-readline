@@ -1,6 +1,6 @@
 ## -*- text -*- ##
 # Master Makefile for the GNU readline library.
-# Copyright (C) 1994-2009 Free Software Foundation, Inc.
+# Copyright (C) 1994-2018 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -242,13 +242,13 @@ uninstall-headers:
 maybe-uninstall-headers: uninstall-headers
 
 install-pc: installdirs
-	$(INSTALL_DATA) $(BUILD_DIR)/readline.pc $(DESTDIR)$(pkgconfigdir)/readline.pc
+	-$(INSTALL_DATA) $(BUILD_DIR)/readline.pc $(DESTDIR)$(pkgconfigdir)/readline.pc
 
 uninstall-pc:
 	-test -n "$(pkgconfigdir)" && cd $(DESTDIR)$(pkgconfigdir) && \
 		${RM} readline.pc
 
-maybe-uinstall-pc: uninstall-pc
+maybe-uninstall-pc: uninstall-pc
 
 install-static: installdirs $(STATIC_LIBS) install-headers install-doc ${install_examples} install-pc
 	-$(MV) $(DESTDIR)$(libdir)/libreadline.a $(DESTDIR)$(libdir)/libreadline.old
@@ -261,7 +261,8 @@ install-static: installdirs $(STATIC_LIBS) install-headers install-doc ${install
 installdirs: $(srcdir)/support/mkinstalldirs
 	-$(SHELL) $(srcdir)/support/mkinstalldirs $(DESTDIR)$(includedir) \
 		$(DESTDIR)$(includedir)/readline $(DESTDIR)$(libdir) \
-		$(DESTDIR)$(infodir) $(DESTDIR)$(man3dir) $(DESTDIR)$(docdir)
+		$(DESTDIR)$(infodir) $(DESTDIR)$(man3dir) $(DESTDIR)$(docdir) \
+		$(DESTDIR)$(pkgconfigdir)
 
 uninstall: uninstall-headers uninstall-doc uninstall-examples uninstall-pc
 	-test -n "$(DESTDIR)$(libdir)" && cd $(DESTDIR)$(libdir) && \

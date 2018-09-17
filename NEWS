@@ -28,6 +28,14 @@ g. There is a simple variable comparison facility available for use within an
    either `on' or `off'; variable names are separated from the operator by
    whitespace.
 
+h. The history expansion library now understands command and process
+   substitution and extended globbing and allows them to appear anywhere in a
+   word.
+
+i. The history library has a new variable that allows applications to set the
+   initial quoting state, so quoting state can be inherited from a previous
+   line.
+
 -------------------------------------------------------------------------------
 This is a terse description of the new features added to readline-7.0 since
 the release of readline-6.3.

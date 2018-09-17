@@ -68,6 +68,24 @@ v. Fixed a problem with exiting bracketed paste mode on terminals that assume
 w. Fixed a bug that could cause a key binding command to refer to an
    uninitialized variable.
 
+x. Added more UTF-8-specific versions of multibyte functions, and optimized
+   existing functions if the current locale uses UTF-8 encoding.
+
+y. Fixed a problem with bracketed-paste inserting more than one character and
+   interacting with other readline functions.
+
+z. Fixed a bug that caused the history library to attempt to append a history
+   line to a non-existent history entry.
+
+aa. If using bracketed paste mode, output a newline after the \r that is the
+    last character of the mode disable string to avoid overwriting output.
+
+bb. Fixes to the vi-mode `b', `B', `w', `W', `e', and `E' commands to better
+    handle multibyte characters.
+
+cc. Fixed a redisplay problem that caused an extra newline to be generated on
+    accept-line when the line length is exactly the screenwidth.
+
 2.  New Features in Readline
 
 a. Non-incremental vi-mode search (`N', `n') can search for a shell pattern, as
@@ -94,6 +112,14 @@ g. There is a simple variable comparison facility available for use within an
    variables may be compared to a value; boolean variables must be compared to
    either `on' or `off'; variable names are separated from the operator by
    whitespace.
+
+h. The history expansion library now understands command and process
+   substitution and extended globbing and allows them to appear anywhere in a
+   word.
+
+i. The history library has a new variable that allows applications to set the
+   initial quoting state, so quoting state can be inherited from a previous
+   line.
 
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-7.0, and the
