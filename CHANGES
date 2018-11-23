@@ -86,6 +86,18 @@ bb. Fixes to the vi-mode `b', `B', `w', `W', `e', and `E' commands to better
 cc. Fixed a redisplay problem that caused an extra newline to be generated on
     accept-line when the line length is exactly the screenwidth.
 
+dd. Fixed a bug with adding multibyte characters to an incremental search
+    string.
+
+ee. Fixed a bug with redoing text insertions in vi mode.
+
+ff. Fixed a bug with pasting text into an incremental search string if bracketed
+    paste mode is enabled. ESC cannot be one of the incremental search
+    terminator characters for this to work.
+
+gg. Fixed a bug with anchored search patterns when performing searches in vi
+    mode.
+
 2.  New Features in Readline
 
 a. Non-incremental vi-mode search (`N', `n') can search for a shell pattern, as
@@ -120,6 +132,12 @@ h. The history expansion library now understands command and process
 i. The history library has a new variable that allows applications to set the
    initial quoting state, so quoting state can be inherited from a previous
    line.
+
+j. Readline now allows application-defined keymap names; there is a new public
+   function, rl_set_keymap_name(), to do that.
+
+k. The "Insert" keypad key, if available, now puts readline into overwrite
+   mode.
 
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-7.0, and the

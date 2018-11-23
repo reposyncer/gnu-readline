@@ -1,8 +1,8 @@
 This is history.info, produced by makeinfo version 6.5 from
 history.texi.
 
-This document describes the GNU History library (version 7.0, 28
-December 2017), a programming tool that provides a consistent user
+This document describes the GNU History library (version 8.0, 18
+September 2018), a programming tool that provides a consistent user
 interface for recalling lines of previously typed input.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -78,6 +78,14 @@ selected words.  The line is broken into words in the same fashion that
 Bash does, so that several words surrounded by quotes are considered one
 word.  History expansions are introduced by the appearance of the
 history expansion character, which is '!' by default.
+
+   History expansion implements shell-like quoting conventions: a
+backslash can be used to remove the special handling for the next
+character; single quotes enclose verbatim sequences of characters, and
+can be used to inhibit history expansion; and characters enclosed within
+double quotes may be subject to history expansion, since backslash can
+escape the history expansion character, but single quotes may not, since
+they are not treated specially within double quotes.
 
 * Menu:
 
@@ -602,7 +610,7 @@ These functions implement history expansion.
      Return an array of tokens parsed out of STRING, much as the shell
      might.  The tokens are split on the characters in the
      HISTORY_WORD_DELIMITERS variable, and shell quoting conventions are
-     obeyed.
+     obeyed as described below.
 
  -- Function: char * history_arg_extract (int first, int last, const
           char *string)
@@ -668,9 +676,24 @@ GNU History Library.
      space, tab, newline, carriage return, and '='.
 
  -- Variable: int history_quotes_inhibit_expansion
-     If non-zero, double-quoted words are not scanned for the history
-     expansion character or the history comment character.  The default
+     If non-zero, the history expansion code implements shell-like
+     quoting: single-quoted words are not scanned for the history
+     expansion character or the history comment character, and
+     double-quoted words may have history expansion performed, since
+     single quotes are not special within double quotes.  The default
      value is 0.
+
+ -- Variable: int history_quoting_state
+     An application may set this variable to indicate that the current
+     line being expanded is subject to existing quoting.  If set to ''',
+     the history expansion function will assume that the line is
+     single-quoted and inhibit expansion until it reads an unquoted
+     closing single quote; if set to '"', history expansion will assume
+     the line is double quoted until it reads an unquoted closing double
+     quote.  If set to zero, the default, the history expansion function
+     will assume the line is not quoted and treat quote characters
+     within the line as described above.  This is only effective if
+     HISTORY_QUOTES_INHIBIT_EXPANSION is set.
 
  -- Variable: rl_linebuf_func_t * history_inhibit_expansion_function
      This should be set to the address of a function that takes two
@@ -1308,7 +1331,7 @@ Appendix C Function and Variable Index
                                                                (line 14)
 * history_get_time:                      Information About the History List.
                                                                (line 29)
-* history_inhibit_expansion_function:    History Variables.    (line 62)
+* history_inhibit_expansion_function:    History Variables.    (line 77)
 * history_is_stifled:                    History List Management.
                                                                (line 50)
 * history_length:                        History Variables.    (line 12)
@@ -1317,6 +1340,7 @@ Appendix C Function and Variable Index
 * history_max_entries:                   History Variables.    (line 15)
 * history_no_expand_chars:               History Variables.    (line 52)
 * history_quotes_inhibit_expansion:      History Variables.    (line 57)
+* history_quoting_state:                 History Variables.    (line 65)
 * history_search:                        Searching the History List.
                                                                (line 12)
 * history_search_delimiter_chars:        History Variables.    (line 47)
@@ -1362,27 +1386,27 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top849
-Node: Using History Interactively1494
-Node: History Interaction2002
-Node: Event Designators3426
-Node: Word Designators4565
-Node: Modifiers6202
-Node: Programming with GNU History7425
-Node: Introduction to History8169
-Node: History Storage9859
-Node: History Functions10994
-Node: Initializing History and State Management11983
-Node: History List Management12795
-Node: Information About the History List15089
-Node: Moving Around the History List16703
-Node: Searching the History List17796
-Node: Managing the History File19721
-Node: History Expansion21541
-Node: History Variables23451
-Node: History Programming Example26521
-Node: GNU Free Documentation License29198
-Node: Concept Index54370
-Node: Function and Variable Index55075
+Node: Top850
+Node: Using History Interactively1495
+Node: History Interaction2003
+Node: Event Designators3901
+Node: Word Designators5040
+Node: Modifiers6677
+Node: Programming with GNU History7900
+Node: Introduction to History8644
+Node: History Storage10334
+Node: History Functions11469
+Node: Initializing History and State Management12458
+Node: History List Management13270
+Node: Information About the History List15564
+Node: Moving Around the History List17178
+Node: Searching the History List18271
+Node: Managing the History File20196
+Node: History Expansion22016
+Node: History Variables23945
+Node: History Programming Example27925
+Node: GNU Free Documentation License30602
+Node: Concept Index55774
+Node: Function and Variable Index56479
 
 End Tag Table

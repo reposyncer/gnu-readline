@@ -1,8 +1,9 @@
 This is readline.info, produced by makeinfo version 6.5 from rlman.texi.
 
-This manual describes the GNU Readline Library (version 7.0, 28 December
-2017), a library which aids in the consistency of user interface across
-discrete programs which provide a command line interface.
+This manual describes the GNU Readline Library (version 8.0, 18
+September 2018), a library which aids in the consistency of user
+interface across discrete programs which provide a command line
+interface.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -414,7 +415,7 @@ Variable Settings
           If set to 'on', and COMPLETION-IGNORE-CASE is enabled,
           Readline treats hyphens ('-') and underscores ('_') as
           equivalent when performing case-insensitive filename matching
-          and completion.
+          and completion.  The default value is 'off'.
 
      'completion-prefix-display-length'
           The length in characters of the common prefix of a list of
@@ -529,13 +530,13 @@ Variable Settings
 
      'keymap'
           Sets Readline's idea of the current keymap for key binding
-          commands.  Acceptable 'keymap' names are 'emacs',
+          commands.  Built-in 'keymap' names are 'emacs',
           'emacs-standard', 'emacs-meta', 'emacs-ctlx', 'vi', 'vi-move',
           'vi-command', and 'vi-insert'.  'vi' is equivalent to
           'vi-command' ('vi-move' is also a synonym); 'emacs' is
-          equivalent to 'emacs-standard'.  The default value is 'emacs'.
-          The value of the 'editing-mode' variable also affects the
-          default keymap.
+          equivalent to 'emacs-standard'.  Applications may add
+          additional names.  The default value is 'emacs'.  The value of
+          the 'editing-mode' variable also affects the default keymap.
 
      'keyseq-timeout'
           Specifies the duration Readline will wait for a character when
@@ -686,7 +687,7 @@ Key Bindings
                Meta-Rubout: backward-kill-word
                Control-o: "> output"
 
-          In the above example, 'C-u' is bound to the function
+          In the example above, 'C-u' is bound to the function
           'universal-argument', 'M-DEL' is bound to the function
           'backward-kill-word', and 'C-o' is bound to run the macro
           expressed on the right hand side (that is, to insert the text
@@ -1169,7 +1170,7 @@ File: readline.info,  Node: Commands For Text,  Next: Commands For Killing,  Pre
      assigned by default.  It allows Readline to insert the pasted text
      as a single unit without treating each character as if it had been
      read from the keyboard.  The characters are inserted as if each one
-     was bound to 'self-insert') instead of executing any editing
+     was bound to 'self-insert' instead of executing any editing
      commands.
 
 'transpose-chars (C-t)'
@@ -2140,6 +2141,18 @@ change which keymap is active.
      supplied in a 'set keymap' inputrc line (*note Readline Init
      File::).
 
+ -- Function: void rl_set_keymap (const char *name, Keymap keymap)
+     Set the name of KEYMAP.  This name will then be "registered" and
+     available for use in a 'set keymap' inputrc directive *note
+     Readline Init File::).  The NAME may not be one of Readline's
+     builtin names; you may not add a different name for one of
+     Readline's builtin keymaps.  Readline will make a copy of NAME.
+     You may replace the name associated with a given keymap by calling
+     this function two or more times with the same KEYMAP argument.  You
+     can associate a registered name with a new keymap by calling this
+     function two or more times with the same NAME argument.  There is
+     no way to remove a named keymap once the name has been registered.
+
 
 File: readline.info,  Node: Binding Keys,  Next: Associating Function Names and Bindings,  Prev: Keymaps,  Up: Readline Convenience Functions
 
@@ -2262,13 +2275,16 @@ associate a new function name with an arbitrary function.
      Return the function invoked by KEYSEQ in keymap MAP.  If MAP is
      'NULL', the current keymap is used.  If TYPE is not 'NULL', the
      type of the object is returned in the 'int' variable it points to
-     (one of 'ISFUNC', 'ISKMAP', or 'ISMACR').
+     (one of 'ISFUNC', 'ISKMAP', or 'ISMACR').  It takes a "translated"
+     key sequence and should not be used if the key sequence can include
+     NUL.
 
  -- Function: rl_command_func_t * rl_function_of_keyseq_len (const char
-          *keyseq, size_t len Keymap map, int *type)
+          *keyseq, size_t len, Keymap map, int *type)
      Return the function invoked by KEYSEQ of length LEN in keymap MAP.
      Equivalent to 'rl_function_of_keyseq' with the addition of the LEN
-     parameter.
+     parameter.  It takes a "translated" key sequence and should be used
+     if the key sequence can include NUL.
 
  -- Function: char ** rl_invoking_keyseqs (rl_command_func_t *function)
      Return an array of strings representing the key sequences used to
@@ -4728,7 +4744,7 @@ Function and Variable Index
                                                               (line  26)
 * rl_add_defun:                          Function Naming.     (line  18)
 * rl_add_funmap_entry:                   Associating Function Names and Bindings.
-                                                              (line  51)
+                                                              (line  54)
 * rl_add_undo:                           Allowing Undoing.    (line  39)
 * rl_alphabetic:                         Utility Functions.   (line  38)
 * rl_already_prompted:                   Readline Variables.  (line  63)
@@ -4869,13 +4885,13 @@ Function and Variable Index
                                                               (line 113)
 * rl_free_undo_list:                     Allowing Undoing.    (line  44)
 * rl_function_dumper:                    Associating Function Names and Bindings.
-                                                              (line  35)
+                                                              (line  38)
 * rl_function_of_keyseq:                 Associating Function Names and Bindings.
                                                               (line  13)
 * rl_function_of_keyseq_len:             Associating Function Names and Bindings.
-                                                              (line  20)
+                                                              (line  22)
 * rl_funmap_names:                       Associating Function Names and Bindings.
-                                                              (line  45)
+                                                              (line  48)
 * rl_generic_bind:                       Binding Keys.        (line  87)
 * rl_getc:                               Character Input.     (line  14)
 * rl_getc_function:                      Readline Variables.  (line 128)
@@ -4900,16 +4916,16 @@ Function and Variable Index
 * rl_insert_text:                        Modifying Text.      (line   6)
 * rl_instream:                           Readline Variables.  (line  96)
 * rl_invoking_keyseqs:                   Associating Function Names and Bindings.
-                                                              (line  26)
+                                                              (line  29)
 * rl_invoking_keyseqs_in_map:            Associating Function Names and Bindings.
-                                                              (line  30)
+                                                              (line  33)
 * rl_key_sequence_length:                Readline Variables.  (line 199)
 * rl_kill_text:                          Modifying Text.      (line  18)
 * rl_last_func:                          Readline Variables.  (line 109)
 * rl_library_version:                    Readline Variables.  (line  72)
 * rl_line_buffer:                        Readline Variables.  (line   8)
 * rl_list_funmap_names:                  Associating Function Names and Bindings.
-                                                              (line  41)
+                                                              (line  44)
 * rl_macro_bind:                         Miscellaneous Functions.
                                                               (line   6)
 * rl_macro_dumper:                       Miscellaneous Functions.
@@ -4964,6 +4980,7 @@ Function and Variable Index
 * rl_set_key:                            Binding Keys.        (line  71)
 * rl_set_keyboard_input_timeout:         Character Input.     (line  34)
 * rl_set_keymap:                         Keymaps.             (line  43)
+* rl_set_keymap <1>:                     Keymaps.             (line  56)
 * rl_set_paren_blink_timeout:            Miscellaneous Functions.
                                                               (line  36)
 * rl_set_prompt:                         Redisplay.           (line  80)
@@ -5044,58 +5061,58 @@ Function and Variable Index
 
 
 Tag Table:
-Node: Top865
-Node: Command Line Editing1590
-Node: Introduction and Notation2242
-Node: Readline Interaction3866
-Node: Readline Bare Essentials5058
-Node: Readline Movement Commands6842
-Node: Readline Killing Commands7803
-Node: Readline Arguments9722
-Node: Searching10767
-Node: Readline Init File12920
-Node: Readline Init File Syntax14074
-Node: Conditional Init Constructs34165
-Node: Sample Init File38362
-Node: Bindable Readline Commands41480
-Node: Commands For Moving42535
-Node: Commands For History44102
-Node: Commands For Text48367
-Node: Commands For Killing51810
-Node: Numeric Arguments53977
-Node: Commands For Completion55117
-Node: Keyboard Macros57086
-Node: Miscellaneous Commands57774
-Node: Readline vi Mode61696
-Node: Programming with GNU Readline63513
-Node: Basic Behavior64499
-Node: Custom Functions68182
-Node: Readline Typedefs69665
-Node: Function Writing71299
-Node: Readline Variables72613
-Node: Readline Convenience Functions85285
-Node: Function Naming86357
-Node: Keymaps87619
-Node: Binding Keys89774
-Node: Associating Function Names and Bindings94322
-Node: Allowing Undoing96893
-Node: Redisplay99443
-Node: Modifying Text103467
-Node: Character Input104714
-Node: Terminal Management106612
-Node: Utility Functions108435
-Node: Miscellaneous Functions111763
-Node: Alternate Interface114352
-Node: A Readline Example117094
-Node: Alternate Interface Example119033
-Node: Readline Signal Handling122565
-Node: Custom Completers131614
-Node: How Completing Works132334
-Node: Completion Functions135641
-Node: Completion Variables139215
-Node: A Short Completion Example154859
-Node: GNU Free Documentation License167638
-Node: Concept Index192812
-Node: Function and Variable Index194333
+Node: Top866
+Node: Command Line Editing1591
+Node: Introduction and Notation2243
+Node: Readline Interaction3867
+Node: Readline Bare Essentials5059
+Node: Readline Movement Commands6843
+Node: Readline Killing Commands7804
+Node: Readline Arguments9723
+Node: Searching10768
+Node: Readline Init File12921
+Node: Readline Init File Syntax14075
+Node: Conditional Init Constructs34234
+Node: Sample Init File38431
+Node: Bindable Readline Commands41549
+Node: Commands For Moving42604
+Node: Commands For History44171
+Node: Commands For Text48436
+Node: Commands For Killing51878
+Node: Numeric Arguments54045
+Node: Commands For Completion55185
+Node: Keyboard Macros57154
+Node: Miscellaneous Commands57842
+Node: Readline vi Mode61764
+Node: Programming with GNU Readline63581
+Node: Basic Behavior64567
+Node: Custom Functions68250
+Node: Readline Typedefs69733
+Node: Function Writing71367
+Node: Readline Variables72681
+Node: Readline Convenience Functions85353
+Node: Function Naming86425
+Node: Keymaps87687
+Node: Binding Keys90604
+Node: Associating Function Names and Bindings95152
+Node: Allowing Undoing97931
+Node: Redisplay100481
+Node: Modifying Text104505
+Node: Character Input105752
+Node: Terminal Management107650
+Node: Utility Functions109473
+Node: Miscellaneous Functions112801
+Node: Alternate Interface115390
+Node: A Readline Example118132
+Node: Alternate Interface Example120071
+Node: Readline Signal Handling123603
+Node: Custom Completers132652
+Node: How Completing Works133372
+Node: Completion Functions136679
+Node: Completion Variables140253
+Node: A Short Completion Example155897
+Node: GNU Free Documentation License168676
+Node: Concept Index193850
+Node: Function and Variable Index195371
 
 End Tag Table

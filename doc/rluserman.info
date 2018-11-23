@@ -2,9 +2,9 @@ This is rluserman.info, produced by makeinfo version 6.5 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 7.0, 28 December 2017), a library which aids in the consistency
-of user interface across discrete programs which provide a command line
-interface.
+(version 8.0, 18 September 2018), a library which aids in the
+consistency of user interface across discrete programs which provide a
+command line interface.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -412,7 +412,7 @@ Variable Settings
           If set to 'on', and COMPLETION-IGNORE-CASE is enabled,
           Readline treats hyphens ('-') and underscores ('_') as
           equivalent when performing case-insensitive filename matching
-          and completion.
+          and completion.  The default value is 'off'.
 
      'completion-prefix-display-length'
           The length in characters of the common prefix of a list of
@@ -527,13 +527,13 @@ Variable Settings
 
      'keymap'
           Sets Readline's idea of the current keymap for key binding
-          commands.  Acceptable 'keymap' names are 'emacs',
+          commands.  Built-in 'keymap' names are 'emacs',
           'emacs-standard', 'emacs-meta', 'emacs-ctlx', 'vi', 'vi-move',
           'vi-command', and 'vi-insert'.  'vi' is equivalent to
           'vi-command' ('vi-move' is also a synonym); 'emacs' is
-          equivalent to 'emacs-standard'.  The default value is 'emacs'.
-          The value of the 'editing-mode' variable also affects the
-          default keymap.
+          equivalent to 'emacs-standard'.  Applications may add
+          additional names.  The default value is 'emacs'.  The value of
+          the 'editing-mode' variable also affects the default keymap.
 
      'keyseq-timeout'
           Specifies the duration Readline will wait for a character when
@@ -684,7 +684,7 @@ Key Bindings
                Meta-Rubout: backward-kill-word
                Control-o: "> output"
 
-          In the above example, 'C-u' is bound to the function
+          In the example above, 'C-u' is bound to the function
           'universal-argument', 'M-DEL' is bound to the function
           'backward-kill-word', and 'C-o' is bound to run the macro
           expressed on the right hand side (that is, to insert the text
@@ -1167,7 +1167,7 @@ File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Pr
      assigned by default.  It allows Readline to insert the pasted text
      as a single unit without treating each character as if it had been
      read from the keyboard.  The characters are inserted as if each one
-     was bound to 'self-insert') instead of executing any editing
+     was bound to 'self-insert' instead of executing any editing
      commands.
 
 'transpose-chars (C-t)'
@@ -1964,29 +1964,29 @@ their use in free software.
 
 
 Tag Table:
-Node: Top908
-Node: Command Line Editing1430
-Node: Introduction and Notation2084
-Node: Readline Interaction3709
-Node: Readline Bare Essentials4902
-Node: Readline Movement Commands6687
-Node: Readline Killing Commands7649
-Node: Readline Arguments9569
-Node: Searching10615
-Node: Readline Init File12769
-Node: Readline Init File Syntax13924
-Node: Conditional Init Constructs34016
-Node: Sample Init File38214
-Node: Bindable Readline Commands41333
-Node: Commands For Moving42389
-Node: Commands For History43957
-Node: Commands For Text48223
-Node: Commands For Killing51667
-Node: Numeric Arguments53835
-Node: Commands For Completion54976
-Node: Keyboard Macros56946
-Node: Miscellaneous Commands57635
-Node: Readline vi Mode61558
-Node: GNU Free Documentation License62472
+Node: Top909
+Node: Command Line Editing1431
+Node: Introduction and Notation2085
+Node: Readline Interaction3710
+Node: Readline Bare Essentials4903
+Node: Readline Movement Commands6688
+Node: Readline Killing Commands7650
+Node: Readline Arguments9570
+Node: Searching10616
+Node: Readline Init File12770
+Node: Readline Init File Syntax13925
+Node: Conditional Init Constructs34085
+Node: Sample Init File38283
+Node: Bindable Readline Commands41402
+Node: Commands For Moving42458
+Node: Commands For History44026
+Node: Commands For Text48292
+Node: Commands For Killing51735
+Node: Numeric Arguments53903
+Node: Commands For Completion55044
+Node: Keyboard Macros57014
+Node: Miscellaneous Commands57703
+Node: Readline vi Mode61626
+Node: GNU Free Documentation License62540
 
 End Tag Table
