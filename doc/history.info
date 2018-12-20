@@ -1,8 +1,8 @@
 This is history.info, produced by makeinfo version 6.5 from
 history.texi.
 
-This document describes the GNU History library (version 8.0, 18
-September 2018), a programming tool that provides a consistent user
+This document describes the GNU History library (version 8.0, 30
+November 2018), a programming tool that provides a consistent user
 interface for recalling lines of previously typed input.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -1386,27 +1386,27 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top850
-Node: Using History Interactively1495
-Node: History Interaction2003
-Node: Event Designators3901
-Node: Word Designators5040
-Node: Modifiers6677
-Node: Programming with GNU History7900
-Node: Introduction to History8644
-Node: History Storage10334
-Node: History Functions11469
-Node: Initializing History and State Management12458
-Node: History List Management13270
-Node: Information About the History List15564
-Node: Moving Around the History List17178
-Node: Searching the History List18271
-Node: Managing the History File20196
-Node: History Expansion22016
-Node: History Variables23945
-Node: History Programming Example27925
-Node: GNU Free Documentation License30602
-Node: Concept Index55774
-Node: Function and Variable Index56479
+Node: Top849
+Node: Using History Interactively1494
+Node: History Interaction2002
+Node: Event Designators3900
+Node: Word Designators5039
+Node: Modifiers6676
+Node: Programming with GNU History7899
+Node: Introduction to History8643
+Node: History Storage10333
+Node: History Functions11468
+Node: Initializing History and State Management12457
+Node: History List Management13269
+Node: Information About the History List15563
+Node: Moving Around the History List17177
+Node: Searching the History List18270
+Node: Managing the History File20195
+Node: History Expansion22015
+Node: History Variables23944
+Node: History Programming Example27924
+Node: GNU Free Documentation License30601
+Node: Concept Index55773
+Node: Function and Variable Index56478
 
 End Tag Table

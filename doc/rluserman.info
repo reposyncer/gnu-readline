@@ -2,9 +2,9 @@ This is rluserman.info, produced by makeinfo version 6.5 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.0, 18 September 2018), a library which aids in the
-consistency of user interface across discrete programs which provide a
-command line interface.
+(version 8.0, 30 November 2018), a library which aids in the consistency
+of user interface across discrete programs which provide a command line
+interface.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -1964,29 +1964,29 @@ their use in free software.
 
 
 Tag Table:
-Node: Top909
-Node: Command Line Editing1431
-Node: Introduction and Notation2085
-Node: Readline Interaction3710
-Node: Readline Bare Essentials4903
-Node: Readline Movement Commands6688
-Node: Readline Killing Commands7650
-Node: Readline Arguments9570
-Node: Searching10616
-Node: Readline Init File12770
-Node: Readline Init File Syntax13925
-Node: Conditional Init Constructs34085
-Node: Sample Init File38283
-Node: Bindable Readline Commands41402
-Node: Commands For Moving42458
-Node: Commands For History44026
-Node: Commands For Text48292
-Node: Commands For Killing51735
-Node: Numeric Arguments53903
-Node: Commands For Completion55044
-Node: Keyboard Macros57014
-Node: Miscellaneous Commands57703
-Node: Readline vi Mode61626
-Node: GNU Free Documentation License62540
+Node: Top908
+Node: Command Line Editing1430
+Node: Introduction and Notation2084
+Node: Readline Interaction3709
+Node: Readline Bare Essentials4902
+Node: Readline Movement Commands6687
+Node: Readline Killing Commands7649
+Node: Readline Arguments9569
+Node: Searching10615
+Node: Readline Init File12769
+Node: Readline Init File Syntax13924
+Node: Conditional Init Constructs34084
+Node: Sample Init File38282
+Node: Bindable Readline Commands41401
+Node: Commands For Moving42457
+Node: Commands For History44025
+Node: Commands For Text48291
+Node: Commands For Killing51734
+Node: Numeric Arguments53902
+Node: Commands For Completion55043
+Node: Keyboard Macros57013
+Node: Miscellaneous Commands57702
+Node: Readline vi Mode61625
+Node: GNU Free Documentation License62539
 
 End Tag Table
