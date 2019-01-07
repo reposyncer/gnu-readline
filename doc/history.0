@@ -6,7 +6,7 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        history - GNU History Library
 
 [1mCOPYRIGHT[0m
-       The GNU History Library is Copyright (C) 1989-2014 by the Free Software
+       The GNU History Library is Copyright (C) 1989-2017 by the Free Software
        Foundation, Inc.
 
 [1mDESCRIPTION[0m
@@ -206,7 +206,9 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
 
        [4mvoid[24m [1madd_history [22m([4mconst[24m [4mchar[24m [4m*string[24m)
        Place [4mstring[24m at the end of the history list.  The associated data field
-       (if any) is set to [1mNULL[22m.
+       (if  any) is set to [1mNULL[22m.  If the maximum number of history entries has
+       been set using [1mstifle_history()[22m, and the new number of history  entries
+       would exceed that maximum, the oldest history entry is removed.
 
        [4mvoid[24m [1madd_history_time [22m([4mconst[24m [4mchar[24m [4m*string[24m)
        Change  the time stamp associated with the most recent history entry to
@@ -233,11 +235,12 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        Clear the history list by deleting all the entries.
 
        [4mvoid[24m [1mstifle_history [22m([4mint[24m [4mmax[24m)
-       Stifle the history list, remembering only the last [4mmax[24m entries.
+       Stifle the history list, remembering only the last  [4mmax[24m  entries.   The
+       history list will contain only [4mmax[24m entries at a time.
 
        [4mint[24m [1munstifle_history [22m([4mvoid[24m)
-       Stop stifling the history.  This  returns  the  previously-set  maximum
-       number  of  history  entries (as set by [1mstifle_history()[22m).  history was
+       Stop  stifling  the  history.   This returns the previously-set maximum
+       number of history entries (as set by  [1mstifle_history()[22m).   history  was
        stifled.  The value is positive if the history was stifled, negative if
        it wasn't.
 
@@ -246,25 +249,26 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
 
 
    [1mInformation About the History List[0m
-       These  functions  return  information  about the entire history list or
+       These functions return information about the  entire  history  list  or
        individual list entries.
 
        [4mHIST_ENTRY[24m [4m**[24m [1mhistory_list [22m([4mvoid[24m)
-       Return a [1mNULL [22mterminated array of [4mHIST_ENTRY[24m [4m*[24m  which  is  the  current
-       input  history.   Element  0 of this list is the beginning of time.  If
+       Return  a  [1mNULL  [22mterminated  array of [4mHIST_ENTRY[24m [4m*[24m which is the current
+       input history.  Element 0 of this list is the beginning  of  time.   If
        there is no history, return [1mNULL[22m.
 
        [4mint[24m [1mwhere_history [22m([4mvoid[24m)
        Returns the offset of the current history element.
 
        [4mHIST_ENTRY[24m [4m*[24m [1mcurrent_history [22m([4mvoid[24m)
-       Return the history entry at the  current  position,  as  determined  by
+       Return  the  history  entry  at  the current position, as determined by
        [1mwhere_history()[22m.  If there is no entry there, return a [1mNULL [22mpointer.
 
        [4mHIST_ENTRY[24m [4m*[24m [1mhistory_get [22m([4mint[24m [4moffset[24m)
-       Return  the  history  entry  at  position  [4moffset[24m,  starting  from [1mhis-[0m
-       [1mtory_base[22m.  If there is no entry there, or if [4moffset[24m  is  greater  than
-       the history length, return a [1mNULL [22mpointer.
+       Return the history entry at position [4moffset[24m.  The range of valid values
+       of  [4moffset[24m  starts  at [1mhistory_base [22mand ends at [1mhistory_length [22m- 1.  If
+       there is no entry there, or if  [4moffset[24m  is  outside  the  valid  range,
+       return a [1mNULL [22mpointer.
 
        [4mtime_t[24m [1mhistory_get_time [22m([4mHIST_ENTRY[24m [4m*[24m)
        Return  the  time stamp associated with the history entry passed as the
@@ -492,4 +496,4 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
 
 
 
-GNU History 6.3                   2015 May 24                       HISTORY(3)
+GNU History 6.3                 2017 October 8                      HISTORY(3)
