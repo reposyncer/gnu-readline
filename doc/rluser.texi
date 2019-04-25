@@ -350,6 +350,11 @@ file is taken from the value of the environment variable @env{INPUTRC}.  If
 that variable is unset, the default is @file{~/.inputrc}.  If that
 file does not exist or cannot be read, the ultimate default is
 @file{/etc/inputrc}.
+@ifset BashFeatures
+The @w{@code{bind}} builtin command can also be used to set Readline
+keybindings and variables.
+@xref{Bash Builtins}.
+@end ifset
 
 When a program which uses the Readline library starts up, the
 init file is read, and the key bindings are set.
@@ -1851,6 +1856,9 @@ If no compspec is found for the full pathname, an attempt is made to
 find a compspec for the portion following the final slash.
 If those searches do not result in a compspec, any compspec defined with
 the @option{-D} option to @code{complete} is used as the default.
+If there is no default compspec, Bash attempts alias expansion
+on the command word as a final resort, and attempts to find a compspec
+for the command word from any successful expansion 
 
 Once a compspec has been found, it is used to generate the list of
 matching words.
@@ -2041,7 +2049,7 @@ The @option{-E} option indicates that other supplied options and actions should
 apply to ``empty'' command completion; that is, completion attempted on a 
 blank line.
 The @option{-I} option indicates that other supplied options and actions should
-apply to completion on the inital non-assignment word on the line, or after a
+apply to completion on the initial non-assignment word on the line, or after a
 command delimiter such as @samp{;} or @samp{|}, which is usually command
 name completion.
 If multiple options are supplied, the @option{-D} option takes precedence
@@ -2252,7 +2260,7 @@ The @option{-E} option indicates that other supplied options should
 apply to ``empty'' command completion; that is, completion attempted on a 
 blank line.
 The @option{-I} option indicates that other supplied options should
-apply to completion on the inital non-assignment word on the line, or after a
+apply to completion on the initial non-assignment word on the line, or after a
 command delimiter such as @samp{;} or @samp{|}, which is usually command
 name completion.
 
@@ -2367,7 +2375,7 @@ character to the directory name, in case we want to append to it.
 The @option{-o bashdefault} option brings in the rest of the "Bash default"
 completions -- possible completion that Bash adds to the default Readline
 set.  These include things like command name completion, variable completion
-for words beginning with @samp{@{}, completions containing pathname
+for words beginning with @samp{$} or @samp{$@{}, completions containing pathname
 expansion patterns (@pxref{Filename Expansion}), and so on.
 
 Once installed using @code{complete}, @code{_comp_cd} will be called every
@@ -2377,7 +2385,7 @@ Many more examples -- an extensive collection of completions for most of
 the common GNU, Unix, and Linux commands -- are available as part of the
 bash_completion project.  This is installed by default on many GNU/Linux
 distributions.  Originally written by Ian Macdonald, the project now lives
-at @url{http://bash-completion.alioth.debian.org/}.  There are ports for
+at @url{https://github.com/scop/bash-completion/}.  There are ports for
 other systems such as Solaris and Mac OS X.
 
 An older version of the bash_completion package is distributed with bash

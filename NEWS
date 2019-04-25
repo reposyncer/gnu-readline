@@ -36,6 +36,12 @@ i. The history library has a new variable that allows applications to set the
    initial quoting state, so quoting state can be inherited from a previous
    line.
 
+j. Readline now allows application-defined keymap names; there is a new public
+   function, rl_set_keymap_name(), to do that.
+
+k. The "Insert" keypad key, if available, now puts readline into overwrite
+   mode.
+
 -------------------------------------------------------------------------------
 This is a terse description of the new features added to readline-7.0 since
 the release of readline-6.3.

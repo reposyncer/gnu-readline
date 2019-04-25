@@ -1,9 +1,9 @@
 This is history.info, produced by makeinfo version 6.5 from
 history.texi.
 
-This document describes the GNU History library (version 8.0, 18
-September 2018), a programming tool that provides a consistent user
-interface for recalling lines of previously typed input.
+This document describes the GNU History library (version 8.0, 6 March
+2019), a programming tool that provides a consistent user interface for
+recalling lines of previously typed input.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -1386,27 +1386,27 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top850
-Node: Using History Interactively1495
-Node: History Interaction2003
-Node: Event Designators3901
-Node: Word Designators5040
-Node: Modifiers6677
-Node: Programming with GNU History7900
-Node: Introduction to History8644
-Node: History Storage10334
-Node: History Functions11469
-Node: Initializing History and State Management12458
-Node: History List Management13270
-Node: Information About the History List15564
-Node: Moving Around the History List17178
-Node: Searching the History List18271
-Node: Managing the History File20196
-Node: History Expansion22016
-Node: History Variables23945
-Node: History Programming Example27925
-Node: GNU Free Documentation License30602
-Node: Concept Index55774
-Node: Function and Variable Index56479
+Node: Top845
+Node: Using History Interactively1490
+Node: History Interaction1998
+Node: Event Designators3896
+Node: Word Designators5035
+Node: Modifiers6672
+Node: Programming with GNU History7895
+Node: Introduction to History8639
+Node: History Storage10329
+Node: History Functions11464
+Node: Initializing History and State Management12453
+Node: History List Management13265
+Node: Information About the History List15559
+Node: Moving Around the History List17173
+Node: Searching the History List18266
+Node: Managing the History File20191
+Node: History Expansion22011
+Node: History Variables23940
+Node: History Programming Example27920
+Node: GNU Free Documentation License30597
+Node: Concept Index55769
+Node: Function and Variable Index56474
 
 End Tag Table

@@ -135,7 +135,7 @@ noninc_search_from_pos (char *string, int pos, int dir, int flags, int *ncp)
 	  sflags |= ANCHORED_SEARCH;
 	  s++;
 	}
-      ret = _hs_history_patsearch (string, dir, sflags);
+      ret = _hs_history_patsearch (s, dir, sflags);
     }
   else if (*string == '^')
     ret = history_search_prefix (string + 1, dir);
@@ -256,6 +256,7 @@ _rl_nsearch_abort (_rl_search_cxt *cxt)
   rl_clear_message ();
   rl_point = cxt->save_point;
   rl_mark = cxt->save_mark;
+  _rl_fix_point (1);
   rl_restore_prompt ();
 
   RL_UNSETSTATE (RL_STATE_NSEARCH);

@@ -1351,3 +1351,12 @@ Makefile.in
 				   ----
 Makefile.in
 	- installdirs: create $(pkgconfigdir) if it doesn't exist
+
+
+				 4/8/2019
+				 --------
+readline.pc.in
+	- change CFLAGS to include ${includedir} instead of ${includedir}/readline,
+	  to support the recommended `#include <readline/readline.h>'. Report
+	  and fix from Andrea Bolognani <abologna@redhat.com>
+

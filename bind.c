@@ -1,6 +1,6 @@
 /* bind.c -- key binding and startup file support for the readline library. */
 
-/* Copyright (C) 1987-2017 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2019 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library
    for reading lines of text with interactive input and history editing.
@@ -135,12 +135,13 @@ rl_add_defun (const char *name, rl_command_func_t *function, int key)
 int
 rl_bind_key (int key, rl_command_func_t *function)
 {
-  char keyseq[3];
+  char keyseq[4];
   int l;
 
-  if (key < 0)
+  if (key < 0 || key > largest_char)
     return (key);
 
+  /* Want to make this a multi-character key sequence with an ESC prefix */
   if (META_CHAR (key) && _rl_convert_meta_chars_to_ascii)
     {
       if (_rl_keymap[ESC].type == ISKMAP)
@@ -153,7 +154,14 @@ rl_bind_key (int key, rl_command_func_t *function)
 	  escmap[key].function = function;
 	  return (0);
 	}
-      return (key);
+
+      /* Otherwise, let's just let rl_generic_bind handle the key sequence.
+	 We start it off with ESC here and let the code below add the rest
+	 of the sequence. */
+      keyseq[0] = ESC;
+      l = 1;
+      key = UNMETA(key);
+      goto bind_keyseq;
     }
 
   /* If it's bound to a function or macro, just overwrite.  Otherwise we have
@@ -168,6 +176,7 @@ rl_bind_key (int key, rl_command_func_t *function)
   else
     {
       l = 0;
+bind_keyseq:
       if (key == '\\')
 	keyseq[l++] = '\\';
       keyseq[l++] = key;
@@ -397,6 +406,9 @@ rl_generic_bind (int type, const char *keyseq, char *data, Keymap map)
 	  return -1;
         }
 
+      /* We now rely on rl_translate_keyseq to do this conversion, so this
+	 check is superfluous. */
+#if 0
       if (META_CHAR (ic) && _rl_convert_meta_chars_to_ascii)
 	{
 	  ic = UNMETA (ic);
@@ -406,6 +418,7 @@ rl_generic_bind (int type, const char *keyseq, char *data, Keymap map)
 	      map = FUNCTION_TO_KEYMAP (map, ESC);
 	    }
 	}
+#endif
 
       if ((i + 1) < keys_len)
 	{
@@ -486,13 +499,25 @@ rl_generic_bind (int type, const char *keyseq, char *data, Keymap map)
   return 0;
 }
 
+#define ADD_NORMAL_CHAR(c) \
+  do { \
+    if (META_CHAR (c) && _rl_convert_meta_chars_to_ascii) \
+      { \
+	array[l++] = ESC; \
+	array[l++] = UNMETA (c); \
+      } \
+    else \
+      array[l++] = (c); \
+  } while (0)
+      
 /* Translate the ASCII representation of SEQ, stuffing the values into ARRAY,
    an array of characters.  LEN gets the final length of ARRAY.  Return
    non-zero if there was an error parsing SEQ. */
 int
 rl_translate_keyseq (const char *seq, char *array, int *len)
 {
-  register int i, c, l, temp;
+  register int i, l, temp;
+  unsigned char c;
 
   for (i = l = 0; c = seq[i]; i++)
     {
@@ -519,9 +544,13 @@ rl_translate_keyseq (const char *seq, char *array, int *len)
 	      else if (c == 'M')
 		{
 		  i++;		/* seq[i] == '-' */
-		  /* XXX - obey convert-meta setting */
-		  if (_rl_convert_meta_chars_to_ascii && _rl_keymap[ESC].type == ISKMAP)
-		    array[l++] = ESC;	/* ESC is meta-prefix */
+		  /* XXX - obey convert-meta setting, convert to key seq  */
+		  if (_rl_convert_meta_chars_to_ascii)
+		    {
+		      array[l++] = ESC;	/* ESC is meta-prefix */
+		      i++;
+		      array[l++] = UNMETA (seq[i]);	/* UNMETA just in case */
+		    }
 		  else if (seq[i+1] == '\\' && seq[i+2] == 'C' && seq[i+3] == '-')
 		    {
 		      i += 4;
@@ -590,7 +619,8 @@ rl_translate_keyseq (const char *seq, char *array, int *len)
 	      for (temp = 2, c -= '0'; ISOCTAL ((unsigned char)seq[i]) && temp--; i++)
 	        c = (c * 8) + OCTVALUE (seq[i]);
 	      i--;	/* auto-increment in for loop */
-	      array[l++] = c & largest_char;
+	      c &= largest_char;
+	      ADD_NORMAL_CHAR (c);
 	      break;
 	    case 'x':
 	      i++;
@@ -599,16 +629,18 @@ rl_translate_keyseq (const char *seq, char *array, int *len)
 	      if (temp == 2)
 	        c = 'x';
 	      i--;	/* auto-increment in for loop */
-	      array[l++] = c & largest_char;
+	      c &= largest_char;
+	      ADD_NORMAL_CHAR (c);
 	      break;
 	    default:	/* backslashes before non-special chars just add the char */
-	      array[l++] = c;
+	      c &= largest_char;
+	      ADD_NORMAL_CHAR (c);
 	      break;	/* the backslash is stripped */
 	    }
 	  continue;
 	}
 
-      array[l++] = c;
+      ADD_NORMAL_CHAR (c);
     }
 
   *len = l;
@@ -809,7 +841,7 @@ _rl_function_of_keyseq_internal (const char *keyseq, size_t len, Keymap map, int
 	{
 	  /* If this is the last key in the key sequence, return the
 	     map. */
-	  if (keyseq[i + 1] == '\0')
+	  if (i + 1 == len)
 	    {
 	      if (type)
 		*type = ISKMAP;
@@ -822,9 +854,9 @@ _rl_function_of_keyseq_internal (const char *keyseq, size_t len, Keymap map, int
       /* If we're not at the end of the key sequence, and the current key
 	 is bound to something other than a keymap, then the entire key
 	 sequence is not bound. */
-      else if (map[ic].type != ISKMAP && keyseq[i+1])
+      else if (map[ic].type != ISKMAP && i+1 < len)
 	return ((rl_command_func_t *)NULL);
-      else	/* map[ic].type != ISKMAP && keyseq[i+1] == 0 */
+      else	/* map[ic].type != ISKMAP && i+1 == len */
 	{
 	  if (type)
 	    *type = map[ic].type;
@@ -1569,15 +1601,11 @@ rl_parse_and_bind (char *string)
       /* Strip trailing whitespace from values of boolean variables. */
       if (find_boolean_var (var) >= 0)
 	{
-	  /* remove trailing whitespace */
-remove_trailing:
-	  e = value + strlen (value) - 1;
-	  while (e >= value && whitespace (*e))
-	    e--;
-	  e++;		/* skip back to whitespace or EOS */
-	  
-	  if (*e && e >= value)
-	    *e = '\0';
+	  /* just read a whitespace-delimited word or empty string */
+	  for (e = value; *e && whitespace (*e) == 0; e++)
+	    ;
+	  if (e > value)
+	    *e = '\0';		/* cut off everything trailing */
 	}
       else if ((i = find_string_var (var)) >= 0)
 	{
@@ -1589,9 +1617,24 @@ remove_trailing:
 	      value++;	/* skip past the quote */
 	    }
 	  else
-	    goto remove_trailing;
+	    {
+	      /* remove trailing whitespace */
+	      e = value + strlen (value) - 1;
+	      while (e >= value && whitespace (*e))
+		e--;
+	      e++;		/* skip back to whitespace or EOS */
+	  
+	      if (*e && e >= value)
+		*e = '\0';
+	    }
 	}
-	
+      else
+	{
+	  /* avoid calling rl_variable_bind just to find this out */
+	  _rl_init_file_error ("%s: unknown variable name", var);
+	  return 1;
+	}
+
       rl_variable_bind (var, value);
       return 0;
     }
@@ -1903,7 +1946,7 @@ string_varname (int i)
 }  
 
 /* A boolean value that can appear in a `set variable' command is true if
-   the value is null or empty, `on' (case-insensitive), or "1".  Any other
+   the value is null or empty, `on' (case-insensitive), or "1".  All other
    values result in 0 (false). */
 static int
 bool_to_int (const char *value)
@@ -1928,7 +1971,7 @@ rl_variable_value (const char *name)
     return (_rl_get_string_variable_value (string_varlist[i].name));
 
   /* Unknown variable names return NULL. */
-  return 0;
+  return (char *)NULL;
 }
 
 int
@@ -1959,6 +2002,8 @@ rl_variable_bind (const char *name, const char *value)
     }
 
   v = (*string_varlist[i].set_func) (value);
+  if (v != 0)
+    _rl_init_file_error ("%s: could not set value to `%s'", name, value);
   return v;
 }
 

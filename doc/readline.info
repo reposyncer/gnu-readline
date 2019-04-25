@@ -1,9 +1,8 @@
 This is readline.info, produced by makeinfo version 6.5 from rlman.texi.
 
-This manual describes the GNU Readline Library (version 8.0, 18
-September 2018), a library which aids in the consistency of user
-interface across discrete programs which provide a command line
-interface.
+This manual describes the GNU Readline Library (version 8.0, 6 March
+2019), a library which aids in the consistency of user interface across
+discrete programs which provide a command line interface.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
 
@@ -1486,7 +1485,7 @@ and subsequent lines with 'j', and so forth.
 aiding in the consistency of user interface across discrete programs
 that need to provide a command line interface.
 
-   Copyright (C) 1988-2016 Free Software Foundation, Inc.
+   Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice pare
@@ -2141,17 +2140,20 @@ change which keymap is active.
      supplied in a 'set keymap' inputrc line (*note Readline Init
      File::).
 
- -- Function: void rl_set_keymap (const char *name, Keymap keymap)
+ -- Function: int rl_set_keymap_name (const char *name, Keymap keymap)
      Set the name of KEYMAP.  This name will then be "registered" and
      available for use in a 'set keymap' inputrc directive *note
      Readline Init File::).  The NAME may not be one of Readline's
-     builtin names; you may not add a different name for one of
-     Readline's builtin keymaps.  Readline will make a copy of NAME.
-     You may replace the name associated with a given keymap by calling
-     this function two or more times with the same KEYMAP argument.  You
-     can associate a registered name with a new keymap by calling this
-     function two or more times with the same NAME argument.  There is
-     no way to remove a named keymap once the name has been registered.
+     builtin keymap names; you may not add a different name for one of
+     Readline's builtin keymaps.  You may replace the name associated
+     with a given keymap by calling this function more than once with
+     the same KEYMAP argument.  You may associate a registered NAME with
+     a new keymap by calling this function more than once with the same
+     NAME argument.  There is no way to remove a named keymap once the
+     name has been registered.  Readline will make a copy of NAME.  The
+     return value is greater than zero unless NAME is one of Readline's
+     builtin keymap names or KEYMAP is one of Readline's builtin
+     keymaps.
 
 
 File: readline.info,  Node: Binding Keys,  Next: Associating Function Names and Bindings,  Prev: Keymaps,  Up: Readline Convenience Functions
@@ -3088,7 +3090,7 @@ signals received while waiting for input.
 
    If an application does not wish Readline to catch 'SIGWINCH', it may
 call 'rl_resize_terminal()' or 'rl_set_screen_size()' to force Readline
-to update its idea of the terminal size when a 'SIGWINCH' is received.
+to update its idea of the terminal size when it receives a 'SIGWINCH'.
 
  -- Function: void rl_echo_signal_char (int sig)
      If an application wishes to install its own signal handlers, but
@@ -3103,11 +3105,14 @@ to update its idea of the terminal size when a 'SIGWINCH' is received.
  -- Function: void rl_set_screen_size (int rows, int cols)
      Set Readline's idea of the terminal size to ROWS rows and COLS
      columns.  If either ROWS or COLUMNS is less than or equal to 0,
-     Readline's idea of that terminal dimension is unchanged.
+     Readline's idea of that terminal dimension is unchanged.  This is
+     intended to tell Readline the physical dimensions of the terminal,
+     and is used internally to calculate the maximum number of
+     characters that may appear on the screen.
 
    If an application does not want to install a 'SIGWINCH' handler, but
-is still interested in the screen dimensions, Readline's idea of the
-screen size may be queried.
+is still interested in the screen dimensions, it may query Readline's
+idea of the screen size.
 
  -- Function: void rl_get_screen_size (int *rows, int *cols)
      Return Readline's idea of the terminal's size in the variables
@@ -3473,7 +3478,9 @@ File: readline.info,  Node: Completion Variables,  Next: A Short Completion Exam
      automatically.  This can be changed in application-specific
      completion functions to provide the "most sensible word separator
      character" according to an application-specific command line syntax
-     specification.
+     specification.  It is set to the default before any
+     application-specific completion function is called, and may only be
+     changed within such a function.
 
  -- Variable: int rl_completion_suppress_append
      If non-zero, RL_COMPLETION_APPEND_CHARACTER is not appended to
@@ -4751,7 +4758,7 @@ Function and Variable Index
 * rl_attempted_completion_function:      Completion Variables.
                                                               (line  11)
 * rl_attempted_completion_over:          Completion Variables.
-                                                              (line 253)
+                                                              (line 255)
 * rl_basic_quote_characters:             Completion Variables.
                                                               (line 143)
 * rl_basic_word_break_characters:        Completion Variables.
@@ -4787,7 +4794,7 @@ Function and Variable Index
 * rl_clear_message:                      Redisplay.           (line  51)
 * rl_clear_pending_input:                Character Input.     (line  29)
 * rl_clear_signals:                      Readline Signal Handling.
-                                                              (line 179)
+                                                              (line 182)
 * rl_clear_visible_line:                 Redisplay.           (line  25)
 * rl_complete:                           How Completing Works.
                                                               (line  46)
@@ -4808,11 +4815,11 @@ Function and Variable Index
 * rl_completion_entry_function <1>:      Completion Variables.
                                                               (line   6)
 * rl_completion_found_quote:             Completion Variables.
-                                                              (line 212)
+                                                              (line 214)
 * rl_completion_invoking_key:            Completion Variables.
-                                                              (line 276)
+                                                              (line 278)
 * rl_completion_mark_symlink_dirs:       Completion Variables.
-                                                              (line 218)
+                                                              (line 220)
 * rl_completion_matches:                 Completion Functions.
                                                               (line  43)
 * rl_completion_mode:                    Completion Functions.
@@ -4820,13 +4827,13 @@ Function and Variable Index
 * rl_completion_query_items:             Completion Variables.
                                                               (line 178)
 * rl_completion_quote_character:         Completion Variables.
-                                                              (line 200)
+                                                              (line 202)
 * rl_completion_suppress_append:         Completion Variables.
-                                                              (line 194)
+                                                              (line 196)
 * rl_completion_suppress_quote:          Completion Variables.
-                                                              (line 206)
+                                                              (line 208)
 * rl_completion_type:                    Completion Variables.
-                                                              (line 268)
+                                                              (line 270)
 * rl_completion_word_break_hook:         Completion Variables.
                                                               (line 151)
 * rl_copy_keymap:                        Keymaps.             (line  16)
@@ -4863,7 +4870,7 @@ Function and Variable Index
 * rl_explicit_arg:                       Readline Variables.  (line 272)
 * rl_extend_line_buffer:                 Utility Functions.   (line  26)
 * rl_filename_completion_desired:        Completion Variables.
-                                                              (line 233)
+                                                              (line 235)
 * rl_filename_completion_function:       Completion Functions.
                                                               (line  57)
 * rl_filename_dequoting_function:        Completion Variables.
@@ -4871,7 +4878,7 @@ Function and Variable Index
 * rl_filename_quote_characters:          Completion Variables.
                                                               (line 166)
 * rl_filename_quoting_desired:           Completion Variables.
-                                                              (line 243)
+                                                              (line 245)
 * rl_filename_quoting_function:          Completion Variables.
                                                               (line  23)
 * rl_filename_rewrite_hook:              Completion Variables.
@@ -4899,16 +4906,16 @@ Function and Variable Index
 * rl_get_keymap_by_name:                 Keymaps.             (line  46)
 * rl_get_keymap_name:                    Keymaps.             (line  51)
 * rl_get_screen_size:                    Readline Signal Handling.
-                                                              (line 162)
+                                                              (line 165)
 * rl_get_termcap:                        Miscellaneous Functions.
                                                               (line  41)
 * rl_gnu_readline_p:                     Readline Variables.  (line  82)
 * rl_ignore_completion_duplicates:       Completion Variables.
-                                                              (line 229)
+                                                              (line 231)
 * rl_ignore_some_completions_function:   Completion Variables.
                                                               (line  55)
 * rl_inhibit_completion:                 Completion Variables.
-                                                              (line 282)
+                                                              (line 284)
 * rl_initialize:                         Utility Functions.   (line  30)
 * rl_input_available_hook:               Readline Variables.  (line 140)
 * rl_insert_completions:                 Completion Functions.
@@ -4969,7 +4976,7 @@ Function and Variable Index
                                                               (line 121)
 * rl_reset_line_state:                   Redisplay.           (line  29)
 * rl_reset_screen_size:                  Readline Signal Handling.
-                                                              (line 166)
+                                                              (line 169)
 * rl_reset_terminal:                     Terminal Management. (line  34)
 * rl_resize_terminal:                    Readline Signal Handling.
                                                               (line 149)
@@ -4980,18 +4987,18 @@ Function and Variable Index
 * rl_set_key:                            Binding Keys.        (line  71)
 * rl_set_keyboard_input_timeout:         Character Input.     (line  34)
 * rl_set_keymap:                         Keymaps.             (line  43)
-* rl_set_keymap <1>:                     Keymaps.             (line  56)
+* rl_set_keymap_name:                    Keymaps.             (line  56)
 * rl_set_paren_blink_timeout:            Miscellaneous Functions.
                                                               (line  36)
 * rl_set_prompt:                         Redisplay.           (line  80)
 * rl_set_screen_size:                    Readline Signal Handling.
                                                               (line 153)
 * rl_set_signals:                        Readline Signal Handling.
-                                                              (line 173)
+                                                              (line 176)
 * rl_show_char:                          Redisplay.           (line  36)
 * rl_signal_event_hook:                  Readline Variables.  (line 136)
 * rl_sort_completion_matches:            Completion Variables.
-                                                              (line 260)
+                                                              (line 262)
 * rl_special_prefixes:                   Completion Variables.
                                                               (line 171)
 * rl_startup_hook:                       Readline Variables.  (line 114)
@@ -5061,58 +5068,58 @@ Function and Variable Index
 
 
 Tag Table:
-Node: Top866
-Node: Command Line Editing1591
-Node: Introduction and Notation2243
-Node: Readline Interaction3867
-Node: Readline Bare Essentials5059
-Node: Readline Movement Commands6843
-Node: Readline Killing Commands7804
-Node: Readline Arguments9723
-Node: Searching10768
-Node: Readline Init File12921
-Node: Readline Init File Syntax14075
-Node: Conditional Init Constructs34234
-Node: Sample Init File38431
-Node: Bindable Readline Commands41549
-Node: Commands For Moving42604
-Node: Commands For History44171
-Node: Commands For Text48436
-Node: Commands For Killing51878
-Node: Numeric Arguments54045
-Node: Commands For Completion55185
-Node: Keyboard Macros57154
-Node: Miscellaneous Commands57842
-Node: Readline vi Mode61764
-Node: Programming with GNU Readline63581
-Node: Basic Behavior64567
-Node: Custom Functions68250
-Node: Readline Typedefs69733
-Node: Function Writing71367
-Node: Readline Variables72681
-Node: Readline Convenience Functions85353
-Node: Function Naming86425
-Node: Keymaps87687
-Node: Binding Keys90604
-Node: Associating Function Names and Bindings95152
-Node: Allowing Undoing97931
-Node: Redisplay100481
-Node: Modifying Text104505
-Node: Character Input105752
-Node: Terminal Management107650
-Node: Utility Functions109473
-Node: Miscellaneous Functions112801
-Node: Alternate Interface115390
-Node: A Readline Example118132
-Node: Alternate Interface Example120071
-Node: Readline Signal Handling123603
-Node: Custom Completers132652
-Node: How Completing Works133372
-Node: Completion Functions136679
-Node: Completion Variables140253
-Node: A Short Completion Example155897
-Node: GNU Free Documentation License168676
-Node: Concept Index193850
-Node: Function and Variable Index195371
+Node: Top861
+Node: Command Line Editing1586
+Node: Introduction and Notation2238
+Node: Readline Interaction3862
+Node: Readline Bare Essentials5054
+Node: Readline Movement Commands6838
+Node: Readline Killing Commands7799
+Node: Readline Arguments9718
+Node: Searching10763
+Node: Readline Init File12916
+Node: Readline Init File Syntax14070
+Node: Conditional Init Constructs34229
+Node: Sample Init File38426
+Node: Bindable Readline Commands41544
+Node: Commands For Moving42599
+Node: Commands For History44166
+Node: Commands For Text48431
+Node: Commands For Killing51873
+Node: Numeric Arguments54040
+Node: Commands For Completion55180
+Node: Keyboard Macros57149
+Node: Miscellaneous Commands57837
+Node: Readline vi Mode61759
+Node: Programming with GNU Readline63576
+Node: Basic Behavior64562
+Node: Custom Functions68245
+Node: Readline Typedefs69728
+Node: Function Writing71362
+Node: Readline Variables72676
+Node: Readline Convenience Functions85348
+Node: Function Naming86420
+Node: Keymaps87682
+Node: Binding Keys90761
+Node: Associating Function Names and Bindings95309
+Node: Allowing Undoing98088
+Node: Redisplay100638
+Node: Modifying Text104662
+Node: Character Input105909
+Node: Terminal Management107807
+Node: Utility Functions109630
+Node: Miscellaneous Functions112958
+Node: Alternate Interface115547
+Node: A Readline Example118289
+Node: Alternate Interface Example120228
+Node: Readline Signal Handling123760
+Node: Custom Completers132998
+Node: How Completing Works133718
+Node: Completion Functions137025
+Node: Completion Variables140599
+Node: A Short Completion Example156390
+Node: GNU Free Documentation License169169
+Node: Concept Index194343
+Node: Function and Variable Index195864
 
 End Tag Table

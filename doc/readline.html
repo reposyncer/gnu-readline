@@ -1,6 +1,6 @@
 <HTML>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- Created on September, 19  2018 by texi2html 1.64 -->
+<!-- Created on April, 17  2019 by texi2html 1.64 -->
 <!-- 
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -2309,7 +2309,7 @@ in the consistency of user interface across discrete programs that need
 to provide a command line interface.
 </P><P>
 
-Copyright (C) 1988--2016 Free Software Foundation, Inc.
+Copyright (C) 1988--2019 Free Software Foundation, Inc.
 </P><P>
 
 Permission is granted to make and distribute verbatim copies of
@@ -3346,19 +3346,22 @@ be supplied in a <CODE>set keymap</CODE> inputrc line (see section <A HREF="read
 
 <A NAME="IDX266"></A>
 <DL>
-<DT><U>Function:</U> void <B>rl_set_keymap</B> <I>(const char *name, Keymap keymap)</I>
+<DT><U>Function:</U> int <B>rl_set_keymap_name</B> <I>(const char *name, Keymap keymap)</I>
 <DD>Set the name of <VAR>keymap</VAR>.  This name will then be "registered" and
 available for use in a <CODE>set keymap</CODE> inputrc directive
 see section <A HREF="readline.html#SEC9">1.3 Readline Init File</A>).
-The <VAR>name</VAR> may not be one of Readline's builtin names;
+The <VAR>name</VAR> may not be one of Readline's builtin keymap names;
 you may not add a different name for one of Readline's builtin keymaps.
-Readline will make a copy of <VAR>name</VAR>.
 You may replace the name associated with a given keymap by calling this
-function two or more times with the same <VAR>keymap</VAR> argument.
-You can associate a registered name with a new keymap by calling this
-function two or more times with the same <VAR>name</VAR> argument.
+function more than once with the same <VAR>keymap</VAR> argument.
+You may associate a registered <VAR>name</VAR> with a new keymap by calling this
+function more than once  with the same <VAR>name</VAR> argument.
 There is no way to remove a named keymap once the name has been
 registered.
+Readline will make a copy of <VAR>name</VAR>.
+The return value is greater than zero unless <VAR>name</VAR> is one of
+Readline's builtin keymap names or <VAR>keymap</VAR> is one of Readline's
+builtin keymaps.
 </DL>
 </P><P>
 
@@ -4869,8 +4872,8 @@ to determine whether or not there are any pending signals.
 
 If an application does not wish Readline to catch <CODE>SIGWINCH</CODE>, it may
 call <CODE>rl_resize_terminal()</CODE> or <CODE>rl_set_screen_size()</CODE> to force
-Readline to update its idea of the terminal size when a <CODE>SIGWINCH</CODE>
-is received.
+Readline to update its idea of the terminal size when it receives
+a <CODE>SIGWINCH</CODE>.
 </P><P>
 
 <A NAME="IDX365"></A>
@@ -4896,12 +4899,15 @@ function with <VAR>sig</VAR> set to <CODE>SIGINT</CODE>, <CODE>SIGQUIT</CODE>, o
 <DD>Set Readline's idea of the terminal size to <VAR>rows</VAR> rows and
 <VAR>cols</VAR> columns.  If either <VAR>rows</VAR> or <VAR>columns</VAR> is less than
 or equal to 0, Readline's idea of that terminal dimension is unchanged.
+This is intended to tell Readline the physical dimensions of the terminal,
+and is used internally to calculate the maximum number of characters that
+may appear on the screen.
 </DL>
 </P><P>
 
 If an application does not want to install a <CODE>SIGWINCH</CODE> handler, but
-is still interested in the screen dimensions, Readline's idea of the screen
-size may be queried.
+is still interested in the screen dimensions, it may query Readline's idea
+of the screen size.
 </P><P>
 
 <A NAME="IDX368"></A>
@@ -5467,6 +5473,8 @@ character (<SAMP>`\0'</SAMP>) prevents anything being appended automatically.
 This can be changed in application-specific completion functions to
 provide the "most sensible word separator character" according to
 an application-specific command line syntax specification.
+It is set to the default before any application-specific completion function
+is called, and may only be changed within such a function.
 </DL>
 </P><P>
 
@@ -7216,7 +7224,7 @@ to permit their use in free software.
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX277"><CODE>rl_set_key</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC32">2.4.3 Binding Keys</A></TD></TR>
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX322"><CODE>rl_set_keyboard_input_timeout</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC37">2.4.8 Character Input</A></TD></TR>
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX263"><CODE>rl_set_keymap</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC31">2.4.2 Selecting a Keymap</A></TD></TR>
-<TR><TD></TD><TD valign=top><A HREF="readline.html#IDX266"><CODE>rl_set_keymap</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC31">2.4.2 Selecting a Keymap</A></TD></TR>
+<TR><TD></TD><TD valign=top><A HREF="readline.html#IDX266"><CODE>rl_set_keymap_name</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC31">2.4.2 Selecting a Keymap</A></TD></TR>
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX349"><CODE>rl_set_paren_blink_timeout</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC40">2.4.11 Miscellaneous Functions</A></TD></TR>
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX311"><CODE>rl_set_prompt</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC35">2.4.6 Redisplay</A></TD></TR>
 <TR><TD></TD><TD valign=top><A HREF="readline.html#IDX367"><CODE>rl_set_screen_size</CODE></A></TD><TD valign=top><A HREF="readline.html#SEC44">2.5 Readline Signal Handling</A></TD></TR>
@@ -7502,7 +7510,7 @@ to permit their use in free software.
 <TD VALIGN="MIDDLE" ALIGN="LEFT">[<A HREF="readline.html#SEC_About"> ? </A>]</TD>
 </TR></TABLE>
 <H1>About this document</H1>
-This document was generated by <I>chet</I> on <I>September, 19  2018</I>
+This document was generated by <I>chet</I> on <I>April, 17  2019</I>
 using <A HREF="http://www.mathematik.uni-kl.de/~obachman/Texi2html
 "><I>texi2html</I></A>
 <P></P>  
@@ -7664,7 +7672,7 @@ the following structure:
 <BR>  
 <FONT SIZE="-1">
 This document was generated
-by <I>chet</I> on <I>September, 19  2018</I>
+by <I>chet</I> on <I>April, 17  2019</I>
 using <A HREF="http://www.mathematik.uni-kl.de/~obachman/Texi2html
 "><I>texi2html</I></A>
 
