@@ -76,6 +76,8 @@ static void redraw_prompt PARAMS((char *));
 
 static char *expand_prompt PARAMS((char *, int, int *, int *, int *, int *));
 
+#define DEFAULT_LINE_BUFFER_SIZE	1024
+
 /* State of visible and invisible lines. */
 struct line_state
   {
@@ -219,7 +221,7 @@ static int msg_bufsiz = 0;
 static int forced_display;
 
 /* Default and initial buffer size.  Can grow. */
-static int line_size = 1024;
+static int line_size = DEFAULT_LINE_BUFFER_SIZE;
 
 /* Variables to keep track of the expanded prompt string, which may
    include invisible characters. */
@@ -574,11 +576,6 @@ rl_expand_prompt (char *prompt)
     {
       /* The prompt spans multiple lines. */
       t = ++p;
-      local_prompt = expand_prompt (p, PMT_MULTILINE,
-				       &prompt_visible_length,
-				       &prompt_last_invisible,
-				       &prompt_invis_chars_first_line,
-				       &prompt_physical_chars);
       c = *t; *t = '\0';
       /* The portion of the prompt string up to and including the
 	 final newline is now null-terminated. */
@@ -588,6 +585,12 @@ rl_expand_prompt (char *prompt)
 						   (int *)NULL,
 						   (int *)NULL);
       *t = c;
+
+      local_prompt = expand_prompt (p, PMT_MULTILINE,
+				       &prompt_visible_length,
+				       &prompt_last_invisible,
+				       &prompt_invis_chars_first_line,
+				       &prompt_physical_chars);
       local_prompt_len = local_prompt ? strlen (local_prompt) : 0;
       return (prompt_prefix_length);
     }
@@ -602,6 +605,9 @@ static void
 init_line_structures (int minsize)
 {
   register int n;
+
+  if (minsize <= _rl_screenwidth)	/* XXX - for gdb */
+    minsize = _rl_screenwidth + 1;
 
   if (invisible_line == 0)	/* initialize it */
     {
@@ -680,6 +686,9 @@ rl_redisplay (void)
       init_line_structures (0);
       rl_on_new_line ();
     }
+  else if (line_size <= _rl_screenwidth)
+    init_line_structures (_rl_screenwidth + 1);
+    
 
   /* Draw the line into the buffer. */
   cpos_buffer_position = -1;

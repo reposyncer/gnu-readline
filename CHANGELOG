@@ -1,4 +1,4 @@
-[Readline-specific changelog.  Descriptions of changes to the source are
+\[Readline-specific changelog.  Descriptions of changes to the source are
  found in the bash changelog.]
 
 				    6/9
@@ -1360,3 +1360,7 @@ readline.pc.in
 	  to support the recommended `#include <readline/readline.h>'. Report
 	  and fix from Andrea Bolognani <abologna@redhat.com>
 
+				   5/13
+				   ----
+configure.ac
+	- hpux: add -DTGETENT_BROKEN to LOCAL_CFLAGS
