@@ -1364,3 +1364,15 @@ readline.pc.in
 				   ----
 configure.ac
 	- hpux: add -DTGETENT_BROKEN to LOCAL_CFLAGS
+
+				   8/28
+				   ----
+configure.ac
+	- hpux: add -DTGETFLAG_BROKEN to LOCAL_CFLAGS
+
+				    9/6
+				    ---
+examples/autoconf/RL_LIB_READLINE_VERSION
+	- include <stdlib.h> in the AC_TRY_RUN block to accommodate compilers
+	  that treat functions without an existing prototype as fatal errors.
+	  Report and fix from Florian Weimer <fweimer@redhat.com>

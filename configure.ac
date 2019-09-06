@@ -215,7 +215,7 @@ esac
 
 case "$host_os" in
 isc*)	LOCAL_CFLAGS=-Disc386 ;;
-hpux*)	LOCAL_CFLAGS=-DTGETENT_BROKEN ;;
+hpux*)	LOCAL_CFLAGS="-DTGETENT_BROKEN -DTGETFLAG_BROKEN" ;;
 esac
 
 # shared library configuration section

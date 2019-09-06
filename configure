@@ -5320,6 +5320,7 @@ else
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <stdlib.h>
 
 typedef RETSIGTYPE sigfunc();
 
@@ -5400,6 +5401,7 @@ else
 #include <sys/types.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <stdlib.h>
 
 main()
 {
@@ -6807,7 +6809,7 @@ esac
 
 case "$host_os" in
 isc*)	LOCAL_CFLAGS=-Disc386 ;;
-hpux*)	LOCAL_CFLAGS=-DTGETENT_BROKEN ;;
+hpux*)	LOCAL_CFLAGS="-DTGETENT_BROKEN -DTGETFLAG_BROKEN" ;;
 esac
 
 # shared library configuration section
