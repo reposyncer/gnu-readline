@@ -185,11 +185,13 @@ rl_display_search (char *search_string, int flags, int where)
   strcpy (message + msglen, "i-search)`");
   msglen += 10;
 
-  if (search_string)
+  if (search_string && *search_string)
     {
       strcpy (message + msglen, search_string);
       msglen += searchlen;
     }
+  else
+    _rl_optimize_redisplay ();
 
   strcpy (message + msglen, "': ");
 
@@ -294,6 +296,7 @@ _rl_isearch_fini (_rl_search_cxt *cxt)
      and rl_get_next_history take care of it. */
   _rl_fix_point (0);
 
+/*  _rl_optimize_redisplay (); */
   rl_clear_message ();
 }
 
@@ -388,7 +391,12 @@ add_character:
   /* Translate the keys we do something with to opcodes. */
   if (c >= 0 && cxt->keymap[c].type == ISFUNC)
     {
-      f = cxt->keymap[c].function;
+      /* If we have a multibyte character, see if it's bound to something that
+	 affects the search. */
+      if (cxt->mb[1])
+	f = rl_function_of_keyseq (cxt->mb, cxt->keymap, (int *)NULL);
+      else
+	f = cxt->keymap[c].function;
 
       if (f == rl_reverse_search_history)
 	cxt->lastc = (cxt->sflags & SF_REVERSE) ? -1 : -2;

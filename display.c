@@ -1,6 +1,6 @@
 /* display.c -- readline redisplay facility. */
 
-/* Copyright (C) 1987-2017 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2019 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library    
    for reading lines of text with interactive input and history editing.
@@ -192,6 +192,8 @@ int _rl_last_v_pos = 0;
   on screen minus 1. */
 int _rl_vis_botlin = 0;
 
+static int _rl_quick_redisplay = 0;
+
 /* This is a hint update_line gives to rl_redisplay that it has adjusted the
    value of _rl_last_c_pos *and* taken the presence of any invisible chars in
    the prompt into account.  rl_redisplay notes this and does not do the
@@ -222,6 +224,10 @@ static int forced_display;
 
 /* Default and initial buffer size.  Can grow. */
 static int line_size = DEFAULT_LINE_BUFFER_SIZE;
+
+/* Set to a non-zero value if horizontal scrolling has been enabled
+   automatically because the terminal was resized to height 1. */
+static int horizontal_scrolling_autoset = 0;	/* explicit initialization */
 
 /* Variables to keep track of the expanded prompt string, which may
    include invisible characters. */
@@ -605,7 +611,9 @@ static void
 init_line_structures (int minsize)
 {
   register int n;
+  int osize;
 
+  osize = minsize;
   if (minsize <= _rl_screenwidth)	/* XXX - for gdb */
     minsize = _rl_screenwidth + 1;
 
@@ -625,7 +633,7 @@ init_line_structures (int minsize)
       invisible_line = (char *)xrealloc (invisible_line, line_size);
     }
 
-  for (n = minsize; n < line_size; n++)
+  for (n = osize; n < line_size; n++)
     {
       visible_line[n] = 0;
       invisible_line[n] = 1;
@@ -651,7 +659,21 @@ init_line_structures (int minsize)
 
   line_structures_initialized = 1;
 }
-  
+
+/* Do whatever tests are necessary and tell update_line that it can do a
+   quick, dumb redisplay on the assumption that there are so many
+   differences between the old and new lines that it would be a waste to
+   compute all the differences.
+   Right now, it just sets _rl_quick_redisplay if the current visible line
+   is a single line (so we don't have to move vertically or mess with line
+   wrapping). */
+void
+_rl_optimize_redisplay (void)
+{
+  if (_rl_vis_botlin == 0)
+    _rl_quick_redisplay = 1;
+}  
+
 /* Basic redisplay algorithm.  See comments inline. */
 void
 rl_redisplay (void)
@@ -688,7 +710,18 @@ rl_redisplay (void)
     }
   else if (line_size <= _rl_screenwidth)
     init_line_structures (_rl_screenwidth + 1);
-    
+
+  /* Enable horizontal scrolling automatically for terminals of height 1
+     where wrapping lines doesn't work. Disable it as soon as the terminal
+     height is increased again if it was automatically enabled. */
+  if (_rl_screenheight <= 1)
+    {
+      if (_rl_horizontal_scroll_mode == 0)
+	 horizontal_scrolling_autoset = 1;
+      _rl_horizontal_scroll_mode = 1;
+    }
+  else if (horizontal_scrolling_autoset)
+    _rl_horizontal_scroll_mode = 0;
 
   /* Draw the line into the buffer. */
   cpos_buffer_position = -1;
@@ -717,7 +750,7 @@ rl_redisplay (void)
   /* If the prompt to be displayed is the `primary' readline prompt (the
      one passed to readline()), use the values we have already expanded.
      If not, use what's already in rl_display_prompt.  WRAP_OFFSET is the
-     number of non-visible characters in the prompt string. */
+     number of non-visible characters (bytes) in the prompt string. */
   /* This is where we output the characters in the prompt before the last
      newline, if any.  If there aren't any embedded newlines, we don't
      write anything. Copy the last line of the prompt string into the line in
@@ -762,7 +795,7 @@ rl_redisplay (void)
 	    }
 	}
 
-      prompt_physical_chars = pmtlen = strlen (prompt_this_line);
+      prompt_physical_chars = pmtlen = strlen (prompt_this_line);	/* XXX */
       temp = pmtlen + out + 2;
       if (temp >= line_size)
 	{
@@ -853,8 +886,8 @@ rl_redisplay (void)
   num = 0;
 #endif
 
-  /* prompt_invis_chars_first_line is the number of invisible characters in
-     the first physical line of the prompt.
+  /* prompt_invis_chars_first_line is the number of invisible characters (bytes)
+     in the first physical line of the prompt.
      wrap_offset - prompt_invis_chars_first_line is usually the number of
      invis chars on the second (or, more generally, last) line. */
 
@@ -984,11 +1017,7 @@ rl_redisplay (void)
 	{
 	  register int newout;
 
-#if 0
-	  newout = (out | (int)7) + 1;
-#else
 	  newout = out + 8 - lpos % 8;
-#endif
 	  temp = newout - out;
 	  if (lpos + temp >= _rl_screenwidth)
 	    {
@@ -1090,6 +1119,11 @@ rl_redisplay (void)
       cpos_buffer_position = out;
       lb_linenum = newlines;
     }
+
+  /* If we are switching from one line to multiple wrapped lines, we don't
+     want to do a dumb update (or we want to make it smarter). */
+  if (_rl_quick_redisplay && newlines > 0)
+    _rl_quick_redisplay = 0;
 
   inv_botlin = lb_botlin = _rl_inv_botlin = newlines;
   CHECK_INV_LBREAKS ();
@@ -1208,18 +1242,34 @@ rl_redisplay (void)
 		    _rl_clear_to_eol (nleft);
 		}
 #if 0
-	      /* This segment is intended to handle the case where the prompt
-		 has invisible characters on the second line and the new line
+	      /* This segment is intended to handle the case where the old
+		 visible prompt has invisible characters and the new line
 		 to be displayed needs to clear the rest of the old characters
-		 out (e.g., when printing the i-search prompt).  In general,
-		 the case of the new line being shorter than the old.
-		 Incomplete */
-	      else if (linenum == prompt_last_screen_line &&
-		       prompt_physical_chars > _rl_screenwidth &&
-		       wrap_offset != prompt_invis_chars_first_line &&
+		 out (e.g., when printing the i-search prompt): in general,
+		 the case of the new line being shorter than the old.  We need
+		 to be at the end of the new line and the old line needs to be
+		 longer than the current cursor position. It's not perfect,
+		 since it uses the byte length of the first line, but this will
+		 at worst result in some extra clear-to-end-of-lines. We can't
+		 use the prompt length variables because they may not
+		 correspond to the visible line (see printing the i-search
+		 prompt above). The tests for differing numbers of invisible
+		 characters may not matter and can probably be removed. */
+	      else if (linenum == 0 &&
+		       linenum == prompt_last_screen_line &&
 		       _rl_last_c_pos == out &&
+		       _rl_last_c_pos < visible_first_line_len &&
+		       visible_wrap_offset &&
+		       visible_wrap_offset != wrap_offset)
+		{
+		  if (mb_cur_max > 1 && rl_byte_oriented == 0)
+		    nleft = _rl_screenwidth - _rl_last_c_pos;
+		  else
+		    nleft = _rl_screenwidth + wrap_offset - _rl_last_c_pos;
+		  if (nleft)
+		    _rl_clear_to_eol (nleft);
+		}
 #endif
-
 
 	      /* Since the new first line is now visible, save its length. */
 	      if (linenum == 0)
@@ -1264,6 +1314,7 @@ rl_redisplay (void)
 	     the characters from the current cursor position.  But we
 	     only need to reprint it if the cursor is before the last
 	     invisible character in the prompt string. */
+	  /* XXX - why not use local_prompt_len? */
 	  nleft = prompt_visible_length + wrap_offset;
 	  if (cursor_linenum == 0 && wrap_offset > 0 && _rl_last_c_pos > 0 &&
 #if 0
@@ -1291,8 +1342,8 @@ rl_redisplay (void)
 	  /* Where on that line?  And where does that line start
 	     in the buffer? */
 	  pos = inv_lbreaks[cursor_linenum];
-	  /* nleft == number of characters in the line buffer between the
-	     start of the line and the desired cursor position. */
+	  /* nleft == number of characters (bytes) in the line buffer between
+	     the start of the line and the desired cursor position. */
 	  nleft = cpos_buffer_position - pos;
 
 	  /* NLEFT is now a number of characters in a buffer.  When in a
@@ -1443,11 +1494,15 @@ rl_redisplay (void)
       visible_wrap_offset = 0;
     else
       visible_wrap_offset = wrap_offset;
+
+    _rl_quick_redisplay = 0;
   }
 
   RL_UNSETSTATE (RL_STATE_REDISPLAYING);
   _rl_release_sigint ();
 }
+
+#define ADJUST_CPOS(x) do { _rl_last_c_pos -= (x) ; cpos_adjusted = 1; } while (0)
 
 /* PWP: update_line() is based on finding the middle difference of each
    line on the screen; vis:
@@ -1611,6 +1666,7 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 		 and do a dumb update. */
 	      if (newwidth != oldwidth)
 		{
+		  oe = old + omax;
 		  ne = new + nmax;
 		  nd = newbytes;
 		  nfd = new + nd;
@@ -1655,6 +1711,46 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 	}
     }
 
+  /* We know that we are dealing with a single screen line here */
+  if (_rl_quick_redisplay)
+    {
+      nfd = new;
+      ofd = old;
+      for (od = 0, oe = ofd; od < omax && *oe; oe++, od++);
+      for (nd = 0, ne = nfd; nd < nmax && *ne; ne++, nd++);
+      od = nd = 0;
+      _rl_move_cursor_relative (0, old);
+
+      bytes_to_insert = ne - nfd;
+      if (bytes_to_insert < local_prompt_len)	/* ??? */
+	goto dumb_update;
+
+      /* output the prompt, output the line contents, clear the rest */
+      _rl_output_some_chars (nfd, local_prompt_len);
+      if (mb_cur_max > 1 && rl_byte_oriented == 0)
+	_rl_last_c_pos = prompt_physical_chars;
+      else
+	_rl_last_c_pos = local_prompt_len;
+
+      bytes_to_insert -= local_prompt_len;
+      if (bytes_to_insert > 0)
+	{
+	  _rl_output_some_chars (new+local_prompt_len, bytes_to_insert);
+	  if (mb_cur_max > 1 && rl_byte_oriented)
+	    _rl_last_c_pos += _rl_col_width (new, local_prompt_len, ne-new, 1);
+	  else
+	    _rl_last_c_pos += bytes_to_insert;
+	}
+
+      /* See comments at dumb_update: for an explanation of this heuristic */
+      if (nmax < omax)
+	goto clear_rest_of_line;
+      else if ((nmax - W_OFFSET(current_line, wrap_offset)) < (omax - W_OFFSET (current_line, visible_wrap_offset)))
+	goto clear_rest_of_line;
+      else
+	return;
+    }
+
   /* Find first difference. */
 #if defined (HANDLE_MULTIBYTE)
   if (mb_cur_max > 1 && rl_byte_oriented == 0)
@@ -1674,7 +1770,7 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 	  memset (&ps_old, 0, sizeof(mbstate_t));
 
 	  /* Are the old and new lines the same? */
-	  if (omax == nmax && STREQN (new, old, omax))
+	  if (omax == nmax && memcmp (new, old, omax) == 0)
 	    {
 	      old_offset = omax;
 	      new_offset = nmax;
@@ -1752,12 +1848,6 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 	  memset (&ps_old, 0, sizeof (mbstate_t));
 	  memset (&ps_new, 0, sizeof (mbstate_t));
 
-#if 0
-	  /* On advice from jir@yamato.ibm.com */
-	  _rl_adjust_point (old, ols - old, &ps_old);
-	  _rl_adjust_point (new, nls - new, &ps_new);
-#endif
-
 	  if (_rl_compare_chars (old, ols - old, &ps_old, new, nls - new, &ps_new) == 0)
 	    break;
 
@@ -1824,6 +1914,10 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
          visible_wrap_offset based on what we know. */
       if (current_line == 0)
 	visible_wrap_offset = prompt_invis_chars_first_line;	/* XXX */
+#if 0		/* XXX - not yet */
+      else if (current_line == prompt_last_screen_line && wrap_offset > prompt_invis_chars_first_line)
+	visible_wrap_offset = wrap_offset - prompt_invis_chars_first_line
+#endif
       if ((mb_cur_max == 1 || rl_byte_oriented) && current_line == 0 && visible_wrap_offset)
 	_rl_last_c_pos += visible_wrap_offset;
     }
@@ -1871,9 +1965,15 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
       _rl_output_some_chars (local_prompt, lendiff);
       if (mb_cur_max > 1 && rl_byte_oriented == 0)
 	{
-	  /* We take wrap_offset into account here so we can pass correct
-	     information to _rl_move_cursor_relative. */
-	  _rl_last_c_pos = _rl_col_width (local_prompt, 0, lendiff, 1) - wrap_offset + modmark;
+	  /* If we just output the entire prompt string we can take advantage
+	     of knowing the number of physical characters in the prompt. If
+	     the prompt wraps lines (lendiff clamped at nmax), we can't. */
+	  if (lendiff == local_prompt_len)
+	    _rl_last_c_pos = prompt_physical_chars + modmark;
+	  else
+	    /* We take wrap_offset into account here so we can pass correct
+	       information to _rl_move_cursor_relative. */
+	    _rl_last_c_pos = _rl_col_width (local_prompt, 0, lendiff, 1) - wrap_offset + modmark;
 	  cpos_adjusted = 1;
 	}
       else
@@ -1894,7 +1994,7 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 	 to just output the prompt from the beginning of the line up to the
 	 first difference, but you don't know the number of invisible
 	 characters in that case.
-	 This needs a lot of work to be efficient. */
+	 This needs a lot of work to be efficient, but it usually doesn't matter. */
       if ((od <= prompt_last_invisible || nd <= prompt_last_invisible))
 	{
 	  nfd = new + lendiff;	/* number of characters we output above */
@@ -1919,16 +2019,33 @@ dumb_update:
 		      current_line == prompt_last_screen_line &&
 		      prompt_physical_chars > _rl_screenwidth &&
 		      _rl_horizontal_scroll_mode == 0)
-		    {
-		      _rl_last_c_pos -= wrap_offset - prompt_invis_chars_first_line;
-		      cpos_adjusted = 1;
-		    }
+		    ADJUST_CPOS (wrap_offset - prompt_invis_chars_first_line);
+
+		  /* If we just output a new line including the prompt, and
+		     the prompt includes invisible characters, we need to
+		     account for them in the _rl_last_c_pos calculation, since
+		     _rl_col_width does not. This happens when other code does
+		     a goto dumb_update; */
+		  else if (current_line == 0 &&
+			   nfd == new &&
+			   prompt_invis_chars_first_line &&
+			   local_prompt_len <= temp &&
+			   wrap_offset >= prompt_invis_chars_first_line &&
+			   _rl_horizontal_scroll_mode == 0)
+		    ADJUST_CPOS (prompt_invis_chars_first_line);
 		}
 	      else
 		_rl_last_c_pos += temp;
 	    }
+	  /* This is a useful heuristic, but what we really want is to clear
+	     if the new number of visible screen characters is less than the
+	     old number of visible screen characters. If the prompt has changed,
+	     we don't really have enough information about the visible line to
+	     know for sure, so we use another heuristic calclulation below. */
 	  if (nmax < omax)
 	    goto clear_rest_of_line;	/* XXX */
+	  else if ((nmax - W_OFFSET(current_line, wrap_offset)) < (omax - W_OFFSET (current_line, visible_wrap_offset)))
+	    goto clear_rest_of_line;
 	  else
 	    return;
 	}
@@ -1957,15 +2074,73 @@ dumb_update:
      When not using multibyte characters, these are equal */
   lendiff = (nls - nfd) - (ols - ofd);
   if (mb_cur_max > 1 && rl_byte_oriented == 0)
-    col_lendiff = _rl_col_width (new, nfd - new, nls - new, 1) - _rl_col_width (old, ofd - old, ols - old, 1);
+    {
+      int newchars, newwidth, newind;
+      int oldchars, oldwidth, oldind;
+
+      newchars = nls - new;
+      oldchars = ols - old;
+
+      /* If we can do it, try to adjust nls and ols so that nls-new will
+	 contain the entire new prompt string. That way we can use
+	 prompt_physical_chars and not have to recompute column widths.
+	 _rl_col_width adds wrap_offset and expects the caller to compensate,
+	 which we do below, so we do the same thing if we don't call
+	 _rl_col_width.
+	 We don't have to compare, since we know the characters are the same.
+	 The check of differing numbers of invisible chars may be extraneous.
+	 XXX - experimental */
+      if (current_line == 0 && nfd == new && newchars > prompt_last_invisible &&
+	  newchars <= local_prompt_len &&
+	  local_prompt_len <= nmax &&
+	  current_invis_chars != visible_wrap_offset)
+	{
+	  while (newchars < nmax && oldchars < omax &&  newchars < local_prompt_len)
+	    {
+#if defined (HANDLE_MULTIBYTE)
+	      newind = _rl_find_next_mbchar (new, newchars, 1, MB_FIND_NONZERO);
+	      oldind = _rl_find_next_mbchar (old, oldchars, 1, MB_FIND_NONZERO);
+
+	      nls += newind - newchars;
+	      ols += oldind - oldchars;
+
+	      newchars = newind;
+	      oldchars = oldind;
+#else
+	      nls++; ols++;
+	      newchars++; oldchars++;
+#endif
+	    }
+	  newwidth = (newchars == local_prompt_len) ? prompt_physical_chars + wrap_offset
+	  					    : _rl_col_width (new, 0, nls - new, 1);
+	  /* if we changed nls and ols, we need to recompute lendiff */
+	  lendiff = (nls - nfd) - (ols - ofd);
+	}
+      else
+	newwidth = _rl_col_width (new, nfd - new, nls - new, 1);
+
+      oldwidth = _rl_col_width (old, ofd - old, ols - old, 1);
+
+      col_lendiff = newwidth - oldwidth;
+    }
   else
     col_lendiff = lendiff;
 
+  /* col_lendiff uses _rl_col_width(), which doesn't know about whether or not
+     the multibyte characters it counts are invisible, so unless we're printing
+     the entire prompt string (in which case we can use prompt_physical_chars)
+     the count is short by the number of bytes in the invisible multibyte
+     characters - the number of multibyte characters.
+
+     We don't have a good way to solve this without moving to something like
+     a bitmap that indicates which characters are visible and which are
+     invisible. We fix it up (imperfectly) in the caller and by trying to use
+     the entire prompt string wherever we can. */
+     
   /* If we are changing the number of invisible characters in a line, and
      the spot of first difference is before the end of the invisible chars,
      lendiff needs to be adjusted. */
-  if (current_line == 0 && /* !_rl_horizontal_scroll_mode && */
-      current_invis_chars != visible_wrap_offset)
+  if (current_line == 0 && current_invis_chars != visible_wrap_offset)
     {
       if (mb_cur_max > 1 && rl_byte_oriented == 0)
 	{
@@ -2008,15 +2183,12 @@ dumb_update:
       if (lendiff < 0)
 	{
 	  _rl_output_some_chars (nfd, temp);
-	  _rl_last_c_pos += col_temp;	/* XXX - was _rl_col_width (nfd, 0, temp, 1); */
+	  _rl_last_c_pos += col_temp;
 	  /* If nfd begins before any invisible characters in the prompt,
 	     adjust _rl_last_c_pos to account for wrap_offset and set
 	     cpos_adjusted to let the caller know. */
 	  if (current_line == 0 && displaying_prompt_first_line && wrap_offset && ((nfd - new) <= prompt_last_invisible))
-	    {
-	      _rl_last_c_pos -= wrap_offset;	/* XXX - prompt_invis_chars_first_line? */
-	      cpos_adjusted = 1;
-	    }
+	    ADJUST_CPOS (wrap_offset);	/* XXX - prompt_invis_chars_first_line? */
 	  return;
 	}
       /* Sometimes it is cheaper to print the characters rather than
@@ -2066,10 +2238,7 @@ dumb_update:
 		 prompt, adjust _rl_last_c_pos to account for wrap_offset
 		 and set cpos_adjusted to let the caller know. */
 	      if ((mb_cur_max > 1 && rl_byte_oriented == 0) && current_line == 0 && displaying_prompt_first_line && wrap_offset && ((nfd - new) <= prompt_last_invisible))
-		{
-		  _rl_last_c_pos -= wrap_offset;	/* XXX - prompt_invis_chars_first_line? */
-		  cpos_adjusted = 1;
-		}
+		ADJUST_CPOS (wrap_offset);	/* XXX - prompt_invis_chars_first_line? */
 	      return;
 	    }
 
@@ -2079,10 +2248,7 @@ dumb_update:
 		 prompt, adjust _rl_last_c_pos to account for wrap_offset
 		 and set cpos_adjusted to let the caller know. */
 	      if ((mb_cur_max > 1 && rl_byte_oriented == 0) && current_line == 0 && displaying_prompt_first_line && wrap_offset && ((nfd - new) <= prompt_last_invisible))
-		{
-		  _rl_last_c_pos -= wrap_offset;	/* XXX - prompt_invis_chars_first_line? */
-		  cpos_adjusted = 1;
-		}
+		ADJUST_CPOS (wrap_offset);	/* XXX - prompt_invis_chars_first_line? */
 	    }
 	}
       else
@@ -2103,10 +2269,11 @@ dumb_update:
 		displaying_prompt_first_line &&
 		wrap_offset != prompt_invis_chars_first_line &&
 		((nfd-new) < (prompt_last_invisible-(current_line*_rl_screenwidth+prompt_invis_chars_first_line))))
-	    {
-	      _rl_last_c_pos -= wrap_offset - prompt_invis_chars_first_line;
-	      cpos_adjusted = 1;
-	    }
+	    ADJUST_CPOS (wrap_offset - prompt_invis_chars_first_line);
+
+	  /* XXX - what happens if wrap_offset == prompt_invis_chars_first_line
+	     and we are drawing the first line (current_line == 0)? We should
+	     adjust by _rl_last_c_pos -= prompt_invis_chars_first_line */
 	}
     }
   else				/* Delete characters from line. */
@@ -2144,15 +2311,15 @@ dumb_update:
 	      _rl_output_some_chars (nfd, bytes_to_insert);
 	      if (mb_cur_max > 1 && rl_byte_oriented == 0)
 		{
+		  /* This still doesn't take into account whether or not the
+		     characters that this counts are invisible. */
 		  _rl_last_c_pos += _rl_col_width (nfd, 0, bytes_to_insert, 1);
 		  if (current_line == 0 && wrap_offset &&
 			displaying_prompt_first_line &&
-			_rl_last_c_pos >= wrap_offset &&	/* XXX was > */
+			prompt_invis_chars_first_line &&
+			_rl_last_c_pos >= prompt_invis_chars_first_line &&
 			((nfd - new) <= prompt_last_invisible))
-		    {
-		      _rl_last_c_pos -= wrap_offset;	/* XXX - prompt_invis_chars_first_line? */
-		      cpos_adjusted = 1;
-		    }
+		    ADJUST_CPOS (prompt_invis_chars_first_line);
 
 #if 1
 #ifdef HANDLE_MULTIBYTE
@@ -2197,10 +2364,7 @@ dumb_update:
 			displaying_prompt_first_line &&
 			_rl_last_c_pos > wrap_offset &&
 			((nfd - new) <= prompt_last_invisible))
-		    {
-		      _rl_last_c_pos -= wrap_offset;	/* XXX - prompt_invis_chars_first_line? */
-		      cpos_adjusted = 1;
-		    }
+		    ADJUST_CPOS (wrap_offset);	/* XXX - prompt_invis_chars_first_line? */
 		}
 	    }
 clear_rest_of_line:

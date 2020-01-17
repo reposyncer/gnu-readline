@@ -1376,3 +1376,10 @@ examples/autoconf/RL_LIB_READLINE_VERSION
 	- include <stdlib.h> in the AC_TRY_RUN block to accommodate compilers
 	  that treat functions without an existing prototype as fatal errors.
 	  Report and fix from Florian Weimer <fweimer@redhat.com>
+
+				   12/13
+				   -----
+support/shlib-install
+	- remove old code for FreeBSD and Dragonfly; they are ELF-only now and
+	  can use the same code as Linux. Fix from
+	  Baptiste Daroussin <bapt@FreeBSD.org>

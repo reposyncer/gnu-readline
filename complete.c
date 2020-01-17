@@ -1,6 +1,6 @@
 /* complete.c -- filename completion for readline. */
 
-/* Copyright (C) 1987-2017 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2019 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library
    for reading lines of text with interactive input and history editing.
@@ -21,11 +21,18 @@
 
 #define READLINE_LIBRARY
 
+#if defined (__TANDEM)
+#  define _XOPEN_SOURCE_EXTENDED 1
+#endif
+
 #if defined (HAVE_CONFIG_H)
 #  include <config.h>
 #endif
 
 #include <sys/types.h>
+#if defined (__TANDEM)
+#  include <sys/stat.h>
+#endif
 #include <fcntl.h>
 #if defined (HAVE_SYS_FILE_H)
 #  include <sys/file.h>
@@ -1335,12 +1342,13 @@ compute_lcd_of_matches (char **match_list, int matches, const char *text)
 	  memset (&ps2, 0, sizeof (mbstate_t));
 	}
 #endif
-      if (_rl_completion_case_fold)
+      for (si = 0; (c1 = match_list[i][si]) && (c2 = match_list[i + 1][si]); si++)
 	{
-	  for (si = 0;
-	       (c1 = _rl_to_lower(match_list[i][si])) &&
-	       (c2 = _rl_to_lower(match_list[i + 1][si]));
-	       si++)
+	    if (_rl_completion_case_fold)
+	      {
+	        c1 = _rl_to_lower (c1);
+	        c2 = _rl_to_lower (c2);
+	      }
 #if defined (HANDLE_MULTIBYTE)
 	    if (MB_CUR_MAX > 1 && rl_byte_oriented == 0)
 	      {
@@ -1352,33 +1360,15 @@ compute_lcd_of_matches (char **match_list, int matches, const char *text)
 		      break;
 		    continue;
 		  }
-		wc1 = towlower (wc1);
-		wc2 = towlower (wc2);
+		if (_rl_completion_case_fold)
+		  {
+		    wc1 = towlower (wc1);
+		   wc2 = towlower (wc2);
+		  }
 		if (wc1 != wc2)
 		  break;
 		else if (v1 > 1)
 		  si += v1 - 1;
-	      }
-	    else
-#endif
-	    if (c1 != c2)
-	      break;
-	}
-      else
-	{
-	  for (si = 0;
-	       (c1 = match_list[i][si]) &&
-	       (c2 = match_list[i + 1][si]);
-	       si++)
-#if defined (HANDLE_MULTIBYTE)
-	    if (MB_CUR_MAX > 1 && rl_byte_oriented == 0)
-	      {
-		mbstate_t ps_back;
-		ps_back = ps1;
-		if (!_rl_compare_chars (match_list[i], si, &ps1, match_list[i+1], si, &ps2))
-		  break;
-		else if ((v = _rl_get_char_len (&match_list[i][si], &ps_back)) > 1)
-		  si += v - 1;
 	      }
 	    else
 #endif

@@ -1,9 +1,9 @@
-This is rluserman.info, produced by makeinfo version 6.5 from
+This is rluserman.info, produced by makeinfo version 6.7 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.0, 6 March 2019), a library which aids in the consistency of
-user interface across discrete programs which provide a command line
+(version 8.0, 15 November 2019), a library which aids in the consistency
+of user interface across discrete programs which provide a command line
 interface.
 
    Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -1235,6 +1235,13 @@ File: rluserman.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Pr
      Kill the word behind point.  Word boundaries are the same as
      'backward-word'.
 
+'shell-transpose-words (M-C-t)'
+     Drag the word before point past the word after point, moving point
+     past that word as well.  If the insertion point is at the end of
+     the line, this transposes the last two words on the line.  Word
+     boundaries are the same as 'shell-forward-word' and
+     'shell-backward-word'.
+
 'unix-word-rubout (C-w)'
      Kill the word behind point, using white space as a word boundary.
      The killed text is saved on the kill-ring.
@@ -1964,29 +1971,34 @@ their use in free software.
 
 
 Tag Table:
-Node: Top904
-Node: Command Line Editing1426
-Node: Introduction and Notation2080
-Node: Readline Interaction3705
-Node: Readline Bare Essentials4898
-Node: Readline Movement Commands6683
-Node: Readline Killing Commands7645
-Node: Readline Arguments9565
-Node: Searching10611
-Node: Readline Init File12765
-Node: Readline Init File Syntax13920
-Node: Conditional Init Constructs34080
-Node: Sample Init File38278
-Node: Bindable Readline Commands41397
-Node: Commands For Moving42453
-Node: Commands For History44021
-Node: Commands For Text48287
-Node: Commands For Killing51730
-Node: Numeric Arguments53898
-Node: Commands For Completion55039
-Node: Keyboard Macros57009
-Node: Miscellaneous Commands57698
-Node: Readline vi Mode61621
-Node: GNU Free Documentation License62535
+Node: Top908
+Node: Command Line Editing1430
+Node: Introduction and Notation2084
+Node: Readline Interaction3709
+Node: Readline Bare Essentials4902
+Node: Readline Movement Commands6687
+Node: Readline Killing Commands7649
+Node: Readline Arguments9569
+Node: Searching10615
+Node: Readline Init File12769
+Node: Readline Init File Syntax13924
+Node: Conditional Init Constructs34084
+Node: Sample Init File38282
+Node: Bindable Readline Commands41401
+Node: Commands For Moving42457
+Node: Commands For History44025
+Node: Commands For Text48291
+Node: Commands For Killing51734
+Node: Numeric Arguments54231
+Node: Commands For Completion55372
+Node: Keyboard Macros57342
+Node: Miscellaneous Commands58031
+Node: Readline vi Mode61954
+Node: GNU Free Documentation License62868
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
