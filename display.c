@@ -223,7 +223,7 @@ static int msg_bufsiz = 0;
 static int forced_display;
 
 /* Default and initial buffer size.  Can grow. */
-static int line_size = DEFAULT_LINE_BUFFER_SIZE;
+static int line_size  = DEFAULT_LINE_BUFFER_SIZE;
 
 /* Set to a non-zero value if horizontal scrolling has been enabled
    automatically because the terminal was resized to height 1. */
@@ -1663,8 +1663,11 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 	      _rl_last_v_pos++;
 
 	      /* 5a. If the number of screen positions doesn't match, punt
-		 and do a dumb update. */
-	      if (newwidth != oldwidth)
+		 and do a dumb update.
+		 5b. If the number of bytes is greater in the new line than
+		 the old, do a dumb update, because there is no guarantee we
+		 can extend the old line enough to fit the new bytes. */
+	      if (newwidth != oldwidth || newbytes > oldbytes)
 		{
 		  oe = old + omax;
 		  ne = new + nmax;
@@ -1678,13 +1681,17 @@ update_line (char *old, char *new, int current_line, int omax, int nmax, int inv
 		     consume the first character of old. Fix up `old' so it
 		     reflects the new screen contents.  We use +1 in the
 		     memmove call to copy the trailing NUL. */
-		  memmove (old+newbytes, old+oldbytes, strlen (old+oldbytes) + 1);
+		  /* (strlen(old+oldbytes) == (omax - oldbytes - 1)) */
+
+		  /* Don't bother trying to fit the bytes if the number of bytes
+		     doesn't change. */
+		  if (oldbytes != newbytes)
+		    memmove (old+newbytes, old+oldbytes, strlen (old+oldbytes) + 1);
 		  memcpy (old, new, newbytes);
 		  j = newbytes - oldbytes;
-		      
 		  omax += j;
 		  /* Fix up indices if we copy data from one line to another */
-		  for (i = current_line+1; i <= inv_botlin+1; i++)
+		  for (i = current_line+1; j != 0 && i <= inv_botlin+1 && i <=_rl_vis_botlin+1; i++)
 		    vis_lbreaks[i] += j;
 		}
 	    }
