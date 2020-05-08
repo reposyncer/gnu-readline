@@ -1,6 +1,6 @@
 /* kill.c -- kill ring management. */
 
-/* Copyright (C) 1994-2019 Free Software Foundation, Inc.
+/* Copyright (C) 1994-2020 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library
    for reading lines of text with interactive input and history editing.      
@@ -718,7 +718,7 @@ _rl_bracketed_text (size_t *lenp)
 /* Having read the special escape sequence denoting the beginning of a
    `bracketed paste' sequence, read the rest of the pasted input until the
    closing sequence and insert the pasted text as a single unit without
-   interpretation. */
+   interpretation. Temporarily highlight the inserted text. */
 int
 rl_bracketed_paste_begin (int count, int key)
 {
@@ -727,7 +727,9 @@ rl_bracketed_paste_begin (int count, int key)
   char *buf;
 
   buf = _rl_bracketed_text (&len);
+  rl_mark = rl_point;
   retval = rl_insert_text (buf) == len ? 0 : 1;
+  rl_activate_mark ();
 
   xfree (buf);
   return (retval);

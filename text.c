@@ -1,6 +1,6 @@
 /* text.c -- text handling commands for readline. */
 
-/* Copyright (C) 1987-2019 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2020 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library
    for reading lines of text with interactive input and history editing.      
@@ -580,18 +580,8 @@ rl_backward_word (int count, int key)
 int
 rl_refresh_line (int ignore1, int ignore2)
 {
-  int curr_line;
-
-  curr_line = _rl_current_display_line ();
-
-  _rl_move_vert (curr_line);
-  _rl_move_cursor_relative (0, rl_line_buffer);   /* XXX is this right */
-
-  _rl_clear_to_eol (0);		/* arg of 0 means to not use spaces */
-
-  rl_redraw_prompt_last_line ();
+  _rl_refresh_line ();
   rl_display_fixed = 1;
-
   return 0;
 }
 
@@ -607,7 +597,18 @@ rl_clear_screen (int count, int key)
       return 0;
     }
 
-  _rl_clear_screen ();		/* calls termcap function to clear screen */
+  _rl_clear_screen (0);		/* calls termcap function to clear screen */
+  rl_keep_mark_active ();
+  rl_forced_update_display ();
+  rl_display_fixed = 1;
+
+  return 0;
+}
+
+int
+rl_clear_display (int count, int key)
+{
+  _rl_clear_screen (1);		/* calls termcap function to clear screen and scrollback buffer */
   rl_forced_update_display ();
   rl_display_fixed = 1;
 
@@ -1091,6 +1092,13 @@ rl_tab_insert (int count, int key)
 int
 rl_newline (int count, int key)
 {
+  if (rl_mark_active_p ())
+    {
+      rl_deactivate_mark ();
+      (*rl_redisplay_function) ();
+      _rl_want_redisplay = 0;
+    }
+
   rl_done = 1;
 
   if (_rl_history_preserve_point)
@@ -1830,7 +1838,43 @@ rl_exchange_point_and_mark (int count, int key)
       return 1;
     }
   else
-    SWAP (rl_point, rl_mark);
+    {
+      SWAP (rl_point, rl_mark);
+      rl_activate_mark ();
+    }
 
   return 0;
+}
+
+/* Active mark support */
+
+/* Is the region active? */
+static int mark_active = 0;
+
+/* Does the current command want the mark to remain active when it completes? */
+int _rl_keep_mark_active;
+
+void
+rl_keep_mark_active (void)
+{
+  _rl_keep_mark_active++;
+}
+
+void
+rl_activate_mark (void)
+{
+  mark_active = 1;
+  rl_keep_mark_active ();
+}
+
+void
+rl_deactivate_mark (void)
+{
+  mark_active = 0;
+}
+
+int
+rl_mark_active_p (void)
+{
+  return (mark_active);
 }

@@ -73,6 +73,7 @@ static const FUNMAP default_funmap[] = {
   { "capitalize-word", rl_capitalize_word },
   { "character-search", rl_char_search },
   { "character-search-backward", rl_backward_char_search },
+  { "clear-display", rl_clear_display },
   { "clear-screen", rl_clear_screen },
   { "complete", rl_complete },
   { "copy-backward-word", rl_copy_backward_word },
@@ -116,6 +117,7 @@ static const FUNMAP default_funmap[] = {
   { "non-incremental-forward-search-history-again", rl_noninc_forward_search_again },
   { "non-incremental-reverse-search-history-again", rl_noninc_reverse_search_again },
   { "old-menu-complete", rl_old_menu_complete },
+  { "operate-and-get-next", rl_operate_and_get_next },
   { "overwrite-mode", rl_overwrite_mode },
 #if defined (_WIN32)
   { "paste-from-clipboard", rl_paste_from_clipboard },
