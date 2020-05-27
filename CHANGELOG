@@ -1383,3 +1383,8 @@ support/shlib-install
 	- remove old code for FreeBSD and Dragonfly; they are ELF-only now and
 	  can use the same code as Linux. Fix from
 	  Baptiste Daroussin <bapt@FreeBSD.org>
+
+				 5/20/2020
+				 ---------
+configure.ac
+	- bumped version number up to 8.1
