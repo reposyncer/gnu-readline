@@ -1,12 +1,12 @@
-This is rluserman.info, produced by makeinfo version 6.5 from
+This is rluserman.info, produced by makeinfo version 6.7 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.0, 30 November 2018), a library which aids in the consistency
-of user interface across discrete programs which provide a command line
+(version 8.0, 4 May 2020), a library which aids in the consistency of
+user interface across discrete programs which provide a command line
 interface.
 
-   Copyright (C) 1988-2016 Free Software Foundation, Inc.
+   Copyright (C) 1988-2020 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -508,7 +508,9 @@ Variable Settings
           to 'on' means that the text of the lines being edited will
           scroll horizontally on a single screen line when they are
           longer than the width of the screen, instead of wrapping onto
-          a new screen line.  By default, this variable is set to 'off'.
+          a new screen line.  This variable is automatically set to 'on'
+          for terminals of height 1.  By default, this variable is set
+          to 'off'.
 
      'input-meta'
           If set to 'on', Readline will enable eight-bit input (it will
@@ -1027,8 +1029,13 @@ File: rluserman.info,  Node: Commands For Moving,  Next: Commands For History,  
      physical line or if the length of the current Readline line is not
      greater than the length of the prompt plus the screen width.
 
+'clear-display (M-C-l)'
+     Clear the screen and, if possible, the terminal's scrollback
+     buffer, then redraw the current line, leaving the current line at
+     the top of the screen.
+
 'clear-screen (C-l)'
-     Clear the screen and redraw the current line, leaving the current
+     Clear the screen, then redraw the current line, leaving the current
      line at the top of the screen.
 
 'redraw-current-line ()'
@@ -1124,6 +1131,13 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
      switches the direction through the history (back or forward).  The
      history expansion facilities are used to extract the last argument,
      as if the '!$' history expansion had been specified.
+
+'operate-and-get-next (C-o)'
+     Accept the current line for return to the calling application as if
+     a newline had been entered, and fetch the next line relative to the
+     current line from the history for editing.  A numeric argument, if
+     supplied, specifies the history entry to use instead of the current
+     line.
 
 
 File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Prev: Commands For History,  Up: Bindable Readline Commands
@@ -1234,6 +1248,13 @@ File: rluserman.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Pr
 'backward-kill-word (M-<DEL>)'
      Kill the word behind point.  Word boundaries are the same as
      'backward-word'.
+
+'shell-transpose-words (M-C-t)'
+     Drag the word before point past the word after point, moving point
+     past that word as well.  If the insertion point is at the end of
+     the line, this transposes the last two words on the line.  Word
+     boundaries are the same as 'shell-forward-word' and
+     'shell-backward-word'.
 
 'unix-word-rubout (C-w)'
      Kill the word behind point, using white space as a word boundary.
@@ -1964,29 +1985,34 @@ their use in free software.
 
 
 Tag Table:
-Node: Top908
-Node: Command Line Editing1430
-Node: Introduction and Notation2084
-Node: Readline Interaction3709
-Node: Readline Bare Essentials4902
-Node: Readline Movement Commands6687
-Node: Readline Killing Commands7649
-Node: Readline Arguments9569
-Node: Searching10615
-Node: Readline Init File12769
-Node: Readline Init File Syntax13924
-Node: Conditional Init Constructs34084
-Node: Sample Init File38282
-Node: Bindable Readline Commands41401
-Node: Commands For Moving42457
-Node: Commands For History44025
-Node: Commands For Text48291
-Node: Commands For Killing51734
-Node: Numeric Arguments53902
-Node: Commands For Completion55043
-Node: Keyboard Macros57013
-Node: Miscellaneous Commands57702
-Node: Readline vi Mode61625
-Node: GNU Free Documentation License62539
+Node: Top902
+Node: Command Line Editing1424
+Node: Introduction and Notation2078
+Node: Readline Interaction3703
+Node: Readline Bare Essentials4896
+Node: Readline Movement Commands6681
+Node: Readline Killing Commands7643
+Node: Readline Arguments9563
+Node: Searching10609
+Node: Readline Init File12763
+Node: Readline Init File Syntax13918
+Node: Conditional Init Constructs34169
+Node: Sample Init File38367
+Node: Bindable Readline Commands41486
+Node: Commands For Moving42542
+Node: Commands For History44302
+Node: Commands For Text48900
+Node: Commands For Killing52343
+Node: Numeric Arguments54840
+Node: Commands For Completion55981
+Node: Keyboard Macros57951
+Node: Miscellaneous Commands58640
+Node: Readline vi Mode62563
+Node: GNU Free Documentation License63477
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

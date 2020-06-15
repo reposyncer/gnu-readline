@@ -5,7 +5,7 @@ dnl report bugs to chet@po.cwru.edu
 dnl
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 1987-2018 Free Software Foundation, Inc.
+# Copyright (C) 1987-2020 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.0, version 2.85])
+AC_REVISION([for Readline 8.1, version 2.88])
 
-AC_INIT(readline, 8.0, bug-readline@gnu.org)
+AC_INIT(readline, 8.1, bug-readline@gnu.org)
 
 dnl make sure we are using a recent autoconf version
 AC_PREREQ(2.50)
@@ -32,7 +32,7 @@ AC_CONFIG_AUX_DIR(./support)
 AC_CONFIG_HEADERS(config.h)
 
 dnl update the value of RL_READLINE_VERSION in readline.h when this changes
-LIBVERSION=8.0
+LIBVERSION=8.1
 
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
@@ -104,8 +104,8 @@ AC_PROG_CC
 dnl AC_AIX
 AC_MINIX
 
-# If we're using gcc and the user hasn't specified CFLAGS, add -O to CFLAGS.
-test -n "$GCC" && test -n "$auto_cflags" && CFLAGS="$CFLAGS -O"
+# If we're using gcc and the user hasn't specified CFLAGS, add -O2 to CFLAGS.
+test -n "$GCC" && test -n "$auto_cflags" && CFLAGS="$CFLAGS -O2"
 
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_INSTALL
@@ -215,6 +215,7 @@ esac
 
 case "$host_os" in
 isc*)	LOCAL_CFLAGS=-Disc386 ;;
+hpux*)	LOCAL_CFLAGS="-DTGETENT_BROKEN -DTGETFLAG_BROKEN" ;;
 esac
 
 # shared library configuration section
