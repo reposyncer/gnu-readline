@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.1, version 2.88])
+AC_REVISION([for Readline 8.1, version 2.89])
 
 AC_INIT(readline, 8.1, bug-readline@gnu.org)
 
@@ -97,15 +97,18 @@ echo "Beginning configuration for readline-$LIBVERSION for ${host_cpu}-${host_ve
 echo ""
 
 # We want these before the checks, so the checks can modify their values.
-test -z "$CFLAGS" && CFLAGS=-g auto_cflags=1
+test -z "$CFLAGS" && want_auto_cflags=1
 
 AC_PROG_MAKE_SET
 AC_PROG_CC
 dnl AC_AIX
 AC_MINIX
 
-# If we're using gcc and the user hasn't specified CFLAGS, add -O2 to CFLAGS.
-test -n "$GCC" && test -n "$auto_cflags" && CFLAGS="$CFLAGS -O2"
+# If we're using gcc and the user hasn't specified CFLAGS, add -O2 to CFLAGS
+if test -n "$want_auto_cflags" ; then
+	AUTO_CFLAGS="-g ${GCC+-O2}"
+	STYLE_CFLAGS="${GCC+-Wno-parentheses} ${GCC+-Wno-format-security}"
+fi
 
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_INSTALL
@@ -293,6 +296,11 @@ case "$BUILD_DIR" in
 esac
 
 AC_SUBST(BUILD_DIR)
+
+if test -n "$want_auto_cflags"; then
+	CFLAGS="$AUTO_CFLAGS"
+fi
+CFLAGS="$CFLAGS $STYLE_CFLAGS"
 
 AC_SUBST(CFLAGS)
 AC_SUBST(LOCAL_CFLAGS)
