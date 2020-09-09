@@ -223,10 +223,10 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               ber of possible completions generated  by  the  [1mpossible-comple-[0m
               [1mtions  [22mcommand.  It may be set to any integer value greater than
               or equal to zero.  If the  number  of  possible  completions  is
-              greater than or equal to the value of this variable, the user is
-              asked whether or not he wishes to view them; otherwise they  are
-              simply listed on the terminal.  A negative value causes readline
-              to never ask.
+              greater  than  or  equal to the value of this variable, readline
+              will ask whether or not the user wishes to view them;  otherwise
+              they are simply listed on the terminal.  A negative value causes
+              readline to never ask.
        [1mconvert-meta (On)[0m
               If set to [1mOn[22m, readline will convert characters with  the  eighth
               bit set to an ASCII key sequence by stripping the eighth bit and

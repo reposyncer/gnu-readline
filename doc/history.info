@@ -1,7 +1,7 @@
 This is history.info, produced by makeinfo version 6.7 from
 history.texi.
 
-This document describes the GNU History library (version 8.0, 4 May
+This document describes the GNU History library (version 8.1, 17 July
 2020), a programming tool that provides a consistent user interface for
 recalling lines of previously typed input.
 
@@ -276,7 +276,7 @@ History library is able to keep track of those lines, associate
 arbitrary data with each line, and utilize information from previous
 lines in composing new ones.
 
-   The programmer using the History library has available functions for
+   A programmer using the History library has available functions for
 remembering lines on a history list, associating arbitrary data with a
 line, removing lines from the list, searching through the list for a
 line containing an arbitrary text string, and referencing any line in
@@ -290,9 +290,9 @@ for manipulating the text of previous lines and using that text in new
 commands.  The basic history manipulation commands are similar to the
 history substitution provided by 'csh'.
 
-   If the programmer desires, he can use the Readline library, which
-includes some history manipulation by default, and has the added
-advantage of command line editing.
+   The programmer can also use the Readline library, which includes some
+history manipulation by default, and has the added advantage of command
+line editing.
 
    Before declaring any functions using any functionality the History
 library provides in other code, an application writer should include the
@@ -1395,28 +1395,28 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top843
-Node: Using History Interactively1488
-Node: History Interaction1996
-Node: Event Designators3894
-Node: Word Designators5168
-Node: Modifiers6928
-Node: Programming with GNU History8473
-Node: Introduction to History9217
-Node: History Storage10907
-Node: History Functions12042
-Node: Initializing History and State Management13031
-Node: History List Management13843
-Node: Information About the History List16137
-Node: Moving Around the History List17751
-Node: Searching the History List18844
-Node: Managing the History File20769
-Node: History Expansion22589
-Node: History Variables24518
-Node: History Programming Example28498
-Node: GNU Free Documentation License31175
-Node: Concept Index56347
-Node: Function and Variable Index57052
+Node: Top845
+Node: Using History Interactively1490
+Node: History Interaction1998
+Node: Event Designators3896
+Node: Word Designators5170
+Node: Modifiers6930
+Node: Programming with GNU History8475
+Node: Introduction to History9219
+Node: History Storage10897
+Node: History Functions12032
+Node: Initializing History and State Management13021
+Node: History List Management13833
+Node: Information About the History List16127
+Node: Moving Around the History List17741
+Node: Searching the History List18834
+Node: Managing the History File20759
+Node: History Expansion22579
+Node: History Variables24508
+Node: History Programming Example28488
+Node: GNU Free Documentation License31165
+Node: Concept Index56337
+Node: Function and Variable Index57042
 
 End Tag Table
 

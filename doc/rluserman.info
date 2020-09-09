@@ -2,7 +2,7 @@ This is rluserman.info, produced by makeinfo version 6.7 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.0, 4 May 2020), a library which aids in the consistency of
+(version 8.1, 17 July 2020), a library which aids in the consistency of
 user interface across discrete programs which provide a command line
 interface.
 
@@ -425,11 +425,11 @@ Variable Settings
           The number of possible completions that determines when the
           user is asked whether the list of possibilities should be
           displayed.  If the number of possible completions is greater
-          than this value, Readline will ask the user whether or not he
-          wishes to view them; otherwise, they are simply listed.  This
-          variable must be set to an integer value greater than or equal
-          to 0.  A negative value means Readline should never ask.  The
-          default limit is '100'.
+          than or equal to this value, Readline will ask whether or not
+          the user wishes to view them; otherwise, they are simply
+          listed.  This variable must be set to an integer value greater
+          than or equal to 0.  A negative value means Readline should
+          never ask.  The default limit is '100'.
 
      'convert-meta'
           If set to 'on', Readline will convert characters with the
@@ -952,8 +952,8 @@ variable assignment, and conditional syntax.
      # rather than as meta-prefixed characters
      set output-meta on
 
-     # if there are more than 150 possible completions for
-     # a word, ask the user if he wants to see all of them
+     # if there are 150 or more possible completions for a word,
+     # ask whether or not the user wants to see all of them
      set completion-query-items 150
 
      # For FTP
@@ -1070,10 +1070,14 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
 'reverse-search-history (C-r)'
      Search backward starting at the current line and moving 'up'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'forward-search-history (C-s)'
      Search forward starting at the current line and moving 'down'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'non-incremental-reverse-search-history (M-p)'
      Search backward starting at the current line and moving 'up'
@@ -1183,6 +1187,11 @@ File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Pr
      read from the keyboard.  The characters are inserted as if each one
      was bound to 'self-insert' instead of executing any editing
      commands.
+
+     Bracketed paste sets the region (the characters between point and
+     the mark) to the inserted text.  It uses the concept of an _active
+     mark_: when the mark is active, Readline redisplay uses the
+     terminal's standout mode to denote the region.
 
 'transpose-chars (C-t)'
      Drag the character before the cursor forward over the character at
@@ -1985,30 +1994,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top902
-Node: Command Line Editing1424
-Node: Introduction and Notation2078
-Node: Readline Interaction3703
-Node: Readline Bare Essentials4896
-Node: Readline Movement Commands6681
-Node: Readline Killing Commands7643
-Node: Readline Arguments9563
-Node: Searching10609
-Node: Readline Init File12763
-Node: Readline Init File Syntax13918
-Node: Conditional Init Constructs34169
-Node: Sample Init File38367
-Node: Bindable Readline Commands41486
-Node: Commands For Moving42542
-Node: Commands For History44302
-Node: Commands For Text48900
-Node: Commands For Killing52343
-Node: Numeric Arguments54840
-Node: Commands For Completion55981
-Node: Keyboard Macros57951
-Node: Miscellaneous Commands58640
-Node: Readline vi Mode62563
-Node: GNU Free Documentation License63477
+Node: Top904
+Node: Command Line Editing1426
+Node: Introduction and Notation2080
+Node: Readline Interaction3705
+Node: Readline Bare Essentials4898
+Node: Readline Movement Commands6683
+Node: Readline Killing Commands7645
+Node: Readline Arguments9565
+Node: Searching10611
+Node: Readline Init File12765
+Node: Readline Init File Syntax13920
+Node: Conditional Init Constructs34180
+Node: Sample Init File38378
+Node: Bindable Readline Commands41504
+Node: Commands For Moving42560
+Node: Commands For History44320
+Node: Commands For Text49084
+Node: Commands For Killing52788
+Node: Numeric Arguments55285
+Node: Commands For Completion56426
+Node: Keyboard Macros58396
+Node: Miscellaneous Commands59085
+Node: Readline vi Mode63008
+Node: GNU Free Documentation License63922
 
 End Tag Table
 

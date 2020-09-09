@@ -1,6 +1,6 @@
 This is readline.info, produced by makeinfo version 6.7 from rlman.texi.
 
-This manual describes the GNU Readline Library (version 8.0, 4 May
+This manual describes the GNU Readline Library (version 8.1, 17 July
 2020), a library which aids in the consistency of user interface across
 discrete programs which provide a command line interface.
 
@@ -427,11 +427,11 @@ Variable Settings
           The number of possible completions that determines when the
           user is asked whether the list of possibilities should be
           displayed.  If the number of possible completions is greater
-          than this value, Readline will ask the user whether or not he
-          wishes to view them; otherwise, they are simply listed.  This
-          variable must be set to an integer value greater than or equal
-          to 0.  A negative value means Readline should never ask.  The
-          default limit is '100'.
+          than or equal to this value, Readline will ask whether or not
+          the user wishes to view them; otherwise, they are simply
+          listed.  This variable must be set to an integer value greater
+          than or equal to 0.  A negative value means Readline should
+          never ask.  The default limit is '100'.
 
      'convert-meta'
           If set to 'on', Readline will convert characters with the
@@ -954,8 +954,8 @@ variable assignment, and conditional syntax.
      # rather than as meta-prefixed characters
      set output-meta on
 
-     # if there are more than 150 possible completions for
-     # a word, ask the user if he wants to see all of them
+     # if there are 150 or more possible completions for a word,
+     # ask whether or not the user wants to see all of them
      set completion-query-items 150
 
      # For FTP
@@ -1072,10 +1072,14 @@ File: readline.info,  Node: Commands For History,  Next: Commands For Text,  Pre
 'reverse-search-history (C-r)'
      Search backward starting at the current line and moving 'up'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'forward-search-history (C-s)'
      Search forward starting at the current line and moving 'down'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'non-incremental-reverse-search-history (M-p)'
      Search backward starting at the current line and moving 'up'
@@ -1185,6 +1189,11 @@ File: readline.info,  Node: Commands For Text,  Next: Commands For Killing,  Pre
      read from the keyboard.  The characters are inserted as if each one
      was bound to 'self-insert' instead of executing any editing
      commands.
+
+     Bracketed paste sets the region (the characters between point and
+     the mark) to the inserted text.  It uses the concept of an _active
+     mark_: when the mark is active, Readline redisplay uses the
+     terminal's standout mode to denote the region.
 
 'transpose-chars (C-t)'
      Drag the character before the cursor forward over the character at
@@ -2729,6 +2738,26 @@ File: readline.info,  Node: Miscellaneous Functions,  Next: Alternate Interface,
      manner as the History library's 'clear_history()' function.  This
      differs from 'clear_history' because it frees private data Readline
      saves in the history list.
+
+ -- Function: void rl_activate_mark (void)
+     Enable an _active_ mark.  When this is enabled, the text between
+     point and mark (the REGION) is displayed in the terminal's standout
+     mode (a FACE).  This is called by various readline functions that
+     set the mark and insert text, and is available for applications to
+     call.
+
+ -- Function: void rl_deactivate_mark (void)
+     Turn off the active mark.
+
+ -- Function: void rl_keep_mark_active (void)
+     Indicate that the mark should remain active when the current
+     readline function completes and after redisplay occurs.  In most
+     cases, the mark remains active for only the duration of a single
+     bindable readline function.
+
+ -- Function: int rl_mark_active_p (void)
+     Return a non-zero value if the mark is currently active; zero
+     otherwise.
 
 
 File: readline.info,  Node: Alternate Interface,  Next: A Readline Example,  Prev: Miscellaneous Functions,  Up: Readline Convenience Functions
@@ -4618,7 +4647,7 @@ Function and Variable Index
                                                               (line  47)
 * bracketed-paste-begin ():              Commands For Text.   (line  36)
 * call-last-kbd-macro (C-x e):           Keyboard Macros.     (line  13)
-* capitalize-word (M-c):                 Commands For Text.   (line  64)
+* capitalize-word (M-c):                 Commands For Text.   (line  69)
 * character-search (C-]):                Miscellaneous Commands.
                                                               (line  42)
 * character-search-backward (M-C-]):     Miscellaneous Commands.
@@ -4661,7 +4690,7 @@ Function and Variable Index
                                                               (line 113)
 * do-lowercase-version (M-A, M-B, M-X, ...): Miscellaneous Commands.
                                                               (line  14)
-* downcase-word (M-l):                   Commands For Text.   (line  60)
+* downcase-word (M-l):                   Commands For Text.   (line  65)
 * dump-functions ():                     Miscellaneous Commands.
                                                               (line  70)
 * dump-macros ():                        Miscellaneous Commands.
@@ -4692,20 +4721,20 @@ Function and Variable Index
 * forward-backward-delete-char ():       Commands For Text.   (line  21)
 * forward-char (C-f):                    Commands For Moving. (line  12)
 * forward-search-history (C-s):          Commands For History.
-                                                              (line  30)
+                                                              (line  32)
 * forward-word (M-f):                    Commands For Moving. (line  18)
 * history-preserve-point:                Readline Init File Syntax.
                                                               (line 162)
 * history-search-backward ():            Commands For History.
-                                                              (line  52)
+                                                              (line  56)
 * history-search-forward ():             Commands For History.
-                                                              (line  46)
+                                                              (line  50)
 * history-size:                          Readline Init File Syntax.
                                                               (line 168)
 * history-substring-search-backward ():  Commands For History.
-                                                              (line  64)
+                                                              (line  68)
 * history-substring-search-forward ():   Commands For History.
-                                                              (line  58)
+                                                              (line  62)
 * horizontal-scroll-mode:                Readline Init File Syntax.
                                                               (line 177)
 * input-meta:                            Readline Init File Syntax.
@@ -4744,14 +4773,14 @@ Function and Variable Index
                                                               (line  16)
 * next-screen-line ():                   Commands For Moving. (line  33)
 * non-incremental-forward-search-history (M-n): Commands For History.
-                                                              (line  40)
+                                                              (line  44)
 * non-incremental-reverse-search-history (M-p): Commands For History.
-                                                              (line  34)
+                                                              (line  38)
 * operate-and-get-next (C-o):            Commands For History.
-                                                              (line  91)
+                                                              (line  95)
 * output-meta:                           Readline Init File Syntax.
                                                               (line 253)
-* overwrite-mode ():                     Commands For Text.   (line  68)
+* overwrite-mode ():                     Commands For Text.   (line  73)
 * page-completions:                      Readline Init File Syntax.
                                                               (line 259)
 * possible-completions (M-?):            Commands For Completion.
@@ -4773,6 +4802,8 @@ Function and Variable Index
                                                               (line 269)
 * revert-line (M-r):                     Miscellaneous Commands.
                                                               (line  26)
+* rl_activate_mark:                      Miscellaneous Functions.
+                                                              (line  55)
 * rl_add_defun:                          Function Naming.     (line  18)
 * rl_add_funmap_entry:                   Associating Function Names and Bindings.
                                                               (line  54)
@@ -4863,6 +4894,8 @@ Function and Variable Index
 * rl_copy_keymap:                        Keymaps.             (line  16)
 * rl_copy_text:                          Modifying Text.      (line  14)
 * rl_crlf:                               Redisplay.           (line  33)
+* rl_deactivate_mark:                    Miscellaneous Functions.
+                                                              (line  62)
 * rl_delete_text:                        Modifying Text.      (line  10)
 * rl_deprep_terminal:                    Terminal Management. (line  12)
 * rl_deprep_term_function:               Readline Variables.  (line 174)
@@ -4950,6 +4983,8 @@ Function and Variable Index
                                                               (line  29)
 * rl_invoking_keyseqs_in_map:            Associating Function Names and Bindings.
                                                               (line  33)
+* rl_keep_mark_active:                   Miscellaneous Functions.
+                                                              (line  65)
 * rl_key_sequence_length:                Readline Variables.  (line 199)
 * rl_kill_text:                          Modifying Text.      (line  18)
 * rl_last_func:                          Readline Variables.  (line 109)
@@ -4964,6 +4999,8 @@ Function and Variable Index
 * rl_make_bare_keymap:                   Keymaps.             (line  11)
 * rl_make_keymap:                        Keymaps.             (line  19)
 * rl_mark:                               Readline Variables.  (line  23)
+* rl_mark_active_p:                      Miscellaneous Functions.
+                                                              (line  71)
 * rl_message:                            Redisplay.           (line  42)
 * rl_modifying:                          Allowing Undoing.    (line  56)
 * rl_named_function:                     Associating Function Names and Bindings.
@@ -5062,8 +5099,8 @@ Function and Variable Index
 * tab-insert (M-<TAB>):                  Commands For Text.   (line  30)
 * tilde-expand (M-~):                    Miscellaneous Commands.
                                                               (line  30)
-* transpose-chars (C-t):                 Commands For Text.   (line  45)
-* transpose-words (M-t):                 Commands For Text.   (line  51)
+* transpose-chars (C-t):                 Commands For Text.   (line  50)
+* transpose-words (M-t):                 Commands For Text.   (line  56)
 * undo (C-_ or C-x C-u):                 Miscellaneous Commands.
                                                               (line  23)
 * universal-argument ():                 Numeric Arguments.   (line  10)
@@ -5073,7 +5110,7 @@ Function and Variable Index
                                                               (line  12)
 * unix-word-rubout (C-w):                Commands For Killing.
                                                               (line  35)
-* upcase-word (M-u):                     Commands For Text.   (line  56)
+* upcase-word (M-u):                     Commands For Text.   (line  61)
 * vi-cmd-mode-string:                    Readline Init File Syntax.
                                                               (line 309)
 * vi-editing-mode (M-C-j):               Miscellaneous Commands.
@@ -5085,68 +5122,68 @@ Function and Variable Index
 * yank (C-y):                            Commands For Killing.
                                                               (line  66)
 * yank-last-arg (M-. or M-_):            Commands For History.
-                                                              (line  79)
+                                                              (line  83)
 * yank-nth-arg (M-C-y):                  Commands For History.
-                                                              (line  70)
+                                                              (line  74)
 * yank-pop (M-y):                        Commands For Killing.
                                                               (line  69)
 
 
 
 Tag Table:
-Node: Top859
-Node: Command Line Editing1584
-Node: Introduction and Notation2236
-Node: Readline Interaction3860
-Node: Readline Bare Essentials5052
-Node: Readline Movement Commands6836
-Node: Readline Killing Commands7797
-Node: Readline Arguments9716
-Node: Searching10761
-Node: Readline Init File12914
-Node: Readline Init File Syntax14068
-Node: Conditional Init Constructs34318
-Node: Sample Init File38515
-Node: Bindable Readline Commands41633
-Node: Commands For Moving42688
-Node: Commands For History44447
-Node: Commands For Text49044
-Node: Commands For Killing52486
-Node: Numeric Arguments54982
-Node: Commands For Completion56122
-Node: Keyboard Macros58091
-Node: Miscellaneous Commands58779
-Node: Readline vi Mode62701
-Node: Programming with GNU Readline64518
-Node: Basic Behavior65504
-Node: Custom Functions69187
-Node: Readline Typedefs70670
-Node: Function Writing72304
-Node: Readline Variables73618
-Node: Readline Convenience Functions86290
-Node: Function Naming87362
-Node: Keymaps88624
-Node: Binding Keys91703
-Node: Associating Function Names and Bindings96251
-Node: Allowing Undoing99030
-Node: Redisplay101580
-Node: Modifying Text105604
-Node: Character Input106851
-Node: Terminal Management108749
-Node: Utility Functions110572
-Node: Miscellaneous Functions113900
-Node: Alternate Interface116489
-Node: A Readline Example119231
-Node: Alternate Interface Example121170
-Node: Readline Signal Handling124702
-Node: Custom Completers133961
-Node: How Completing Works134681
-Node: Completion Functions137988
-Node: Completion Variables141562
-Node: A Short Completion Example157355
-Node: GNU Free Documentation License170135
-Node: Concept Index195309
-Node: Function and Variable Index196830
+Node: Top861
+Node: Command Line Editing1586
+Node: Introduction and Notation2238
+Node: Readline Interaction3862
+Node: Readline Bare Essentials5054
+Node: Readline Movement Commands6838
+Node: Readline Killing Commands7799
+Node: Readline Arguments9718
+Node: Searching10763
+Node: Readline Init File12916
+Node: Readline Init File Syntax14070
+Node: Conditional Init Constructs34329
+Node: Sample Init File38526
+Node: Bindable Readline Commands41651
+Node: Commands For Moving42706
+Node: Commands For History44465
+Node: Commands For Text49228
+Node: Commands For Killing52931
+Node: Numeric Arguments55427
+Node: Commands For Completion56567
+Node: Keyboard Macros58536
+Node: Miscellaneous Commands59224
+Node: Readline vi Mode63146
+Node: Programming with GNU Readline64963
+Node: Basic Behavior65949
+Node: Custom Functions69632
+Node: Readline Typedefs71115
+Node: Function Writing72749
+Node: Readline Variables74063
+Node: Readline Convenience Functions86735
+Node: Function Naming87807
+Node: Keymaps89069
+Node: Binding Keys92148
+Node: Associating Function Names and Bindings96696
+Node: Allowing Undoing99475
+Node: Redisplay102025
+Node: Modifying Text106049
+Node: Character Input107296
+Node: Terminal Management109194
+Node: Utility Functions111017
+Node: Miscellaneous Functions114345
+Node: Alternate Interface117764
+Node: A Readline Example120506
+Node: Alternate Interface Example122445
+Node: Readline Signal Handling125977
+Node: Custom Completers135236
+Node: How Completing Works135956
+Node: Completion Functions139263
+Node: Completion Variables142837
+Node: A Short Completion Example158630
+Node: GNU Free Documentation License171410
+Node: Concept Index196584
+Node: Function and Variable Index198105
 
 End Tag Table
 

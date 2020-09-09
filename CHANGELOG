@@ -1388,3 +1388,9 @@ support/shlib-install
 				 ---------
 configure.ac
 	- bumped version number up to 8.1
+
+				   6/15
+				   ----
+configure.ac
+	- add -Wno-parentheses -Wno-format-security to CFLAGS if gcc (or clang)
+	  is the compiler
