@@ -62,6 +62,17 @@ s. Fixed a bug with vi-mode digit arguments that caused the last command to be
    set incorrectly. This prevents yank-last-arg from working as intended, for
    example.
 
+t. Make sure that all undo groups are closed when leaving vi insertion mode.  
+
+u. Make sure that the vi-mode `C' and `c' commands enter insert mode even if
+   the motion command doesn't have any effect.
+
+v. Fixed several potential memory leaks in the callback mode context handling.
+
+w. If readline is handling a SIGTTOU, make sure SIGTTOU is blocked while
+   executing the terminal cleanup code, since it's no longer run in a signal
+   handling context.
+
 2. New Features in Readline
 
 a. If a second consecutive completion attempt produces matches where the first
@@ -94,6 +105,8 @@ i. Readline tries to take advantage of the more regular structure of UTF-8
 
 j. The bindable operate-and-get-next command (and its default bindings) are
    now part of readline instead of a bash-specific addition.
+
+k. The signal cleanup code now blocks SIGINT while processing after a SIGINT.  
 
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-8.0, and the

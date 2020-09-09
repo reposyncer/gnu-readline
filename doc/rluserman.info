@@ -2,11 +2,11 @@ This is rluserman.info, produced by makeinfo version 6.7 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.0, 15 November 2019), a library which aids in the consistency
-of user interface across discrete programs which provide a command line
+(version 8.1, 17 July 2020), a library which aids in the consistency of
+user interface across discrete programs which provide a command line
 interface.
 
-   Copyright (C) 1988-2016 Free Software Foundation, Inc.
+   Copyright (C) 1988-2020 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -425,11 +425,11 @@ Variable Settings
           The number of possible completions that determines when the
           user is asked whether the list of possibilities should be
           displayed.  If the number of possible completions is greater
-          than this value, Readline will ask the user whether or not he
-          wishes to view them; otherwise, they are simply listed.  This
-          variable must be set to an integer value greater than or equal
-          to 0.  A negative value means Readline should never ask.  The
-          default limit is '100'.
+          than or equal to this value, Readline will ask whether or not
+          the user wishes to view them; otherwise, they are simply
+          listed.  This variable must be set to an integer value greater
+          than or equal to 0.  A negative value means Readline should
+          never ask.  The default limit is '100'.
 
      'convert-meta'
           If set to 'on', Readline will convert characters with the
@@ -508,7 +508,9 @@ Variable Settings
           to 'on' means that the text of the lines being edited will
           scroll horizontally on a single screen line when they are
           longer than the width of the screen, instead of wrapping onto
-          a new screen line.  By default, this variable is set to 'off'.
+          a new screen line.  This variable is automatically set to 'on'
+          for terminals of height 1.  By default, this variable is set
+          to 'off'.
 
      'input-meta'
           If set to 'on', Readline will enable eight-bit input (it will
@@ -950,8 +952,8 @@ variable assignment, and conditional syntax.
      # rather than as meta-prefixed characters
      set output-meta on
 
-     # if there are more than 150 possible completions for
-     # a word, ask the user if he wants to see all of them
+     # if there are 150 or more possible completions for a word,
+     # ask whether or not the user wants to see all of them
      set completion-query-items 150
 
      # For FTP
@@ -1027,8 +1029,13 @@ File: rluserman.info,  Node: Commands For Moving,  Next: Commands For History,  
      physical line or if the length of the current Readline line is not
      greater than the length of the prompt plus the screen width.
 
+'clear-display (M-C-l)'
+     Clear the screen and, if possible, the terminal's scrollback
+     buffer, then redraw the current line, leaving the current line at
+     the top of the screen.
+
 'clear-screen (C-l)'
-     Clear the screen and redraw the current line, leaving the current
+     Clear the screen, then redraw the current line, leaving the current
      line at the top of the screen.
 
 'redraw-current-line ()'
@@ -1063,10 +1070,14 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
 'reverse-search-history (C-r)'
      Search backward starting at the current line and moving 'up'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'forward-search-history (C-s)'
      Search forward starting at the current line and moving 'down'
      through the history as necessary.  This is an incremental search.
+     This command sets the region to the matched text and activates the
+     mark.
 
 'non-incremental-reverse-search-history (M-p)'
      Search backward starting at the current line and moving 'up'
@@ -1125,6 +1136,13 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
      history expansion facilities are used to extract the last argument,
      as if the '!$' history expansion had been specified.
 
+'operate-and-get-next (C-o)'
+     Accept the current line for return to the calling application as if
+     a newline had been entered, and fetch the next line relative to the
+     current line from the history for editing.  A numeric argument, if
+     supplied, specifies the history entry to use instead of the current
+     line.
+
 
 File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Prev: Commands For History,  Up: Bindable Readline Commands
 
@@ -1170,6 +1188,11 @@ File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Pr
      was bound to 'self-insert' instead of executing any editing
      commands.
 
+     Bracketed paste sets the region (the characters between point and
+     the mark) to the inserted text.  It uses the concept of an _active
+     mark_: when the mark is active, Readline redisplay uses the
+     terminal's standout mode to denote the region.
+
 'transpose-chars (C-t)'
      Drag the character before the cursor forward over the character at
      the cursor, moving the cursor forward as well.  If the insertion
@@ -1214,10 +1237,14 @@ File: rluserman.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Pr
 -------------------------
 
 'kill-line (C-k)'
-     Kill the text from point to the end of the line.
+     Kill the text from point to the end of the line.  With a negative
+     numeric argument, kill backward from the cursor to the beginning of
+     the current line.
 
 'backward-kill-line (C-x Rubout)'
      Kill backward from the cursor to the beginning of the current line.
+     With a negative numeric argument, kill forward from the cursor to
+     the end of the current line.
 
 'unix-line-discard (C-u)'
      Kill backward from the cursor to the beginning of the current line.
@@ -1971,30 +1998,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top908
-Node: Command Line Editing1430
-Node: Introduction and Notation2084
-Node: Readline Interaction3709
-Node: Readline Bare Essentials4902
-Node: Readline Movement Commands6687
-Node: Readline Killing Commands7649
-Node: Readline Arguments9569
-Node: Searching10615
-Node: Readline Init File12769
-Node: Readline Init File Syntax13924
-Node: Conditional Init Constructs34084
-Node: Sample Init File38282
-Node: Bindable Readline Commands41401
-Node: Commands For Moving42457
-Node: Commands For History44025
-Node: Commands For Text48291
-Node: Commands For Killing51734
-Node: Numeric Arguments54231
-Node: Commands For Completion55372
-Node: Keyboard Macros57342
-Node: Miscellaneous Commands58031
-Node: Readline vi Mode61954
-Node: GNU Free Documentation License62868
+Node: Top904
+Node: Command Line Editing1426
+Node: Introduction and Notation2080
+Node: Readline Interaction3705
+Node: Readline Bare Essentials4898
+Node: Readline Movement Commands6683
+Node: Readline Killing Commands7645
+Node: Readline Arguments9565
+Node: Searching10611
+Node: Readline Init File12765
+Node: Readline Init File Syntax13920
+Node: Conditional Init Constructs34180
+Node: Sample Init File38378
+Node: Bindable Readline Commands41504
+Node: Commands For Moving42560
+Node: Commands For History44320
+Node: Commands For Text49084
+Node: Commands For Killing52788
+Node: Numeric Arguments55503
+Node: Commands For Completion56644
+Node: Keyboard Macros58614
+Node: Miscellaneous Commands59303
+Node: Readline vi Mode63226
+Node: GNU Free Documentation License64140
 
 End Tag Table
 

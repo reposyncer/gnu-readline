@@ -34,6 +34,8 @@ i. Readline tries to take advantage of the more regular structure of UTF-8
 j. The bindable operate-and-get-next command (and its default bindings) are
    now part of readline instead of a bash-specific addition.
 
+k. The signal cleanup code now blocks SIGINT while processing after a SIGINT.  
+
 -------------------------------------------------------------------------------
 This is a terse description of the new features added to readline-8.0 since
 the release of readline-7.0.

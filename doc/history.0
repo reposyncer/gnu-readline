@@ -6,7 +6,7 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        history - GNU History Library
 
 [1mCOPYRIGHT[0m
-       The GNU History Library is Copyright (C) 1989-2017 by the Free Software
+       The GNU History Library is Copyright (C) 1989-2020 by the Free Software
        Foundation, Inc.
 
 [1mDESCRIPTION[0m
@@ -130,8 +130,8 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        grams.
 
    [1mIntroduction to History[0m
-       The programmer using the History library has  available  functions  for
-       remembering  lines on a history list, associating arbitrary data with a
+       A programmer using the History library has available functions for  re-
+       membering  lines  on  a history list, associating arbitrary data with a
        line, removing lines from the list, searching through the  list  for  a
        line  containing  an arbitrary text string, and referencing any line in
        the list directly.  In addition, a history [4mexpansion[24m function is avail-
@@ -144,9 +144,9 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        commands.  The basic history manipulation commands are identical to the
        history substitution provided by [1mbash[22m.
 
-       If the programmer desires, he can use the Readline library,  which  in-
-       cludes  some  history manipulation by default, and has the added advan-
-       tage of command line editing.
+       The programmer can also use the Readline library, which  includes  some
+       history manipulation by default, and has the added advantage of command
+       line editing.
 
        Before declaring any functions using any functionality the History  li-
        brary  provides in other code, an application writer should include the
@@ -154,7 +154,6 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        features.   It  supplies  extern  declarations for all of the library's
        public functions and variables, and declares all  of  the  public  data
        structures.
-
 
    [1mHistory Storage[0m
        The  history  list  is an array of history entries.  A history entry is
@@ -420,7 +419,7 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
        The maximum number of history entries.  This must be changed using [1msti-[0m
        [1mfle_history()[22m.
 
-       [4mint[24m [1mhistory_wite_timestamps[0m
+       [4mint[24m [1mhistory_write_timestamps[0m
        If non-zero, timestamps are written to the history file, so they can be
        preserved between sessions.  The default value is 0, meaning that time-
        stamps  are  not saved.  The current timestamp format uses the value of
@@ -503,4 +502,4 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
 
 
 
-GNU History 8.0                2019 November 15                     HISTORY(3)
+GNU History 8.1                  2020 July 17                       HISTORY(3)
