@@ -73,6 +73,10 @@ w. If readline is handling a SIGTTOU, make sure SIGTTOU is blocked while
    executing the terminal cleanup code, since it's no longer run in a signal
    handling context.
 
+x. Fixed a bug that could cause an application with an application-specific 
+   redisplay function to crash if the line data structures had not been
+   initialized.
+
 2. New Features in Readline
 
 a. If a second consecutive completion attempt produces matches where the first
