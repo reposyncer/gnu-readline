@@ -1237,10 +1237,14 @@ File: rluserman.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Pr
 -------------------------
 
 'kill-line (C-k)'
-     Kill the text from point to the end of the line.
+     Kill the text from point to the end of the line.  With a negative
+     numeric argument, kill backward from the cursor to the beginning of
+     the current line.
 
 'backward-kill-line (C-x Rubout)'
      Kill backward from the cursor to the beginning of the current line.
+     With a negative numeric argument, kill forward from the cursor to
+     the end of the current line.
 
 'unix-line-discard (C-u)'
      Kill backward from the cursor to the beginning of the current line.
@@ -2012,12 +2016,12 @@ Node: Commands For Moving42560
 Node: Commands For History44320
 Node: Commands For Text49084
 Node: Commands For Killing52788
-Node: Numeric Arguments55285
-Node: Commands For Completion56426
-Node: Keyboard Macros58396
-Node: Miscellaneous Commands59085
-Node: Readline vi Mode63008
-Node: GNU Free Documentation License63922
+Node: Numeric Arguments55503
+Node: Commands For Completion56644
+Node: Keyboard Macros58614
+Node: Miscellaneous Commands59303
+Node: Readline vi Mode63226
+Node: GNU Free Documentation License64140
 
 End Tag Table
 

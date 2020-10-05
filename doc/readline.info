@@ -1239,10 +1239,14 @@ File: readline.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Pre
 -------------------------
 
 'kill-line (C-k)'
-     Kill the text from point to the end of the line.
+     Kill the text from point to the end of the line.  With a negative
+     numeric argument, kill backward from the cursor to the beginning of
+     the current line.
 
 'backward-kill-line (C-x Rubout)'
      Kill backward from the cursor to the beginning of the current line.
+     With a negative numeric argument, kill forward from the cursor to
+     the end of the current line.
 
 'unix-line-discard (C-u)'
      Kill backward from the cursor to the beginning of the current line.
@@ -4632,9 +4636,9 @@ Function and Variable Index
 * backward-char (C-b):                   Commands For Moving. (line  15)
 * backward-delete-char (Rubout):         Commands For Text.   (line  17)
 * backward-kill-line (C-x Rubout):       Commands For Killing.
-                                                              (line   9)
+                                                              (line  11)
 * backward-kill-word (M-<DEL>):          Commands For Killing.
-                                                              (line  24)
+                                                              (line  28)
 * backward-word (M-b):                   Commands For Moving. (line  22)
 * beginning-of-history (M-<):            Commands For History.
                                                               (line  19)
@@ -4675,16 +4679,16 @@ Function and Variable Index
 * convert-meta:                          Readline Init File Syntax.
                                                               (line 105)
 * copy-backward-word ():                 Commands For Killing.
-                                                              (line  56)
+                                                              (line  60)
 * copy-forward-word ():                  Commands For Killing.
-                                                              (line  61)
+                                                              (line  65)
 * copy-region-as-kill ():                Commands For Killing.
-                                                              (line  52)
+                                                              (line  56)
 * delete-char (C-d):                     Commands For Text.   (line  12)
 * delete-char-or-list ():                Commands For Completion.
                                                               (line  39)
 * delete-horizontal-space ():            Commands For Killing.
-                                                              (line  44)
+                                                              (line  48)
 * digit-argument (M-0, M-1, ... M--):    Numeric Arguments.   (line   6)
 * disable-completion:                    Readline Init File Syntax.
                                                               (line 113)
@@ -4750,11 +4754,11 @@ Function and Variable Index
 * kill-line (C-k):                       Commands For Killing.
                                                               (line   6)
 * kill-region ():                        Commands For Killing.
-                                                              (line  48)
+                                                              (line  52)
 * kill-whole-line ():                    Commands For Killing.
-                                                              (line  15)
-* kill-word (M-d):                       Commands For Killing.
                                                               (line  19)
+* kill-word (M-d):                       Commands For Killing.
+                                                              (line  23)
 * mark-modified-lines:                   Readline Init File Syntax.
                                                               (line 231)
 * mark-symlinked-directories:            Readline Init File Syntax.
@@ -5084,7 +5088,7 @@ Function and Variable Index
 * set-mark (C-@):                        Miscellaneous Commands.
                                                               (line  33)
 * shell-transpose-words (M-C-t):         Commands For Killing.
-                                                              (line  28)
+                                                              (line  32)
 * show-all-if-ambiguous:                 Readline Init File Syntax.
                                                               (line 275)
 * show-all-if-unmodified:                Readline Init File Syntax.
@@ -5105,11 +5109,11 @@ Function and Variable Index
                                                               (line  23)
 * universal-argument ():                 Numeric Arguments.   (line  10)
 * unix-filename-rubout ():               Commands For Killing.
-                                                              (line  39)
+                                                              (line  43)
 * unix-line-discard (C-u):               Commands For Killing.
-                                                              (line  12)
+                                                              (line  16)
 * unix-word-rubout (C-w):                Commands For Killing.
-                                                              (line  35)
+                                                              (line  39)
 * upcase-word (M-u):                     Commands For Text.   (line  61)
 * vi-cmd-mode-string:                    Readline Init File Syntax.
                                                               (line 309)
@@ -5120,13 +5124,13 @@ Function and Variable Index
 * visible-stats:                         Readline Init File Syntax.
                                                               (line 331)
 * yank (C-y):                            Commands For Killing.
-                                                              (line  66)
+                                                              (line  70)
 * yank-last-arg (M-. or M-_):            Commands For History.
                                                               (line  83)
 * yank-nth-arg (M-C-y):                  Commands For History.
                                                               (line  74)
 * yank-pop (M-y):                        Commands For Killing.
-                                                              (line  69)
+                                                              (line  73)
 
 
 
@@ -5149,41 +5153,41 @@ Node: Commands For Moving42706
 Node: Commands For History44465
 Node: Commands For Text49228
 Node: Commands For Killing52931
-Node: Numeric Arguments55427
-Node: Commands For Completion56567
-Node: Keyboard Macros58536
-Node: Miscellaneous Commands59224
-Node: Readline vi Mode63146
-Node: Programming with GNU Readline64963
-Node: Basic Behavior65949
-Node: Custom Functions69632
-Node: Readline Typedefs71115
-Node: Function Writing72749
-Node: Readline Variables74063
-Node: Readline Convenience Functions86735
-Node: Function Naming87807
-Node: Keymaps89069
-Node: Binding Keys92148
-Node: Associating Function Names and Bindings96696
-Node: Allowing Undoing99475
-Node: Redisplay102025
-Node: Modifying Text106049
-Node: Character Input107296
-Node: Terminal Management109194
-Node: Utility Functions111017
-Node: Miscellaneous Functions114345
-Node: Alternate Interface117764
-Node: A Readline Example120506
-Node: Alternate Interface Example122445
-Node: Readline Signal Handling125977
-Node: Custom Completers135236
-Node: How Completing Works135956
-Node: Completion Functions139263
-Node: Completion Variables142837
-Node: A Short Completion Example158630
-Node: GNU Free Documentation License171410
-Node: Concept Index196584
-Node: Function and Variable Index198105
+Node: Numeric Arguments55645
+Node: Commands For Completion56785
+Node: Keyboard Macros58754
+Node: Miscellaneous Commands59442
+Node: Readline vi Mode63364
+Node: Programming with GNU Readline65181
+Node: Basic Behavior66167
+Node: Custom Functions69850
+Node: Readline Typedefs71333
+Node: Function Writing72967
+Node: Readline Variables74281
+Node: Readline Convenience Functions86953
+Node: Function Naming88025
+Node: Keymaps89287
+Node: Binding Keys92366
+Node: Associating Function Names and Bindings96914
+Node: Allowing Undoing99693
+Node: Redisplay102243
+Node: Modifying Text106267
+Node: Character Input107514
+Node: Terminal Management109412
+Node: Utility Functions111235
+Node: Miscellaneous Functions114563
+Node: Alternate Interface117982
+Node: A Readline Example120724
+Node: Alternate Interface Example122663
+Node: Readline Signal Handling126195
+Node: Custom Completers135454
+Node: How Completing Works136174
+Node: Completion Functions139481
+Node: Completion Variables143055
+Node: A Short Completion Example158848
+Node: GNU Free Documentation License171628
+Node: Concept Index196802
+Node: Function and Variable Index198323
 
 End Tag Table
 
