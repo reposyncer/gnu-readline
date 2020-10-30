@@ -25,7 +25,8 @@ f. New active mark and face feature: when enabled, it will highlight the text
 
 g. Readline sets the mark in several additional commands.
 
-h. Bracketed paste mode is enabled by default (for now).
+h. Bracketed paste mode is enabled by default. There is a configure-time
+   option (--enable-bracketed-paste-default) to set the default to on or off.
 
 i. Readline tries to take advantage of the more regular structure of UTF-8
    characters to identify the beginning and end of characters when moving
@@ -33,3 +34,5 @@ i. Readline tries to take advantage of the more regular structure of UTF-8
 
 j. The bindable operate-and-get-next command (and its default bindings) are
    now part of readline instead of a bash-specific addition.
+
+k. The signal cleanup code now blocks SIGINT while processing after a SIGINT.  
