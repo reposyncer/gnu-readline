@@ -384,7 +384,7 @@ HISTORY(3)                 Library Functions Manual                 HISTORY(3)
               -1     if there was an error in expansion;
               2      if  the  returned  line should be displayed, but not exe-
                      cuted, as with the [1m:p [22mmodifier.
-       If an error ocurred in expansion, then [4moutput[24m  contains  a  descriptive
+       If an error occurred in expansion, then [4moutput[24m contains  a  descriptive
        error message.
 
        [4mchar[24m [4m*[24m [1mget_history_event [22m([4mconst[24m [4mchar[24m [4m*string,[24m [4mint[24m [4m*cindex,[24m [4mint[24m [4mqchar[24m)

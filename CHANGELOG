@@ -1394,3 +1394,12 @@ configure.ac
 configure.ac
 	- add -Wno-parentheses -Wno-format-security to CFLAGS if gcc (or clang)
 	  is the compiler
+
+				   10/29
+				   -----
+configure.ac
+	- --enable-bracketed-paste-default: new invocation option, toggles the
+	  default value of enable-bracketed-paste (on by default)
+
+INSTALL
+	- document new --enable-bracketed-paste-default configure option

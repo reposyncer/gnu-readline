@@ -1,6 +1,6 @@
 This is readline.info, produced by makeinfo version 6.7 from rlman.texi.
 
-This manual describes the GNU Readline Library (version 8.1, 17 July
+This manual describes the GNU Readline Library (version 8.1, 29 October
 2020), a library which aids in the consistency of user interface across
 discrete programs which provide a command line interface.
 
@@ -473,7 +473,7 @@ Variable Settings
           buffer as a single string of characters, instead of treating
           each character as if it had been read from the keyboard.  This
           can prevent pasted characters from being interpreted as
-          editing commands.  The default is 'off'.
+          editing commands.  The default is 'On'.
 
      'enable-keypad'
           When set to 'on', Readline will try to enable the application
@@ -5135,59 +5135,59 @@ Function and Variable Index
 
 
 Tag Table:
-Node: Top861
-Node: Command Line Editing1586
-Node: Introduction and Notation2238
-Node: Readline Interaction3862
-Node: Readline Bare Essentials5054
-Node: Readline Movement Commands6838
-Node: Readline Killing Commands7799
-Node: Readline Arguments9718
-Node: Searching10763
-Node: Readline Init File12916
-Node: Readline Init File Syntax14070
-Node: Conditional Init Constructs34329
-Node: Sample Init File38526
-Node: Bindable Readline Commands41651
-Node: Commands For Moving42706
-Node: Commands For History44465
-Node: Commands For Text49228
-Node: Commands For Killing52931
-Node: Numeric Arguments55645
-Node: Commands For Completion56785
-Node: Keyboard Macros58754
-Node: Miscellaneous Commands59442
-Node: Readline vi Mode63364
-Node: Programming with GNU Readline65181
-Node: Basic Behavior66167
-Node: Custom Functions69850
-Node: Readline Typedefs71333
-Node: Function Writing72967
-Node: Readline Variables74281
-Node: Readline Convenience Functions86953
-Node: Function Naming88025
-Node: Keymaps89287
-Node: Binding Keys92366
-Node: Associating Function Names and Bindings96914
-Node: Allowing Undoing99693
-Node: Redisplay102243
-Node: Modifying Text106267
-Node: Character Input107514
-Node: Terminal Management109412
-Node: Utility Functions111235
-Node: Miscellaneous Functions114563
-Node: Alternate Interface117982
-Node: A Readline Example120724
-Node: Alternate Interface Example122663
-Node: Readline Signal Handling126195
-Node: Custom Completers135454
-Node: How Completing Works136174
-Node: Completion Functions139481
-Node: Completion Variables143055
-Node: A Short Completion Example158848
-Node: GNU Free Documentation License171628
-Node: Concept Index196802
-Node: Function and Variable Index198323
+Node: Top864
+Node: Command Line Editing1589
+Node: Introduction and Notation2241
+Node: Readline Interaction3865
+Node: Readline Bare Essentials5057
+Node: Readline Movement Commands6841
+Node: Readline Killing Commands7802
+Node: Readline Arguments9721
+Node: Searching10766
+Node: Readline Init File12919
+Node: Readline Init File Syntax14073
+Node: Conditional Init Constructs34331
+Node: Sample Init File38528
+Node: Bindable Readline Commands41653
+Node: Commands For Moving42708
+Node: Commands For History44467
+Node: Commands For Text49230
+Node: Commands For Killing52933
+Node: Numeric Arguments55647
+Node: Commands For Completion56787
+Node: Keyboard Macros58756
+Node: Miscellaneous Commands59444
+Node: Readline vi Mode63366
+Node: Programming with GNU Readline65183
+Node: Basic Behavior66169
+Node: Custom Functions69852
+Node: Readline Typedefs71335
+Node: Function Writing72969
+Node: Readline Variables74283
+Node: Readline Convenience Functions86955
+Node: Function Naming88027
+Node: Keymaps89289
+Node: Binding Keys92368
+Node: Associating Function Names and Bindings96916
+Node: Allowing Undoing99695
+Node: Redisplay102245
+Node: Modifying Text106269
+Node: Character Input107516
+Node: Terminal Management109414
+Node: Utility Functions111237
+Node: Miscellaneous Functions114565
+Node: Alternate Interface117984
+Node: A Readline Example120726
+Node: Alternate Interface Example122665
+Node: Readline Signal Handling126197
+Node: Custom Completers135456
+Node: How Completing Works136176
+Node: Completion Functions139483
+Node: Completion Variables143057
+Node: A Short Completion Example158850
+Node: GNU Free Documentation License171630
+Node: Concept Index196804
+Node: Function and Variable Index198325
 
 End Tag Table
 

@@ -1,7 +1,7 @@
 This is history.info, produced by makeinfo version 6.7 from
 history.texi.
 
-This document describes the GNU History library (version 8.1, 17 July
+This document describes the GNU History library (version 8.1, 29 October
 2020), a programming tool that provides a consistent user interface for
 recalling lines of previously typed input.
 
@@ -1395,28 +1395,28 @@ Appendix C Function and Variable Index
 
 
 Tag Table:
-Node: Top845
-Node: Using History Interactively1490
-Node: History Interaction1998
-Node: Event Designators3896
-Node: Word Designators5170
-Node: Modifiers6930
-Node: Programming with GNU History8475
-Node: Introduction to History9219
-Node: History Storage10897
-Node: History Functions12032
-Node: Initializing History and State Management13021
-Node: History List Management13833
-Node: Information About the History List16127
-Node: Moving Around the History List17741
-Node: Searching the History List18834
-Node: Managing the History File20759
-Node: History Expansion22579
-Node: History Variables24508
-Node: History Programming Example28488
-Node: GNU Free Documentation License31165
-Node: Concept Index56337
-Node: Function and Variable Index57042
+Node: Top848
+Node: Using History Interactively1493
+Node: History Interaction2001
+Node: Event Designators3899
+Node: Word Designators5173
+Node: Modifiers6933
+Node: Programming with GNU History8478
+Node: Introduction to History9222
+Node: History Storage10900
+Node: History Functions12035
+Node: Initializing History and State Management13024
+Node: History List Management13836
+Node: Information About the History List16130
+Node: Moving Around the History List17744
+Node: Searching the History List18837
+Node: Managing the History File20762
+Node: History Expansion22582
+Node: History Variables24511
+Node: History Programming Example28491
+Node: GNU Free Documentation License31168
+Node: Concept Index56340
+Node: Function and Variable Index57045
 
 End Tag Table
 

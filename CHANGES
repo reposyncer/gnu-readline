@@ -77,6 +77,12 @@ x. Fixed a bug that could cause an application with an application-specific
    redisplay function to crash if the line data structures had not been
    initialized.
 
+y. Terminals that are named "dumb" or unknown do not enable bracketed paste
+   by default.
+
+z. Ensure that disabling bracketed paste turns off highlighting the incremental
+   search string when the search is successful.
+
 2. New Features in Readline
 
 a. If a second consecutive completion attempt produces matches where the first
@@ -101,7 +107,8 @@ f. New active mark and face feature: when enabled, it will highlight the text
 
 g. Readline sets the mark in several additional commands.
 
-h. Bracketed paste mode is enabled by default (for now).
+h. Bracketed paste mode is enabled by default. There is a configure-time
+   option (--enable-bracketed-paste-default) to set the default to on or off.
 
 i. Readline tries to take advantage of the more regular structure of UTF-8
    characters to identify the beginning and end of characters when moving
