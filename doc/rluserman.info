@@ -2,8 +2,8 @@ This is rluserman.info, produced by makeinfo version 6.7 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.1, 17 July 2020), a library which aids in the consistency of
-user interface across discrete programs which provide a command line
+(version 8.1, 29 October 2020), a library which aids in the consistency
+of user interface across discrete programs which provide a command line
 interface.
 
    Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -471,7 +471,7 @@ Variable Settings
           buffer as a single string of characters, instead of treating
           each character as if it had been read from the keyboard.  This
           can prevent pasted characters from being interpreted as
-          editing commands.  The default is 'off'.
+          editing commands.  The default is 'On'.
 
      'enable-keypad'
           When set to 'on', Readline will try to enable the application
@@ -1998,30 +1998,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top904
-Node: Command Line Editing1426
-Node: Introduction and Notation2080
-Node: Readline Interaction3705
-Node: Readline Bare Essentials4898
-Node: Readline Movement Commands6683
-Node: Readline Killing Commands7645
-Node: Readline Arguments9565
-Node: Searching10611
-Node: Readline Init File12765
-Node: Readline Init File Syntax13920
-Node: Conditional Init Constructs34180
-Node: Sample Init File38378
-Node: Bindable Readline Commands41504
-Node: Commands For Moving42560
-Node: Commands For History44320
-Node: Commands For Text49084
-Node: Commands For Killing52788
-Node: Numeric Arguments55503
-Node: Commands For Completion56644
-Node: Keyboard Macros58614
-Node: Miscellaneous Commands59303
-Node: Readline vi Mode63226
-Node: GNU Free Documentation License64140
+Node: Top907
+Node: Command Line Editing1429
+Node: Introduction and Notation2083
+Node: Readline Interaction3708
+Node: Readline Bare Essentials4901
+Node: Readline Movement Commands6686
+Node: Readline Killing Commands7648
+Node: Readline Arguments9568
+Node: Searching10614
+Node: Readline Init File12768
+Node: Readline Init File Syntax13923
+Node: Conditional Init Constructs34182
+Node: Sample Init File38380
+Node: Bindable Readline Commands41506
+Node: Commands For Moving42562
+Node: Commands For History44322
+Node: Commands For Text49086
+Node: Commands For Killing52790
+Node: Numeric Arguments55505
+Node: Commands For Completion56646
+Node: Keyboard Macros58616
+Node: Miscellaneous Commands59305
+Node: Readline vi Mode63228
+Node: GNU Free Documentation License64142
 
 End Tag Table
 

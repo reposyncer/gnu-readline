@@ -254,7 +254,7 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               escapes  to  begin and end sequences of non-printing characters,
               which can be used to embed a terminal control sequence into  the
               mode string.
-       [1menable-bracketed-paste (Off)[0m
+       [1menable-bracketed-paste (On)[0m
               When  set  to  [1mOn[22m, readline will configure the terminal in a way
               that will enable it to insert each paste into the editing buffer
               as a single string of characters, instead of treating each char-
@@ -1127,4 +1127,4 @@ READLINE(3)                Library Functions Manual                READLINE(3)
 
 
 
-GNU Readline 8.0                 2020 March 24                     READLINE(3)
+GNU Readline 8.1                2020 October 29                    READLINE(3)
