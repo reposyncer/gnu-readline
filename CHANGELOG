@@ -1403,3 +1403,7 @@ configure.ac
 
 INSTALL
 	- document new --enable-bracketed-paste-default configure option
+
+				   12/4
+				   ----
+[readline-8.1 frozen]

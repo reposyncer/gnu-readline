@@ -418,9 +418,11 @@ add_character:
     {
       /* If we have a multibyte character, see if it's bound to something that
 	 affects the search. */
-      if (cxt->mb[1])
+#if defined (HANDLE_MULTIBYTE)
+      if (MB_CUR_MAX > 1 && rl_byte_oriented == 0 && cxt->mb[1])
 	f = rl_function_of_keyseq (cxt->mb, cxt->keymap, (int *)NULL);
       else
+#endif
 	{
 	  f = cxt->keymap[c].function;
 	  if (f == rl_do_lowercase_version)
@@ -617,6 +619,7 @@ opcode_dispatch:
       rl_restore_prompt();
       rl_clear_message ();
 
+      _rl_fix_point (1);	/* in case save_line and save_point are out of sync */
       return -1;
 
     case -5:	/* C-W */
