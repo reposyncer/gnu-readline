@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.1, version 2.90])
+AC_REVISION([for Readline 8.1, version 2.91])
 
 AC_INIT(readline, 8.1, bug-readline@gnu.org)
 
@@ -145,10 +145,11 @@ AC_HEADER_STDC
 
 AC_HEADER_STAT
 AC_HEADER_DIRENT
+AC_HEADER_TIME
 
-AC_CHECK_FUNCS(fcntl kill lstat readlink)
-AC_CHECK_FUNCS(fnmatch memmove pselect putenv select setenv setlocale \
-		strcasecmp strpbrk tcgetattr vsnprintf)
+AC_CHECK_FUNCS(fcntl gettimeofday kill lstat pselect readlink select setitimer)
+AC_CHECK_FUNCS(fnmatch memmove putenv setenv setlocale \
+		strcasecmp strpbrk sysconf tcgetattr vsnprintf)
 AC_CHECK_FUNCS(isascii isxdigit)
 AC_CHECK_FUNCS(getpwent getpwnam getpwuid)
 
@@ -158,7 +159,8 @@ AC_FUNC_STRCOLL
 AC_CHECK_HEADERS(fcntl.h unistd.h stdlib.h varargs.h stdarg.h stdbool.h \
 		string.h strings.h \
 		limits.h locale.h pwd.h memory.h termcap.h termios.h termio.h)
-AC_CHECK_HEADERS(sys/ioctl.h sys/pte.h sys/stream.h sys/select.h sys/file.h)
+AC_CHECK_HEADERS(sys/ioctl.h sys/pte.h sys/stream.h sys/select.h \
+		sys/time.h sys/file.h)
 
 AC_CHECK_HEADERS(sys/ptem.h,,,
 [[
@@ -190,6 +192,7 @@ BASH_CHECK_SPEED_T
 BASH_STRUCT_WINSIZE
 BASH_STRUCT_DIRENT_D_INO
 BASH_STRUCT_DIRENT_D_FILENO
+BASH_STRUCT_TIMEVAL
 
 AC_CHECK_HEADERS(libaudit.h)
 AC_CHECK_DECLS([AUDIT_USER_TTY],,, [[#include <linux/audit.h>]])

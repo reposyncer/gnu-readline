@@ -32,6 +32,7 @@ posixdir.h	f
 posixjmp.h	f
 posixselect.h	f
 posixstat.h	f
+posixtime.h	f
 readline.h	f
 rlconf.h	f
 rldefs.h	f
@@ -121,6 +122,8 @@ examples/rlevent.c	f
 examples/rlkeymaps.c	f
 examples/rltest.c	f
 examples/rl-callbacktest.c	f
+examples/rl-timeout.c	f
+examples/rl-test-timeout	f
 examples/rl.c		f
 examples/rlptytest.c	f
 examples/rlversion.c	f
