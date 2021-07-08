@@ -134,6 +134,7 @@ extern int rl_end_of_history (int, int);
 extern int rl_get_next_history (int, int);
 extern int rl_get_previous_history (int, int);
 extern int rl_operate_and_get_next (int, int);
+extern int rl_fetch_history (int, int);
 
 /* Bindable commands for managing the mark and region. */
 extern int rl_set_mark (int, int);
@@ -335,6 +336,7 @@ extern char *rl_untranslate_keyseq (int);
 extern rl_command_func_t *rl_named_function (const char *);
 extern rl_command_func_t *rl_function_of_keyseq (const char *, Keymap, int *);
 extern rl_command_func_t *rl_function_of_keyseq_len (const char *, size_t, Keymap, int *);
+extern int rl_trim_arg_from_keyseq (const char *, size_t, Keymap);
 
 extern void rl_list_funmap_names (void);
 extern char **rl_invoking_keyseqs_in_map (rl_command_func_t *, Keymap);

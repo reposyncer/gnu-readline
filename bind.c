@@ -880,6 +880,84 @@ rl_function_of_keyseq_len (const char *keyseq, size_t len, Keymap map, int *type
   return _rl_function_of_keyseq_internal (keyseq, len, map, type);
 }
 
+/* Assuming there is a numeric argument at the beginning of KEYSEQ (the
+   caller is responsible for checking), return the index of the portion of
+   the key sequence following the numeric argument. If there's no numeric
+   argument (?), or if KEYSEQ consists solely of a numeric argument (?),
+   return -1. */
+int
+rl_trim_arg_from_keyseq	(const char *keyseq, size_t len, Keymap map)
+{
+  register int i, j, parsing_digits;
+  unsigned char ic;
+  Keymap map0;
+
+  if (map == 0)
+    map = _rl_keymap;
+  map0 = map;
+
+  /* The digits following the initial one (e.g., the binding to digit-argument)
+    or the optional `-' in a binding to digit-argument or universal-argument
+    are not added to rl_executing_keyseq. This is basically everything read by
+    rl_digit_loop. The parsing_digits logic is here in case they ever are. */
+  for (i = j = parsing_digits = 0; keyseq && i < len; i++)
+    {
+      ic = keyseq[i];
+
+      if (parsing_digits)
+	{
+	  if (_rl_digit_p (ic))
+	    {
+	      j = i + 1;
+	      continue;
+	    }
+	  parsing_digits = 0;
+	}
+
+      if (map[ic].type == ISKMAP)
+	{
+	  if (i + 1 == len)
+	    return -1;
+	  map = FUNCTION_TO_KEYMAP (map, ic);
+	  continue;
+	}
+      if (map[ic].type == ISFUNC)
+	{
+#if defined (VI_MODE)
+	  if (map[ic].function != rl_digit_argument && map[ic].function != rl_universal_argument && map[ic].function != rl_vi_arg_digit)
+#else
+	  if (map[ic].function != rl_digit_argument && map[ic].function != rl_universal_argument)
+#endif
+	    return (j);
+
+	  /* We don't bother with a keyseq that is only a numeric argument */
+	  if (i + 1 == len)
+	    return -1;
+
+	  map = map0;
+	  parsing_digits = 1;
+
+	  /* This logic should be identical to rl_digit_loop */
+	  /* We accept M-- as equivalent to M--1, C-u- as equivalent to C-u-1
+	     but set parsing_digits to 2 to note that we saw `-' */
+	  if (map[ic].function == rl_universal_argument && (i + 1 == '-'))
+	    {
+	      i++;
+	      parsing_digits = 2;
+	    }
+	  if (map[ic].function == rl_digit_argument && ic == '-')
+	    {
+	      parsing_digits = 2;
+	    }
+	  j = i + 1;
+	}
+    }
+
+  /* If we're still parsing digits by the time we get here, we don't allow a
+     key sequence that consists solely of a numeric argument */
+  return -1;
+}
+  
 /* The last key bindings file read. */
 static char *last_readline_init_file = (char *)NULL;
 
@@ -1153,6 +1231,12 @@ const char * const _rl_possible_control_prefixes[] = {
 const char * const _rl_possible_meta_prefixes[] = {
   "Meta", "M-", (const char *)NULL
 };
+
+/* Forward declarations */
+static int parser_if (char *);
+static int parser_else (char *);
+static int parser_endif (char *);
+static int parser_include (char *);
 
 /* Conditionals. */
 
@@ -1813,6 +1897,7 @@ static const struct {
   { "convert-meta",		&_rl_convert_meta_chars_to_ascii, 0 },
   { "disable-completion",	&rl_inhibit_completion,		0 },
   { "echo-control-characters",	&_rl_echo_control_chars,	0 },
+  { "enable-active-region",	&_rl_enable_active_region,	0 },
   { "enable-bracketed-paste",	&_rl_enable_bracketed_paste,	V_SPECIAL },
   { "enable-keypad",		&_rl_enable_keypad,		0 },
   { "enable-meta-key",		&_rl_enable_meta,		0 },
