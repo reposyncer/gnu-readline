@@ -934,7 +934,6 @@ rl_trim_arg_from_keyseq	(const char *keyseq, size_t len, Keymap map)
 	  if (i + 1 == len)
 	    return -1;
 
-	  map = map0;
 	  parsing_digits = 1;
 
 	  /* This logic should be identical to rl_digit_loop */
@@ -949,6 +948,8 @@ rl_trim_arg_from_keyseq	(const char *keyseq, size_t len, Keymap map)
 	    {
 	      parsing_digits = 2;
 	    }
+
+	  map = map0;
 	  j = i + 1;
 	}
     }
@@ -2631,6 +2632,15 @@ _rl_get_keyname (int key)
       keyname[i++] = '2';
       c -= 128;
       keyname[i++] = (c / 8) + '0';
+      c = (c % 8) + '0';
+    }
+  /* These characters are valid UTF-8; convert them into octal escape
+     sequences as well. This changes C. */
+  else if (c >= 160)
+    {
+      keyname[i++] = '\\';
+      keyname[i++] = '0' + ((((unsigned char)c) >> 6) & 0x07);
+      keyname[i++] = '0' + ((((unsigned char)c) >> 3) & 0x07);
       c = (c % 8) + '0';
     }
 

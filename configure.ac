@@ -116,8 +116,8 @@ AC_MINIX
 
 # If we're using gcc and the user hasn't specified CFLAGS, add -O2 to CFLAGS
 if test -n "$want_auto_cflags" ; then
-	AUTO_CFLAGS="-g ${GCC+-O2}"
-	STYLE_CFLAGS="${GCC+-Wno-parentheses} ${GCC+-Wno-format-security}"
+	AUTO_CFLAGS="-g ${GCC:+-O2}"
+	STYLE_CFLAGS="${GCC:+-Wno-parentheses} ${GCC:+-Wno-format-security}"
 fi
 
 AC_PROG_GCC_TRADITIONAL
