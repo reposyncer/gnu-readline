@@ -5,7 +5,7 @@ dnl report bugs to chet@po.cwru.edu
 dnl
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 1987-2020 Free Software Foundation, Inc.
+# Copyright (C) 1987-2021 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.1, version 2.91])
+AC_REVISION([for Readline 8.1, version 2.94])
 
 AC_INIT(readline, 8.1, bug-readline@gnu.org)
 
 dnl make sure we are using a recent autoconf version
-AC_PREREQ(2.50)
+AC_PREREQ(2.63)
 
 AC_CONFIG_SRCDIR(readline.h)
 AC_CONFIG_AUX_DIR(./support)
@@ -41,7 +41,7 @@ dnl configure defaults
 opt_curses=no
 
 dnl arguments to configure
-AC_ARG_WITH(curses, AC_HELP_STRING([--with-curses], [use the curses library instead of the termcap library]), opt_curses=$withval)
+AC_ARG_WITH(curses, AS_HELP_STRING([--with-curses], [use the curses library instead of the termcap library]), opt_curses=$withval)
 
 if test "$opt_curses" = "yes"; then
 	prefer_curses=yes
@@ -54,12 +54,12 @@ opt_shared_libs=yes
 opt_install_examples=yes
 opt_bracketed_paste_default=yes
 
-AC_ARG_ENABLE(multibyte, AC_HELP_STRING([--enable-multibyte], [enable multibyte characters if OS supports them]), opt_multibyte=$enableval)
-AC_ARG_ENABLE(shared, AC_HELP_STRING([--enable-shared], [build shared libraries [[default=YES]]]), opt_shared_libs=$enableval)
-AC_ARG_ENABLE(static, AC_HELP_STRING([--enable-static], [build static libraries [[default=YES]]]), opt_static_libs=$enableval)
-AC_ARG_ENABLE(install-examples, AC_HELP_STRING([--disable-install-examples], [don't install examples [[default=install]]]), opt_install_examples=$enableval)
+AC_ARG_ENABLE(multibyte, AS_HELP_STRING([--enable-multibyte], [enable multibyte characters if OS supports them]), opt_multibyte=$enableval)
+AC_ARG_ENABLE(shared, AS_HELP_STRING([--enable-shared], [build shared libraries [[default=YES]]]), opt_shared_libs=$enableval)
+AC_ARG_ENABLE(static, AS_HELP_STRING([--enable-static], [build static libraries [[default=YES]]]), opt_static_libs=$enableval)
+AC_ARG_ENABLE(install-examples, AS_HELP_STRING([--disable-install-examples], [don't install examples [[default=install]]]), opt_install_examples=$enableval)
 
-AC_ARG_ENABLE(bracketed-paste-default, AC_HELP_STRING([--disable-bracketed-paste-default], [disable bracketed paste by default [[default=enable]]]), opt_bracketed_paste_default=$enableval)
+AC_ARG_ENABLE(bracketed-paste-default, AS_HELP_STRING([--disable-bracketed-paste-default], [disable bracketed paste by default [[default=enable]]]), opt_bracketed_paste_default=$enableval)
 
 if test $opt_multibyte = no; then
 AC_DEFINE(NO_MULTIBYTE_SUPPORT)
@@ -111,13 +111,12 @@ test -z "$CFLAGS" && want_auto_cflags=1
 
 AC_PROG_MAKE_SET
 AC_PROG_CC
-dnl AC_AIX
-AC_MINIX
+AC_USE_SYSTEM_EXTENSIONS
 
 # If we're using gcc and the user hasn't specified CFLAGS, add -O2 to CFLAGS
 if test -n "$want_auto_cflags" ; then
 	AUTO_CFLAGS="-g ${GCC:+-O2}"
-	STYLE_CFLAGS="${GCC:+-Wno-parentheses} ${GCC:+-Wno-format-security}"
+	STYLE_CFLAGS="${GCC:+-Wno-parentheses} ${GCC:+-Wno-format-security} ${GCC:+-Wno-tautological-constant-out-of-range-compare}"
 fi
 
 AC_PROG_GCC_TRADITIONAL
@@ -136,16 +135,11 @@ AC_C_PROTOTYPES
 AC_C_CHAR_UNSIGNED
 AC_C_VOLATILE
 
-AC_TYPE_SIGNAL
-
 AC_TYPE_SIZE_T
 AC_CHECK_TYPE(ssize_t, int)
 
-AC_HEADER_STDC
-
 AC_HEADER_STAT
 AC_HEADER_DIRENT
-AC_HEADER_TIME
 
 AC_CHECK_FUNCS(fcntl gettimeofday kill lstat pselect readlink select setitimer)
 AC_CHECK_FUNCS(fnmatch memmove putenv setenv setlocale \
@@ -177,14 +171,12 @@ BASH_SYS_REINSTALL_SIGHANDLERS
 BASH_FUNC_POSIX_SETJMP
 BASH_FUNC_LSTAT
 BASH_FUNC_STRCOLL
-BASH_FUNC_CTYPE_NONASCII
 
 BASH_CHECK_GETPW_FUNCS
 
 AC_HEADER_TIOCGWINSZ
 
 BASH_TYPE_SIG_ATOMIC_T
-BASH_TYPE_SIGHANDLER
 
 BASH_HAVE_TIOCSTAT
 BASH_HAVE_FIONREAD
@@ -331,8 +323,9 @@ AC_SUBST(LIBVERSION)
 AC_SUBST(TERMCAP_LIB)
 AC_SUBST(TERMCAP_PKG_CONFIG_LIB)
 
-AC_OUTPUT([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc],
-[
-# Makefile uses this timestamp file to record whether config.h is up to date.
-echo > stamp-h
-])
+AC_CONFIG_FILES([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc])
+
+dnl Makefile uses this timestamp file to record whether config.h is up to date.
+AC_CONFIG_COMMANDS([stamp-h], [echo > stamp-h])
+
+AC_OUTPUT

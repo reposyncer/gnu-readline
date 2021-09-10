@@ -1,6 +1,8 @@
 /* config.h.in.  Maintained by hand. */
 
 /* Template definitions for autoconf */
+
+/* These are set by AC_USE_SYSTEM_EXTENSIONS */
 #undef __EXTENSIONS__
 #undef _ALL_SOURCE
 #undef _GNU_SOURCE
@@ -15,11 +17,6 @@
 #undef NO_MULTIBYTE_SUPPORT
 
 #undef _FILE_OFFSET_BITS
-
-/* Define as the return type of signal handlers (int or void).  */
-#undef RETSIGTYPE
-
-#undef VOID_SIGHANDLER
 
 /* Characteristics of the compiler. */
 #undef sig_atomic_t
@@ -156,8 +153,6 @@
 /* and whether it works */
 #undef WCWIDTH_BROKEN
 
-#undef STDC_HEADERS
-
 /* Define if you have the <dirent.h> header file.  */
 #undef HAVE_DIRENT_H
 
@@ -268,11 +263,7 @@
 /* Define if you have <linux/audit.h> and it defines AUDIT_USER_TTY */
 #undef HAVE_DECL_AUDIT_USER_TTY
 
-#undef TIME_WITH_SYS_TIME
-
 /* Definitions pulled in from aclocal.m4. */
-#undef VOID_SIGHANDLER
-
 #undef GWINSZ_IN_SYS_IOCTL
 
 #undef STRUCT_WINSIZE_IN_SYS_IOCTL
