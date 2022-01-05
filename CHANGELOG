@@ -1431,3 +1431,12 @@ configure.ac, config.h.in
 	- AC_USE_SYSTEM_EXTENSIONS: use instead of AC_AIX and AC_MINIX
 	- AC_HEADER_STDC: removed
 	- BASH_FUNC_CTYPE_NONASCII: removed
+
+				   11/25
+				   -----
+history.pc.in
+	- pkgconfig file for history library. From Siteshwar Vashisht
+	  <svashisht@redhat.com>
+
+configure.ac,MANIFEST,Makefile.in
+	- support for creating history.pc

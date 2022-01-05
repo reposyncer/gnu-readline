@@ -356,7 +356,7 @@ expand_prompt (char *pmt, int flags, int *lp, int *lip, int *niflp, int *vlp)
 {
   char *r, *ret, *p, *igstart, *nprompt, *ms;
   int l, rl, last, ignoring, ninvis, invfl, invflset, ind, pind, physchars;
-  int mlen, newlines, newlines_guess, bound;
+  int mlen, newlines, newlines_guess, bound, can_add_invis;
   int mb_cur_max;
 
   /* We only expand the mode string for the last line of a multiline prompt
@@ -372,6 +372,7 @@ expand_prompt (char *pmt, int flags, int *lp, int *lip, int *niflp, int *vlp)
   else
     nprompt = pmt;
 
+  can_add_invis = 0;
   mb_cur_max = MB_CUR_MAX;
 
   if (_rl_screenwidth == 0)
@@ -434,6 +435,11 @@ expand_prompt (char *pmt, int flags, int *lp, int *lip, int *niflp, int *vlp)
       else if (ignoring && *p == RL_PROMPT_END_IGNORE)
 	{
 	  ignoring = 0;
+	  /* If we have a run of invisible characters, adjust local_prompt_newlines
+	     to add them, since update_line expects them to be counted before
+	     wrapping the line. */
+	  if (can_add_invis)
+	    local_prompt_newlines[newlines] = r - ret;
 	  if (p != (igstart + 1))
 	    last = r - ret - 1;
 	  continue;
@@ -498,10 +504,17 @@ expand_prompt (char *pmt, int flags, int *lp, int *lip, int *niflp, int *vlp)
 	        new = r - ret;
 	      local_prompt_newlines[++newlines] = new;
 	    }
+
+	  /* What if a physical character of width >= 2 is split? There is
+	     code that wraps before the physical screen width if the character
+	     width would exceed it, but it needs to be checked against this
+	     code and local_prompt_newlines[]. */
+	  if (ignoring == 0)
+	    can_add_invis = (physchars == bound); 
 	}
     }
 
-  if (rl < _rl_screenwidth)
+  if (rl <= _rl_screenwidth)
     invfl = ninvis;
 
   *r = '\0';
@@ -2588,7 +2601,8 @@ rl_clear_visible_line (void)
   for (curr_line = _rl_last_v_pos; curr_line >= 0; curr_line--)
     {
       _rl_move_vert (curr_line);
-      _rl_clear_to_eol (0);
+      _rl_clear_to_eol (_rl_screenwidth);
+      _rl_cr ();		/* in case we use space_to_eol() */
     }
 
   return 0;
@@ -3372,26 +3386,15 @@ _rl_redisplay_after_sigwinch (void)
      screen line. */
   if (_rl_term_cr)
     {
-      _rl_move_vert (_rl_vis_botlin);
-
-      _rl_cr ();
-      _rl_last_c_pos = 0;
-
-#if !defined (__MSDOS__)
-      if (_rl_term_clreol)
-	tputs (_rl_term_clreol, 1, _rl_output_character_function);
-      else
-#endif
-	{
-	  space_to_eol (_rl_screenwidth);
-	  _rl_cr ();
-	}
-
+      rl_clear_visible_line ();
       if (_rl_last_v_pos > 0)
 	_rl_move_vert (0);
     }
   else
     rl_crlf ();
+
+  if (_rl_screenwidth < prompt_visible_length)
+    _rl_reset_prompt ();		/* update local_prompt_newlines array */
 
   /* Redraw only the last line of a multi-line prompt. */
   t = strrchr (rl_display_prompt, '\n');

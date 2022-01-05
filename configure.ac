@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.1, version 2.94])
+AC_REVISION([for Readline 8.1, version 2.95])
 
 AC_INIT(readline, 8.1, bug-readline@gnu.org)
 
@@ -323,7 +323,7 @@ AC_SUBST(LIBVERSION)
 AC_SUBST(TERMCAP_LIB)
 AC_SUBST(TERMCAP_PKG_CONFIG_LIB)
 
-AC_CONFIG_FILES([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc])
+AC_CONFIG_FILES([Makefile doc/Makefile examples/Makefile shlib/Makefile readline.pc history.pc])
 
 dnl Makefile uses this timestamp file to record whether config.h is up to date.
 AC_CONFIG_COMMANDS([stamp-h], [echo > stamp-h])

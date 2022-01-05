@@ -21,6 +21,7 @@ configure	f
 configure.ac	f
 Makefile.in	f
 readline.pc.in	f
+history.pc.in	f
 ansi_stdlib.h	f
 chardefs.h	f
 colors.h	f
