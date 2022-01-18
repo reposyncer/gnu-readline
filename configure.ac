@@ -5,7 +5,7 @@ dnl report bugs to chet@po.cwru.edu
 dnl
 dnl Process this file with autoconf to produce a configure script.
 
-# Copyright (C) 1987-2021 Free Software Foundation, Inc.
+# Copyright (C) 1987-2022 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.1, version 2.95])
+AC_REVISION([for Readline 8.2, version 2.95])
 
-AC_INIT(readline, 8.1, bug-readline@gnu.org)
+AC_INIT(readline, 8.2, bug-readline@gnu.org)
 
 dnl make sure we are using a recent autoconf version
-AC_PREREQ(2.63)
+AC_PREREQ(2.69)
 
 AC_CONFIG_SRCDIR(readline.h)
 AC_CONFIG_AUX_DIR(./support)
 AC_CONFIG_HEADERS(config.h)
 
 dnl update the value of RL_READLINE_VERSION in readline.h when this changes
-LIBVERSION=8.1
+LIBVERSION=8.2
 
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
@@ -130,7 +130,12 @@ AC_PROG_RANLIB
 MAKE_SHELL=/bin/sh
 AC_SUBST(MAKE_SHELL)
 
+dnl include files for gettext
+
+m4_include([m4/codeset.m4])
+
 AC_C_CONST
+AC_C_INLINE
 AC_C_PROTOTYPES
 AC_C_CHAR_UNSIGNED
 AC_C_VOLATILE
@@ -302,6 +307,7 @@ esac
 
 AC_SUBST(BUILD_DIR)
 
+# CFLAGS=${CFLAGS-"$AUTO_CFLAGS"}
 if test -n "$want_auto_cflags"; then
 	CFLAGS="$AUTO_CFLAGS"
 fi

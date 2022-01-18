@@ -19,6 +19,8 @@
 #undef _FILE_OFFSET_BITS
 
 /* Characteristics of the compiler. */
+#undef inline
+
 #undef sig_atomic_t
 
 #undef size_t

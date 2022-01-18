@@ -7,6 +7,7 @@ examples/autoconf	d
 examples/rlfe	d
 support		d
 shlib		d
+m4		d
 COPYING		f
 README		f
 MANIFEST	f
@@ -19,6 +20,7 @@ aclocal.m4	f
 config.h.in	f
 configure	f
 configure.ac	f
+m4/codeset.m4	f
 Makefile.in	f
 readline.pc.in	f
 history.pc.in	f
