@@ -1,7 +1,7 @@
 Basic Installation
 ==================
 
-These are installation instructions for Readline-8.1.
+These are installation instructions for Readline-8.2.
 
 The simplest way to compile readline is:
 
@@ -55,7 +55,7 @@ The file `configure.in' is used to create `configure' by a
 program called `autoconf'.  You only need `configure.in' if you
 want to change it or regenerate `configure' using a newer version
 of `autoconf'.  The readline `configure.in' requires autoconf
-version 2.50 or newer. 
+version 2.69 or newer. 
 
 Compilers and Options
 =====================
