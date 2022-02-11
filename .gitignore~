@@ -33,6 +33,5 @@ libreadline.so.*
 *.dylib
 
 readline.pc
-history.pc
 
 stamp-h

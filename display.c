@@ -1,6 +1,6 @@
 /* display.c -- readline redisplay facility. */
 
-/* Copyright (C) 1987-2021 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2022 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library    
    for reading lines of text with interactive input and history editing.
@@ -1595,9 +1595,9 @@ putc_face (int c, int face, char *cur_face)
       if (face != FACE_NORMAL && face != FACE_STANDOUT)
 	return;
       if (face == FACE_STANDOUT && cf == FACE_NORMAL)
-        _rl_standout_on ();
+	_rl_region_color_on ();
       if (face == FACE_NORMAL && cf == FACE_STANDOUT)
-        _rl_standout_off ();
+	_rl_region_color_off ();
       *cur_face = face;
     }
   if (c != EOF)
