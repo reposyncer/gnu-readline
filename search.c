@@ -1,6 +1,6 @@
 /* search.c - code for non-incremental searching in emacs and vi modes. */
 
-/* Copyright (C) 1992-2021 Free Software Foundation, Inc.
+/* Copyright (C) 1992-2022 Free Software Foundation, Inc.
 
    This file is part of the GNU Readline Library (Readline), a library
    for reading lines of text with interactive input and history editing.      
@@ -60,9 +60,9 @@ static int noninc_history_pos;
 
 static char *prev_line_found = (char *) NULL;
 
-static int rl_history_search_len;
-static int rl_history_search_pos;
-static int rl_history_search_flags;
+static int _rl_history_search_len;
+/*static*/ int _rl_history_search_pos;
+static int _rl_history_search_flags;
 
 static char *history_search_string;
 static int history_string_size;
@@ -88,6 +88,13 @@ make_history_line_current (HIST_ENTRY *entry)
   if (rl_undo_list && rl_undo_list != (UNDO_LIST *)entry->data)
     rl_free_undo_list ();  
 
+  /* This will need to free the saved undo list associated with the original
+     (pre-search) line buffer. */
+  if (_rl_saved_line_for_history)
+    _rl_free_saved_history_line ();
+
+  rl_maybe_save_line ();
+
   /* Now we create a new undo list with a single insert for this text.
      WE DON'T CHANGE THE ORIGINAL HISTORY ENTRY UNDO LIST */
   _rl_replace_text (entry->line, 0, rl_end);
@@ -100,11 +107,6 @@ make_history_line_current (HIST_ENTRY *entry)
        current editing buffer. */
     rl_free_undo_list ();
 #endif
-
-  /* This will need to free the saved undo list associated with the original
-     (pre-search) line buffer. */
-  if (_rl_saved_line_for_history)
-    _rl_free_saved_history_line ();
 }
 
 /* Search the history list for STRING starting at absolute history position
@@ -193,6 +195,7 @@ noninc_dosearch (char *string, int dir, int flags)
     history_set_pos (oldpos);
 
   make_history_line_current (entry);
+  _rl_free_saved_history_line ();
 
   if (_rl_enable_active_region && ((flags & SF_PATTERN) == 0) && ind > 0 && ind < rl_end)
     {
@@ -539,14 +542,14 @@ rl_history_search_internal (int count, int dir)
   while (count)
     {
       RL_CHECK_SIGNALS ();
-      ret = noninc_search_from_pos (history_search_string, rl_history_search_pos + dir, dir, 0, &newcol);
+      ret = noninc_search_from_pos (history_search_string, _rl_history_search_pos + dir, dir, 0, &newcol);
       if (ret == -1)
 	break;
 
       /* Get the history entry we found. */
-      rl_history_search_pos = ret;
+      _rl_history_search_pos = ret;
       oldpos = where_history ();
-      history_set_pos (rl_history_search_pos);
+      history_set_pos (_rl_history_search_pos);
       temp = current_history ();	/* will never be NULL after successful search */
       history_set_pos (oldpos);
 
@@ -566,14 +569,14 @@ rl_history_search_internal (int count, int dir)
          in the line buffer after the search fails, change the #if 0 to
          #if 1 */
 #if 0
-      if (rl_point > rl_history_search_len)
+      if (rl_point > _rl_history_search_len)
         {
-          rl_point = rl_end = rl_history_search_len;
+          rl_point = rl_end = _rl_history_search_len;
           rl_line_buffer[rl_end] = '\0';
           rl_mark = 0;
         }
 #else
-      rl_point = rl_history_search_len;	/* rl_maybe_unsave_line changes it */
+      rl_point = _rl_history_search_len;	/* rl_maybe_unsave_line changes it */
       rl_mark = rl_end;
 #endif
       return 1;
@@ -585,16 +588,17 @@ rl_history_search_internal (int count, int dir)
   /* Make sure we set the current history position to the last line found so
      we can do things like operate-and-get-next from here. This is similar to
      how incremental search behaves. */
-  history_set_pos (rl_history_search_pos);	/* XXX */
+  rl_maybe_replace_line ();
+  history_set_pos (_rl_history_search_pos);	/* XXX */
 
   /* decide where to put rl_point -- need to change this for pattern search */
-  if (rl_history_search_flags & ANCHORED_SEARCH)
-    rl_point = rl_history_search_len;	/* easy case */
+  if (_rl_history_search_flags & ANCHORED_SEARCH)
+    rl_point = _rl_history_search_len;	/* easy case */
   else
     {
 #if 0
       t = strstr (rl_line_buffer, history_search_string);	/* XXX */
-      rl_point = t ? (int)(t - rl_line_buffer) + rl_history_search_len : rl_end;
+      rl_point = t ? (int)(t - rl_line_buffer) + _rl_history_search_len : rl_end;
 #else
       rl_point = (newcol >= 0) ? newcol : rl_end;
 #endif
@@ -609,17 +613,17 @@ rl_history_search_reinit (int flags)
 {
   int sind;
 
-  rl_history_search_pos = where_history ();
-  rl_history_search_len = rl_point;
-  rl_history_search_flags = flags;
+  _rl_history_search_pos = where_history ();
+  _rl_history_search_len = rl_point;
+  _rl_history_search_flags = flags;
 
   prev_line_found = (char *)NULL;
   if (rl_point)
     {
       /* Allocate enough space for anchored and non-anchored searches */
-      if (rl_history_search_len >= history_string_size - 2)
+      if (_rl_history_search_len >= history_string_size - 2)
 	{
-	  history_string_size = rl_history_search_len + 2;
+	  history_string_size = _rl_history_search_len + 2;
 	  history_search_string = (char *)xrealloc (history_search_string, history_string_size);
 	}
       sind = 0;
@@ -644,7 +648,7 @@ rl_history_search_forward (int count, int ignore)
       rl_last_func != rl_history_search_backward)
     rl_history_search_reinit (ANCHORED_SEARCH);
 
-  if (rl_history_search_len == 0)
+  if (_rl_history_search_len == 0)
     return (rl_get_next_history (count, ignore));
   return (rl_history_search_internal (abs (count), (count > 0) ? 1 : -1));
 }
@@ -662,7 +666,7 @@ rl_history_search_backward (int count, int ignore)
       rl_last_func != rl_history_search_backward)
     rl_history_search_reinit (ANCHORED_SEARCH);
 
-  if (rl_history_search_len == 0)
+  if (_rl_history_search_len == 0)
     return (rl_get_previous_history (count, ignore));
   return (rl_history_search_internal (abs (count), (count > 0) ? -1 : 1));
 }
@@ -681,7 +685,7 @@ rl_history_substr_search_forward (int count, int ignore)
       rl_last_func != rl_history_substr_search_backward)
     rl_history_search_reinit (NON_ANCHORED_SEARCH);
 
-  if (rl_history_search_len == 0)
+  if (_rl_history_search_len == 0)
     return (rl_get_next_history (count, ignore));
   return (rl_history_search_internal (abs (count), (count > 0) ? 1 : -1));
 }
@@ -699,7 +703,7 @@ rl_history_substr_search_backward (int count, int ignore)
       rl_last_func != rl_history_substr_search_backward)
     rl_history_search_reinit (NON_ANCHORED_SEARCH);
 
-  if (rl_history_search_len == 0)
+  if (_rl_history_search_len == 0)
     return (rl_get_previous_history (count, ignore));
   return (rl_history_search_internal (abs (count), (count > 0) ? -1 : 1));
 }
