@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.2, version 2.95])
+AC_REVISION([for Readline 8.2, version 2.96])
 
 AC_INIT(readline, 8.2, bug-readline@gnu.org)
 
@@ -39,9 +39,11 @@ AC_CANONICAL_BUILD
 
 dnl configure defaults
 opt_curses=no
+opt_shared_termcap_lib=no
 
 dnl arguments to configure
 AC_ARG_WITH(curses, AS_HELP_STRING([--with-curses], [use the curses library instead of the termcap library]), opt_curses=$withval)
+AC_ARG_WITH(shared-termcap-library, AS_HELP_STRING([--enable-shared-termcap-library], [link the readline shared library against the termcap/curses shared library [[default=NO]]]), opt_shared_termcap_lib=$withval)
 
 if test "$opt_curses" = "yes"; then
 	prefer_curses=yes
@@ -210,6 +212,10 @@ fi
 if test "$TERMCAP_LIB" = "-lncurses"; then
 	AC_CHECK_HEADERS(ncurses/termcap.h)
 fi
+case "$opt_shared_termcap_lib" in
+[[Yy]][[Ee]][[Ss]])	SHARED_TERMCAP="$TERMCAP_LIB" ;;
+-l*)		SHARED_TERMCAP="$opt_shared_termcap_lib" ;;
+esac
 
 case "$TERMCAP_LIB" in
 -ltinfo)  TERMCAP_PKG_CONFIG_LIB=tinfo ;;
@@ -240,10 +246,12 @@ if test -f ${srcdir}/support/shobj-conf; then
         AC_MSG_CHECKING(configuration for building shared libraries)
         eval `TERMCAP_LIB=$TERMCAP_LIB ${CONFIG_SHELL-/bin/sh} ${srcdir}/support/shobj-conf -C "${CC}" -c ${host_cpu} -o ${host_os} -v ${host_vendor}`
 
-#	case "$SHLIB_LIBS" in
-#	*curses*|*termcap*|*termlib*)	;;
-#	*)			SHLIB_LIBS="$SHLIB_LIBS $TERMCAP_LIB" ;;
-#	esac
+	# SHARED_TERMCAP is set only if opt_shared_termcap_library is set
+	case "$SHLIB_LIBS" in
+	*curses*|*tinfo*)	;;
+	*termcap*|*termlib*)	;;	# common aliases
+	*)		SHLIB_LIBS="$SHLIB_LIBS $SHARED_TERMCAP" ;;
+	esac
 	
         AC_SUBST(SHOBJ_CC)
         AC_SUBST(SHOBJ_CFLAGS)
