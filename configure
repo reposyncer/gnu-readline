@@ -7309,7 +7309,8 @@ elif test $bash_cv_termcap_lib = libc; then
 TERMCAP_LIB=
 TERMCAP_DEP=
 else
-TERMCAP_LIB=-lcurses
+# we assume ncurses is installed somewhere the linker can find it
+TERMCAP_LIB=-lncurses
 TERMCAP_DEP=
 fi
 
@@ -7826,8 +7827,10 @@ if test -f ${srcdir}/support/shobj-conf; then
 printf %s "checking configuration for building shared libraries... " >&6; }
         eval `TERMCAP_LIB=$TERMCAP_LIB ${CONFIG_SHELL-/bin/sh} ${srcdir}/support/shobj-conf -C "${CC}" -c ${host_cpu} -o ${host_os} -v ${host_vendor}`
 
+	# SHARED_TERMCAP is set only if opt_shared_termcap_library is set
 	case "$SHLIB_LIBS" in
-	*curses*|*termcap*|*termlib*|*tinfo*)	;;
+	*curses*|*tinfo*)	;;
+	*termcap*|*termlib*)	;;	# common aliases
 	*)		SHLIB_LIBS="$SHLIB_LIBS $SHARED_TERMCAP" ;;
 	esac
 
