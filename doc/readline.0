@@ -173,23 +173,49 @@ READLINE(3)                Library Functions Manual                READLINE(3)
        sitive), and "1" are equivalent to [1mOn[22m.  All other values are equivalent
        to [1mOff[22m.  The variables and their default values are:
 
+       [1mactive-region-start-color[0m
+              A string variable that controls the text  color  and  background
+              when  displaying the text in the active region (see the descrip-
+              tion of [1menable-active-region [22mbelow).  This string must not  take
+              up any physical character positions on the display, so it should
+              consist only of terminal escape sequences.  It is output to  the
+              terminal  before displaying the text in the active region.  This
+              variable is reset to the default  value  whenever  the  terminal
+              type  changes.   The  default  value is the string that puts the
+              terminal in standout mode, as obtained from the terminal's  ter-
+              minfo description.  A sample value might be "\e[01;33m".
+       [1mactive-region-end-color[0m
+              A  string  variable  that  "undoes"  the  effects  of [1mactive-re-[0m
+              [1mgion-start-color [22mand restores "normal" terminal display  appear-
+              ance  after  displaying  text in the active region.  This string
+              must not take up any physical character positions  on  the  dis-
+              play,  so  it  should consist only of terminal escape sequences.
+              It is output to the terminal after displaying the  text  in  the
+              active  region.   This  variable  is  reset to the default value
+              whenever the terminal type changes.  The default  value  is  the
+              string  that  restores  the  terminal from standout mode, as ob-
+              tained from the terminal's terminfo description.  A sample value
+              might be "\e[0m".
        [1mbell-style (audible)[0m
-              Controls what happens when readline wants to ring  the  terminal
+              Controls  what  happens when readline wants to ring the terminal
               bell.  If set to [1mnone[22m, readline never rings the bell.  If set to
-              [1mvisible[22m, readline uses a visible bell if one is  available.   If
+              [1mvisible[22m,  readline  uses a visible bell if one is available.  If
               set to [1maudible[22m, readline attempts to ring the terminal's bell.
        [1mbind-tty-special-chars (On)[0m
-              If  set  to [1mOn [22m(the default), readline attempts to bind the con-
-              trol characters   treated specially  by  the  kernel's  terminal
+              If set to [1mOn [22m(the default), readline attempts to bind  the  con-
+              trol  characters    treated  specially  by the kernel's terminal
               driver to their readline equivalents.
        [1mblink-matching-paren (Off)[0m
               If set to [1mOn[22m, readline attempts to briefly move the cursor to an
               opening parenthesis when a closing parenthesis is inserted.
        [1mcolored-completion-prefix (Off)[0m
-              If set to [1mOn[22m, when listing completions,  readline  displays  the
+              If  set  to  [1mOn[22m, when listing completions, readline displays the
               common prefix of the set of possible completions using a differ-
-              ent color.  The color definitions are taken from  the  value  of
-              the [1mLS_COLORS [22menvironment variable.
+              ent  color.   The  color definitions are taken from the value of
+              the [1mLS_COLORS [22menvironment variable.  If there is a color defini-
+              tion  in [1m$LS_COLORS [22mfor the custom suffix "readline-colored-com-
+              pletion-prefix", readline uses this color for the common  prefix
+              instead of its default.
        [1mcolored-stats (Off)[0m
               If  set to [1mOn[22m, readline displays possible completions using dif-
               ferent colors to indicate their file type.   The  color  defini-
@@ -254,13 +280,23 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               escapes  to  begin and end sequences of non-printing characters,
               which can be used to embed a terminal control sequence into  the
               mode string.
+       [1menable-active-region (On)[0m
+              The  [4mpoint[24m  is the current cursor position, and [4mmark[24m refers to a
+              saved cursor position.  The text between the point and  mark  is
+              referred  to  as  the  [4mregion[24m.  When this variable is set to [4mOn[24m,
+              readline allows certain commands to designate the region as  [4mac-[0m
+              [4mtive[24m.   When  the region is active, readline highlights the text
+              in the region using the value of the  [1mactive-region-start-color[22m,
+              which  defaults to the string that enables the terminal's stand-
+              out mode.  The active region shows the text inserted  by  brack-
+              eted-paste  and  any matching text found by incremental and non-
+              incremental history searches.
        [1menable-bracketed-paste (On)[0m
-              When  set  to  [1mOn[22m, readline will configure the terminal in a way
-              that will enable it to insert each paste into the editing buffer
-              as a single string of characters, instead of treating each char-
-              acter as if it had been read from the keyboard.  This  can  pre-
-              vent  pasted  characters  from being interpreted as editing com-
-              mands.
+              When set to [1mOn[22m, readline configures the terminal to insert  each
+              paste  into the editing buffer as a single string of characters,
+              instead of treating each character as if it had been  read  from
+              the keyboard.  This prevents readline from executing any editing
+              commands bound to key sequences appearing in the pasted text.
        [1menable-keypad (Off)[0m
               When set to [1mOn[22m, readline will try to enable the application key-
               pad when it is called.  Some systems need this to enable the ar-
@@ -576,6 +612,16 @@ READLINE(3)                Library Functions Manual                READLINE(3)
        [1mend-of-history (M->)[0m
               Move to the end of the input history, i.e., the  line  currently
               being entered.
+       [1moperate-and-get-next (C-o)[0m
+              Accept the current line for return to the calling application as
+              if a newline had been entered, and fetch the next line  relative
+              to the current line from the history for editing.  A numeric ar-
+              gument, if supplied, specifies the history entry to use  instead
+              of the current line.
+       [1mfetch-history[0m
+              With  a numeric argument, fetch that entry from the history list
+              and make it the current line.  Without an argument, move back to
+              the first entry in the history list.
        [1mreverse-search-history (C-r)[0m
               Search  backward  starting  at  the current line and moving `up'
               through the  history  as  necessary.   This  is  an  incremental
@@ -631,12 +677,6 @@ READLINE(3)                Library Functions Manual                READLINE(3)
               (back or forward).  The history expansion facilities are used to
               extract  the last argument, as if the "!$" history expansion had
               been specified.
-       [1moperate-and-get-next (C-o)[0m
-              Accept the current line for return to the calling application as
-              if  a newline had been entered, and fetch the next line relative
-              to the current line from the history for editing.  A numeric ar-
-              gument,  if supplied, specifies the history entry to use instead
-              of the current line.
 
    [1mCommands for Changing Text[0m
        [4mend-of-file[24m [1m(usually C-d)[0m
@@ -1127,4 +1167,4 @@ READLINE(3)                Library Functions Manual                READLINE(3)
 
 
 
-GNU Readline 8.1                2020 October 29                    READLINE(3)
+GNU Readline 8.2                 2022 March 11                     READLINE(3)

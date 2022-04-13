@@ -1,12 +1,12 @@
-This is rluserman.info, produced by makeinfo version 6.7 from
+This is rluserman.info, produced by makeinfo version 6.8 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.1, 29 October 2020), a library which aids in the consistency
-of user interface across discrete programs which provide a command line
+(version 8.2, 11 March 2022), a library which aids in the consistency of
+user interface across discrete programs which provide a command line
 interface.
 
-   Copyright (C) 1988-2020 Free Software Foundation, Inc.
+   Copyright (C) 1988-2022 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -307,7 +307,7 @@ File: rluserman.info,  Node: Readline Init File,  Next: Bindable Readline Comman
 Although the Readline library comes with a set of Emacs-like keybindings
 installed by default, it is possible to use a different set of
 keybindings.  Any user can customize programs that use Readline by
-putting commands in an "inputrc" file, conventionally in his home
+putting commands in an "inputrc" file, conventionally in their home
 directory.  The name of this file is taken from the value of the
 environment variable 'INPUTRC'.  If that variable is unset, the default
 is '~/.inputrc'.  If that file does not exist or cannot be read, the
@@ -361,6 +361,32 @@ Variable Settings
      A great deal of run-time behavior is changeable with the following
      variables.
 
+     'active-region-start-color'
+          A string variable that controls the text color and background
+          when displaying the text in the active region (see the
+          description of 'enable-active-region' below).  This string
+          must not take up any physical character positions on the
+          display, so it should consist only of terminal escape
+          sequences.  It is output to the terminal before displaying the
+          text in the active region.  This variable is reset to the
+          default value whenever the terminal type changes.  The default
+          value is the string that puts the terminal in standout mode,
+          as obtained from the terminal's terminfo description.  A
+          sample value might be '\e[01;33m'.
+
+     'active-region-end-color'
+          A string variable that "undoes" the effects of
+          'active-region-start-color' and restores "normal" terminal
+          display appearance after displaying text in the active region.
+          This string must not take up any physical character positions
+          on the display, so it should consist only of terminal escape
+          sequences.  It is output to the terminal after displaying the
+          text in the active region.  This variable is reset to the
+          default value whenever the terminal type changes.  The default
+          value is the string that restores the terminal from standout
+          mode, as obtained from the terminal's terminfo description.  A
+          sample value might be '\e[0m'.
+
      'bell-style'
           Controls what happens when Readline wants to ring the terminal
           bell.  If set to 'none', Readline never rings the bell.  If
@@ -382,7 +408,10 @@ Variable Settings
           If set to 'on', when listing completions, Readline displays
           the common prefix of the set of possible completions using a
           different color.  The color definitions are taken from the
-          value of the 'LS_COLORS' environment variable.  The default is
+          value of the 'LS_COLORS' environment variable.  If there is a
+          color definition in 'LS_COLORS' for the custom suffix
+          'readline-colored-completion-prefix', Readline uses this color
+          for the common prefix instead of its default.  The default is
           'off'.
 
      'colored-stats'
@@ -428,8 +457,9 @@ Variable Settings
           than or equal to this value, Readline will ask whether or not
           the user wishes to view them; otherwise, they are simply
           listed.  This variable must be set to an integer value greater
-          than or equal to 0.  A negative value means Readline should
-          never ask.  The default limit is '100'.
+          than or equal to zero.  A zero value means Readline should
+          never ask; negative values are treated as zero.  The default
+          limit is '100'.
 
      'convert-meta'
           If set to 'on', Readline will convert characters with the
@@ -465,13 +495,27 @@ Variable Settings
           non-printing characters, which can be used to embed a terminal
           control sequence into the mode string.  The default is '@'.
 
+     'enable-active-region'
+          The "point" is the current cursor position, and "mark" refers
+          to a saved cursor position (*note Commands For Moving::).  The
+          text between the point and mark is referred to as the
+          "region".  When this variable is set to 'On', Readline allows
+          certain commands to designate the region as "active".  When
+          the region is active, Readline highlights the text in the
+          region using the value of the 'active-region-start-color',
+          which defaults to the string that enables the terminal's
+          standout mode.  The active region shows the text inserted by
+          bracketed-paste and any matching text found by incremental and
+          non-incremental history searches.  The default is 'On'.
+
      'enable-bracketed-paste'
-          When set to 'On', Readline will configure the terminal in a
-          way that will enable it to insert each paste into the editing
-          buffer as a single string of characters, instead of treating
-          each character as if it had been read from the keyboard.  This
-          can prevent pasted characters from being interpreted as
-          editing commands.  The default is 'On'.
+          When set to 'On', Readline configures the terminal to insert
+          each paste into the editing buffer as a single string of
+          characters, instead of treating each character as if it had
+          been read from the keyboard.  This is called putting the
+          terminal into "bracketed paste mode"; it prevents Readline
+          from executing any editing commands bound to key sequences
+          appearing in the pasted text.  The default is 'On'.
 
      'enable-keypad'
           When set to 'on', Readline will try to enable the application
@@ -1142,6 +1186,11 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
      current line from the history for editing.  A numeric argument, if
      supplied, specifies the history entry to use instead of the current
      line.
+
+'fetch-history ()'
+     With a numeric argument, fetch that entry from the history list and
+     make it the current line.  Without an argument, move back to the
+     first entry in the history list.
 
 
 File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Prev: Commands For History,  Up: Bindable Readline Commands
@@ -1998,30 +2047,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top907
-Node: Command Line Editing1429
-Node: Introduction and Notation2083
-Node: Readline Interaction3708
-Node: Readline Bare Essentials4901
-Node: Readline Movement Commands6686
-Node: Readline Killing Commands7648
-Node: Readline Arguments9568
-Node: Searching10614
-Node: Readline Init File12768
+Node: Top905
+Node: Command Line Editing1427
+Node: Introduction and Notation2081
+Node: Readline Interaction3706
+Node: Readline Bare Essentials4899
+Node: Readline Movement Commands6684
+Node: Readline Killing Commands7646
+Node: Readline Arguments9566
+Node: Searching10612
+Node: Readline Init File12766
 Node: Readline Init File Syntax13923
-Node: Conditional Init Constructs34182
-Node: Sample Init File38380
-Node: Bindable Readline Commands41506
-Node: Commands For Moving42562
-Node: Commands For History44322
-Node: Commands For Text49086
-Node: Commands For Killing52790
-Node: Numeric Arguments55505
-Node: Commands For Completion56646
-Node: Keyboard Macros58616
-Node: Miscellaneous Commands59305
-Node: Readline vi Mode63228
-Node: GNU Free Documentation License64142
+Node: Conditional Init Constructs36843
+Node: Sample Init File41041
+Node: Bindable Readline Commands44167
+Node: Commands For Moving45223
+Node: Commands For History46983
+Node: Commands For Text51948
+Node: Commands For Killing55652
+Node: Numeric Arguments58367
+Node: Commands For Completion59508
+Node: Keyboard Macros61478
+Node: Miscellaneous Commands62167
+Node: Readline vi Mode66090
+Node: GNU Free Documentation License67004
 
 End Tag Table
 

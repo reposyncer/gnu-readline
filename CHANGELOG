@@ -1440,3 +1440,11 @@ history.pc.in
 
 configure.ac,MANIFEST,Makefile.in
 	- support for creating history.pc
+
+				 3/29/2022
+				 ---------
+configure.ac
+	- new option: --with-shared-termcap-library: use to force the shared
+	  readline library to be linked against a shared termcap/curses library
+	  that configure finds. If the argument begins with `-l', use that
+	  library instead; updated INSTALL accordingly
