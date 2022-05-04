@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <locale.h>
 
 /* Used for select(2) */
 #include <sys/types.h>
@@ -12,6 +11,10 @@
 
 #include <errno.h>
 #include <stdio.h>
+
+#ifdef HAVE_LOCALE_H
+#  include <locale.h>
+#endif
 
 /* Standard readline include files. */
 #if defined (READLINE_LIBRARY)
@@ -71,7 +74,6 @@ main (int c, char **v)
 {
   fd_set fds;
   int r;
-
 
   setlocale (LC_ALL, "");
 
