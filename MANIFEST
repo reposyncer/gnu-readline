@@ -18,7 +18,7 @@ NEWS		f
 USAGE		f
 aclocal.m4	f
 config.h.in	f
-configure	f
+configure	f	755
 configure.ac	f
 m4/codeset.m4	f
 Makefile.in	f
@@ -141,7 +141,7 @@ examples/rlfe/ChangeLog		f
 examples/rlfe/Makefile.in	f
 examples/rlfe/README		f
 examples/rlfe/config.h.in	f
-examples/rlfe/configure		f
+examples/rlfe/configure		f	755
 examples/rlfe/configure.in	f
 examples/rlfe/extern.h		f
 examples/rlfe/os.h		f
