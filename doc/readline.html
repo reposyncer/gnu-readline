@@ -4780,6 +4780,7 @@ history list.
 #include &lt;fcntl.h&gt;
 #include &lt;stdio.h&gt;
 #include &lt;errno.h&gt;
+#include &lt;locale.h&gt;
 
 #if defined (HAVE_STRING_H)
 #  include &lt;string.h&gt;
@@ -4859,6 +4860,8 @@ main (argc, argv)
      char **argv;
 {
   char *line, *s;
+
+  setlocale (LC_ALL, &quot;&quot;);
 
   progname = argv[0];
 

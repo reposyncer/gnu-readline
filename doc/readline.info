@@ -3759,6 +3759,7 @@ command names, line editing features, and access to the history list.
      #include <fcntl.h>
      #include <stdio.h>
      #include <errno.h>
+     #include <locale.h>
 
      #if defined (HAVE_STRING_H)
      #  include <string.h>
@@ -3838,6 +3839,8 @@ command names, line editing features, and access to the history list.
           char **argv;
      {
        char *line, *s;
+
+       setlocale (LC_ALL, "");
 
        progname = argv[0];
 
@@ -5297,9 +5300,9 @@ Node: How Completing Works141703
 Node: Completion Functions145010
 Node: Completion Variables148584
 Node: A Short Completion Example164390
-Node: GNU Free Documentation License177170
-Node: Concept Index202344
-Node: Function and Variable Index203865
+Node: GNU Free Documentation License177227
+Node: Concept Index202401
+Node: Function and Variable Index203922
 
 End Tag Table
 

@@ -25,6 +25,10 @@
 #include <util.h>
 #endif
 
+#ifdef HAVE_LOCALE_H
+#  include <locale.h>
+#endif
+
 #ifdef READLINE_LIBRARY
 #  include "readline.h"
 #else
@@ -315,6 +319,11 @@ int
 main()
 {
   int val;
+
+#ifdef HAVE_SETLOCALE
+  setlocale (LC_ALL, "");
+#endif
+
   val = openpty (&masterfd, &slavefd, NULL, NULL, NULL);
   if (val == -1)
     return -1;
