@@ -103,6 +103,10 @@ l. There is a new configuration option: --with-shared-termcap-library, which
    forces linking the shared readline library with the shared termcap (or
    curses/ncurses/termlib) library so applications don't have to do it.
 
+m. Readline now checks for changes to locale settings (LC_ALL/LC_CTYPE/LANG)
+   each time it is called, and modifies the appropriate locale-specific display
+   and key binding variables when the locale changes.
+
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-8.1, and
 the previous version, readline-8.0.
@@ -482,7 +486,7 @@ jj. Fixed a bug that caused mode strings to be displayed incorrectly if the
 
 2.  New Features in Readline
 
-a.  The history truncation code now uses the same error recovery mechansim as
+a.  The history truncation code now uses the same error recovery mechanism as
     the history writing code, and restores the old version of the history file
     on error.  The error recovery mechanism handles symlinked history files.
 
@@ -813,7 +817,7 @@ d.  New bindable function: skip-csi-sequence.  Can be used as a default to
     to bind all keys.
 
 e.  New application-settable function: rl_filename_rewrite_hook.  Can be used
-    to rewite or modify filenames read from the file system before they are
+    to rewrite or modify filenames read from the file system before they are
     compared to the word to be completed.
 
 f.  New bindable variable: skip-completed-text, active when completing in the
@@ -875,7 +879,7 @@ l.  Fixed a bug in the code that buffers characters received very quickly in
     succession which caused characters to be dropped.
 
 m.  Fixed a bug that caused readline to reference uninitialized data structures
-    if it received a SIGWINCH before completing initialzation.
+    if it received a SIGWINCH before completing initialization.
 
 n.  Fixed a bug that caused the vi-mode `last command' to be set incorrectly
     and therefore unrepeatable.
@@ -1213,7 +1217,7 @@ w.  The history search functions now perform better bounds checking on the
     history list.
 
 x.  Change to history expansion functions to treat `^' as equivalent to word 
-    one, as the documention states.
+    one, as the documentation states.
 
 y.  Some changes to the display code to improve display and redisplay of
     multibyte characters.
@@ -1474,7 +1478,7 @@ f.  The incremental search code remembers the last search string and uses
 
 h.  New bindable variable `history-preserve-point'.  If set, the history
     code attempts to place the user at the same location on each history
-    line retrived with previous-history or next-history.
+    line retrieved with previous-history or next-history.
 
 -------------------------------------------------------------------------------
 This document details the changes between this version, readline-4.2,

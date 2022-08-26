@@ -2,8 +2,8 @@ This is rluserman.info, produced by makeinfo version 6.8 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.2, 11 March 2022), a library which aids in the consistency of
-user interface across discrete programs which provide a command line
+(version 8.2, 12 August 2022), a library which aids in the consistency
+of user interface across discrete programs which provide a command line
 interface.
 
    Copyright (C) 1988-2022 Free Software Foundation, Inc.
@@ -467,7 +467,9 @@ Variable Settings
           eighth bit and prefixing an <ESC> character, converting them
           to a meta-prefixed key sequence.  The default value is 'on',
           but will be set to 'off' if the locale is one that contains
-          eight-bit characters.
+          eight-bit characters.  This variable is dependent on the
+          'LC_CTYPE' locale category, and may change if the locale is
+          changed.
 
      'disable-completion'
           If set to 'On', Readline will inhibit word completion.
@@ -562,7 +564,9 @@ Variable Settings
           regardless of what the terminal claims it can support.  The
           default value is 'off', but Readline will set it to 'on' if
           the locale contains eight-bit characters.  The name
-          'meta-flag' is a synonym for this variable.
+          'meta-flag' is a synonym for this variable.  This variable is
+          dependent on the 'LC_CTYPE' locale category, and may change if
+          the locale is changed.
 
      'isearch-terminators'
           The string of characters that should terminate an incremental
@@ -627,7 +631,9 @@ Variable Settings
           If set to 'on', Readline will display characters with the
           eighth bit set directly rather than as a meta-prefixed escape
           sequence.  The default is 'off', but Readline will set it to
-          'on' if the locale contains eight-bit characters.
+          'on' if the locale contains eight-bit characters.  This
+          variable is dependent on the 'LC_CTYPE' locale category, and
+          may change if the locale is changed.
 
      'page-completions'
           If set to 'on', Readline uses an internal 'more'-like pager to
@@ -2047,30 +2053,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top905
-Node: Command Line Editing1427
-Node: Introduction and Notation2081
-Node: Readline Interaction3706
-Node: Readline Bare Essentials4899
-Node: Readline Movement Commands6684
-Node: Readline Killing Commands7646
-Node: Readline Arguments9566
-Node: Searching10612
-Node: Readline Init File12766
-Node: Readline Init File Syntax13923
-Node: Conditional Init Constructs36843
-Node: Sample Init File41041
-Node: Bindable Readline Commands44167
-Node: Commands For Moving45223
-Node: Commands For History46983
-Node: Commands For Text51948
-Node: Commands For Killing55652
-Node: Numeric Arguments58367
-Node: Commands For Completion59508
-Node: Keyboard Macros61478
-Node: Miscellaneous Commands62167
-Node: Readline vi Mode66090
-Node: GNU Free Documentation License67004
+Node: Top906
+Node: Command Line Editing1428
+Node: Introduction and Notation2082
+Node: Readline Interaction3707
+Node: Readline Bare Essentials4900
+Node: Readline Movement Commands6685
+Node: Readline Killing Commands7647
+Node: Readline Arguments9567
+Node: Searching10613
+Node: Readline Init File12767
+Node: Readline Init File Syntax13924
+Node: Conditional Init Constructs37216
+Node: Sample Init File41414
+Node: Bindable Readline Commands44540
+Node: Commands For Moving45596
+Node: Commands For History47356
+Node: Commands For Text52321
+Node: Commands For Killing56025
+Node: Numeric Arguments58740
+Node: Commands For Completion59881
+Node: Keyboard Macros61851
+Node: Miscellaneous Commands62540
+Node: Readline vi Mode66463
+Node: GNU Free Documentation License67377
 
 End Tag Table
 

@@ -1410,7 +1410,7 @@ INSTALL
 
 				 8/17/2021
 				 ---------
-confiugre.ac
+configure.ac
 	- use `:+' when testing the value of $GCC, since autoconf seems to
 	  set it to the empty string if gcc isn't the compiler. Reported by
 	  Osipov, Michael (LDA IT PLM) <michael.osipov@siemens.com>
