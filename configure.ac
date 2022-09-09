@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.2, version 2.96])
+AC_REVISION([for Readline 8.2, version 2.97])
 
 AC_INIT(readline, 8.2, bug-readline@gnu.org)
 
@@ -43,7 +43,7 @@ opt_shared_termcap_lib=no
 
 dnl arguments to configure
 AC_ARG_WITH(curses, AS_HELP_STRING([--with-curses], [use the curses library instead of the termcap library]), opt_curses=$withval)
-AC_ARG_WITH(shared-termcap-library, AS_HELP_STRING([--enable-shared-termcap-library], [link the readline shared library against the termcap/curses shared library [[default=NO]]]), opt_shared_termcap_lib=$withval)
+AC_ARG_WITH(shared-termcap-library, AS_HELP_STRING([--with-shared-termcap-library], [link the readline shared library against the termcap/curses shared library [[default=NO]]]), opt_shared_termcap_lib=$withval)
 
 if test "$opt_curses" = "yes"; then
 	prefer_curses=yes
