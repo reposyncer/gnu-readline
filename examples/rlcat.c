@@ -84,7 +84,7 @@ main (argc, argv)
   int opt, Vflag, Nflag;
 
 #ifdef HAVE_SETLOCALE
-  setlocale (LC_ALL, ""):
+  setlocale (LC_ALL, "");
 #endif
 
   progname = strrchr(argv[0], '/');
