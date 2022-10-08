@@ -151,7 +151,9 @@ int rl_timeout_remaining (unsigned int *, unsigned int *);
 
 int _rl_timeout_init (void);
 int _rl_timeout_sigalrm_handler (void);
+#if defined (RL_TIMEOUT_USE_SELECT)
 int _rl_timeout_select (int, fd_set *, fd_set *, fd_set *, const struct timeval *, const sigset_t *);
+#endif
 
 static void _rl_timeout_handle (void);
 #if defined (RL_TIMEOUT_USE_SIGALRM)
@@ -818,7 +820,7 @@ rl_getc (FILE *stream)
       /* We know at this point that _rl_caught_signal == 0 */
 
 #if defined (__MINGW32__)
-      if (isatty (fd)
+      if (isatty (fd))
 	return (_getch ());	/* "There is no error return." */
 #endif
       result = 0;
