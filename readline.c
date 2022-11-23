@@ -566,6 +566,7 @@ readline_internal_charloop (void)
 {
   static int lastc, eof_found;
   int c, code, lk, r;
+  static procenv_t olevel;
 
   lastc = EOF;
 
@@ -576,6 +577,9 @@ readline_internal_charloop (void)
 #endif
       lk = _rl_last_command_was_kill;
 
+      /* Save and restore _rl_top_level even though most of the time it
+	 doesn't matter. */
+      memcpy ((void *)olevel, (void *)_rl_top_level, sizeof (procenv_t));
 #if defined (HAVE_POSIX_SIGSETJMP)
       code = sigsetjmp (_rl_top_level, 0);
 #else
@@ -586,6 +590,7 @@ readline_internal_charloop (void)
 	{
 	  (*rl_redisplay_function) ();
 	  _rl_want_redisplay = 0;
+	  memcpy ((void *)_rl_top_level, (void *)olevel, sizeof (procenv_t));
 
 	  /* If we longjmped because of a timeout, handle it here. */
 	  if (RL_ISSTATE (RL_STATE_TIMEOUT))
@@ -703,6 +708,7 @@ readline_internal_charloop (void)
       _rl_internal_char_cleanup ();
 
 #if defined (READLINE_CALLBACKS)
+      memcpy ((void *)_rl_top_level, (void *)olevel, sizeof (procenv_t));
       return 0;
 #else
     }
@@ -1322,9 +1328,8 @@ readline_initialize_everything (void)
     _rl_parse_colors ();
 #endif
 
-  rl_executing_keyseq = malloc (_rl_executing_keyseq_size = 16);
-  if (rl_executing_keyseq)
-    rl_executing_keyseq[rl_key_sequence_length = 0] = '\0';
+  rl_executing_keyseq = xmalloc (_rl_executing_keyseq_size = 16);
+  rl_executing_keyseq[rl_key_sequence_length = 0] = '\0';
 }
 
 /* If this system allows us to look at the values of the regular
