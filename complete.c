@@ -246,10 +246,23 @@ rl_icppfunc_t *rl_filename_stat_hook = (rl_icppfunc_t *)NULL;
    either return its first argument (if no conversion takes place) or
    newly-allocated memory.  This can, for instance, convert filenames
    between character sets for comparison against what's typed at the
-   keyboard.  The returned value is what is added to the list of
-   matches.  The second argument is the length of the filename to be
-   converted. */
+   keyboard (after its potential modification by rl_completion_rewrite_hook).
+   The returned value is what is added to the list of matches.
+   The second argument is the length of the filename to be converted. */
 rl_dequote_func_t *rl_filename_rewrite_hook = (rl_dequote_func_t *)NULL;
+
+/* If non-zero, this is the address of a function to call before
+   comparing the filename portion of a word to be completed with directory
+   entries from the filesystem. This takes the address of the partial word
+   to be completed, after any rl_filename_dequoting_function has been applied.
+   The function should either return its first argument (if no conversion
+   takes place) or newly-allocated memory. This can, for instance, convert
+   the filename portion of the completion word to a character set suitable
+   for comparison against directory entries read from the filesystem (after
+   their potential modification by rl_filename_rewrite_hook). 
+   The returned value is what is added to the list of matches.
+   The second argument is the length of the filename to be converted. */
+rl_dequote_func_t *rl_completion_rewrite_hook = (rl_dequote_func_t *)NULL;
 
 /* Non-zero means readline completion functions perform tilde expansion. */
 int rl_complete_with_tilde_expansion = 0;
@@ -460,6 +473,7 @@ rl_complete (int ignore, int invoking_key)
 int
 rl_possible_completions (int ignore, int invoking_key)
 {
+  last_completion_failed = 0;
   rl_completion_invoking_key = invoking_key;
   return (rl_complete_internal ('?'));
 }
@@ -2174,7 +2188,9 @@ rl_complete_internal (int what_to_do)
 	  append_to_match (matches[0], delimiter, quote_char, nontrivial_lcd);
 	  break;
 	}
-      
+      /*FALLTHROUGH*/
+
+    case '%':
       do_display = 1;
       break;
 
@@ -2537,9 +2553,9 @@ rl_filename_completion_function (const char *text, int state)
       filename_len = strlen (filename);
 
       /* Normalize the filename if the application has set a rewrite hook. */
-      if (*filename && rl_filename_rewrite_hook)
+      if (*filename && rl_completion_rewrite_hook)
 	{
-	  temp = (*rl_filename_rewrite_hook) (filename, filename_len);
+	  temp = (*rl_completion_rewrite_hook) (filename, filename_len);
 	  if (temp != filename)
 	    {
 	      xfree (filename);
