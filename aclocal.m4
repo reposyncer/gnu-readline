@@ -3,7 +3,7 @@ dnl Bash specific tests
 dnl
 dnl Some derived from PDKSH 5.1.3 autoconf tests
 dnl
-dnl Copyright (C) 1987-2023 Free Software Foundation, Inc.
+dnl Copyright (C) 1987-2024 Free Software Foundation, Inc.
 dnl
 
 dnl
@@ -1816,6 +1816,9 @@ main(int c, char **v)
 
         setlocale(LC_ALL, "en_US.UTF-8");
         w = wcwidth (0x0301);
+	if (w != 0)
+	  exit (0);
+	w = wcwidth (0x200b);
         exit (w == 0);  /* exit 0 if wcwidth broken */
 }
 ]])], [bash_cv_wcwidth_broken=yes], [bash_cv_wcwidth_broken=no],

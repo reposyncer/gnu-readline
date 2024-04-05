@@ -126,6 +126,8 @@ examples/rlevent.c	f
 examples/rlkeymaps.c	f
 examples/rltest.c	f
 examples/rl-callbacktest.c	f
+examples/rl-callbacktest2.c	f
+examples/rl-callbacktest3.c	f
 examples/rl-timeout.c	f
 examples/rl-test-timeout	f
 examples/rl.c		f

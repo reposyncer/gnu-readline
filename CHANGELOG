@@ -1460,3 +1460,8 @@ Makefile.in
 	  HAVE_GETTIMEOFDAY is defined. This is for systems like _WIN32 that
 	  don't have gettimeofday()
 
+				 3/6/2024
+				 --------
+config.h.in
+	- added more defines that bash aclocal.m4 BASH_CHECK_MULTIBYTE checks
+	  for

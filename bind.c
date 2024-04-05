@@ -968,11 +968,20 @@ _rl_read_file (char *filename, size_t *sizep)
   char *buffer;
   int i, file;
 
-  file = -1;
-  if (((file = open (filename, O_RDONLY, 0666)) < 0) || (fstat (file, &finfo) < 0))
+  file = open (filename, O_RDONLY, 0666);
+  /* If the open is interrupted, retry once */
+  if (file < 0 && errno == EINTR)
     {
+      RL_CHECK_SIGNALS ();
+      file = open (filename, O_RDONLY, 0666);
+    }
+  
+  if ((file < 0) || (fstat (file, &finfo) < 0))
+    {
+      i = errno;
       if (file >= 0)
 	close (file);
+      errno = i;
       return ((char *)NULL);
     }
 
@@ -981,10 +990,13 @@ _rl_read_file (char *filename, size_t *sizep)
   /* check for overflow on very large files */
   if (file_size != finfo.st_size || file_size + 1 < file_size)
     {
+      i = errno;
       if (file >= 0)
 	close (file);
 #if defined (EFBIG)
       errno = EFBIG;
+#else
+      errno = i;
 #endif
       return ((char *)NULL);
     }
@@ -2901,7 +2913,7 @@ rl_dump_macros (int count, int key)
 static char *
 _rl_get_string_variable_value (const char *name)
 {
-  static char numbuf[64];
+  static char numbuf[64];	/* more than enough for INTMAX_MAX */
   char *ret;
 
   if (_rl_stricmp (name, "active-region-start-color") == 0)
@@ -2951,24 +2963,40 @@ _rl_get_string_variable_value (const char *name)
     return (_rl_comment_begin ? _rl_comment_begin : RL_COMMENT_BEGIN_DEFAULT);
   else if (_rl_stricmp (name, "completion-display-width") == 0)
     {
+#if defined (HAVE_VSNPRINTF)
+      snprintf (numbuf, sizeof (numbuf), "%d", _rl_completion_columns);
+#else
       sprintf (numbuf, "%d", _rl_completion_columns);
+#endif
       return (numbuf);
     }
   else if (_rl_stricmp (name, "completion-prefix-display-length") == 0)
     {
+#if defined (HAVE_VSNPRINTF)
+      snprintf (numbuf, sizeof (numbuf), "%d", _rl_completion_prefix_display_length);
+#else
       sprintf (numbuf, "%d", _rl_completion_prefix_display_length);
+#endif
       return (numbuf);
     }
   else if (_rl_stricmp (name, "completion-query-items") == 0)
     {
+#if defined (HAVE_VSNPRINTF)
+      snprintf (numbuf, sizeof (numbuf), "%d", rl_completion_query_items);
+#else
       sprintf (numbuf, "%d", rl_completion_query_items);
+#endif
       return (numbuf);
     }
   else if (_rl_stricmp (name, "editing-mode") == 0)
     return (rl_get_keymap_name_from_edit_mode ());
   else if (_rl_stricmp (name, "history-size") == 0)
     {
+#if defined (HAVE_VSNPRINTF)
+      snprintf (numbuf, sizeof (numbuf), "%d", history_is_stifled() ? history_max_entries : -1);
+#else
       sprintf (numbuf, "%d", history_is_stifled() ? history_max_entries : -1);
+#endif
       return (numbuf);
     }
   else if (_rl_stricmp (name, "isearch-terminators") == 0)
@@ -2995,7 +3023,11 @@ _rl_get_string_variable_value (const char *name)
     }
   else if (_rl_stricmp (name, "keyseq-timeout") == 0)
     {
-      sprintf (numbuf, "%d", _rl_keyseq_timeout);    
+#if defined (HAVE_VSNPRINTF)
+      snprintf (numbuf, sizeof (numbuf), "%d", _rl_keyseq_timeout);
+#else
+      sprintf (numbuf, "%d", _rl_keyseq_timeout);
+#endif
       return (numbuf);
     }
   else if (_rl_stricmp (name, "emacs-mode-string") == 0)
