@@ -82,6 +82,7 @@ vi_keymap.c	f
 vi_mode.c	f
 xfree.c		f
 xmalloc.c	f
+gettimeofday.c	f
 history.c	f
 histexpand.c	f
 histfile.c	f
@@ -89,14 +90,14 @@ histsearch.c	f
 patchlevel	f
 shlib/Makefile.in	f
 support/config.guess	f
-support/config.rpath	f
+support/config.rpath	f	755
 support/config.sub	f
-support/install.sh	f
-support/mkdirs		f
+support/install.sh	f	755
+support/mkdirs		f	755
 support/mkdist		f
-support/mkinstalldirs	f
+support/mkinstalldirs	f	755
 support/shobj-conf	f
-support/shlib-install	f
+support/shlib-install	f	755
 support/wcwidth.c	f
 doc/Makefile.in		f
 doc/texinfo.tex		f
@@ -125,6 +126,8 @@ examples/rlevent.c	f
 examples/rlkeymaps.c	f
 examples/rltest.c	f
 examples/rl-callbacktest.c	f
+examples/rl-callbacktest2.c	f
+examples/rl-callbacktest3.c	f
 examples/rl-timeout.c	f
 examples/rl-test-timeout	f
 examples/rl.c		f

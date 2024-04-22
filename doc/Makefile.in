@@ -73,7 +73,7 @@ HISTSRC = $(srcdir)/history.texi $(srcdir)/hsuser.texi \
 	  $(srcdir)/hstech.texi $(srcdir)/version.texi $(srcdir)/fdl.texi
 
 # This should be a program that converts troff to an ascii-readable format
-NROFF       = groff -Tascii
+NROFF       = groff -Tascii -P -c
 
 # This should be a program that converts troff to postscript
 GROFF       = groff
