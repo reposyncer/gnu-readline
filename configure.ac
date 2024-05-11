@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.3, version 2.98])
+AC_REVISION([for Readline 8.3, version 2.99])
 
 AC_INIT(readline, 8.3, bug-readline@gnu.org)
 
@@ -122,7 +122,8 @@ if test -n "$want_auto_cflags" ; then
 	STYLE_CFLAGS="${GCC:+-Wno-parentheses} ${GCC:+-Wno-format-security}"
 fi
 
-AC_PROG_GCC_TRADITIONAL
+dnl this macro is obsolete
+dnl AC_PROG_GCC_TRADITIONAL
 AC_PROG_INSTALL
 AC_CHECK_TOOL(AR, ar)
 dnl Set default for ARFLAGS, since autoconf does not have a macro for it.

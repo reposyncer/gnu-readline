@@ -145,13 +145,13 @@ examples/rlfe/Makefile.in	f
 examples/rlfe/README		f
 examples/rlfe/config.h.in	f
 examples/rlfe/configure		f	755
-examples/rlfe/configure.in	f
+examples/rlfe/configure.ac	f
 examples/rlfe/extern.h		f
 examples/rlfe/os.h		f
 examples/rlfe/pty.c		f
 examples/rlfe/rlfe.c		f
 examples/rlfe/screen.h		f
-examples/rlwrap-0.30.tar.gz	f
+examples/rlwrap-0.46.1.tar.gz	f
 # formatted documentation, from MANIFEST.doc
 doc/readline.ps		f
 doc/history.ps		f

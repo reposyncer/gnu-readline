@@ -163,12 +163,21 @@ hist_erasedups$(EXEEXT): hist_erasedups.o $(HISTORY_LIB)
 hist_purgecmd$(EXEEXT): hist_purgecmd.o $(HISTORY_LIB)
 	$(CC) $(LDFLAGS) -o $@ hist_purgecmd.o -lhistory $(TERMCAP_LIB)
 
+rlfe:	force
+	( rlfe_srcdir=${srcdir}/rlfe ; \
+	  if test -d rlfe; then :; else mkdir rlfe; fi; \
+	  cd rlfe && $(SHELL) $$rlfe_srcdir/configure -C && ${MAKE}  )
+
+force:
+
 clean mostlyclean:
 	$(RM) $(OBJECTS) $(OTHEROBJ)
 	$(RM) $(EXECUTABLES) $(OTHEREXE) *.exe
+	-( cd rlfe && ${MAKE} $@ )
 
 distclean maintainer-clean: clean
 	$(RM) Makefile
+	-( cd rlfe && ${MAKE} $@ )
 
 fileman.o: fileman.c
 manexamp.o: manexamp.c
