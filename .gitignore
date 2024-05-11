@@ -35,3 +35,5 @@ libreadline.so.*
 readline.pc
 
 stamp-h
+
+*.orig
