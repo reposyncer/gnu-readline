@@ -1480,3 +1480,9 @@ configure.ac
 	- AC_PROG_GCC_TRADITIONAL: remove
 	- need to note in CHANGES that configure now supports --enable-year2038.
 	  THIS IS AN ABI CHANGE IF YOU ENABLE IT
+
+				    7/7
+				    ---
+configure.ac
+	- add ncursesw as a possible value for TERMCAP_PKG_CONFIG_LIB, with
+	  corresponding changes to aclocal.m4, which is shared with bash
