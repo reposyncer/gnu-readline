@@ -88,7 +88,9 @@ HHIISSTTOORRYY EEXXPPAANNSSIIOONN
               pand to the zeroth word if there is only one word in the line.
        %%      The first word matched by the most recent "?_s_t_r_i_n_g?"  search, if
               the search string begins with a character  that  is  part  of  a
-              word.
+              word.   By  default,  searches begin at the end of each line and
+              proceed to the beginning, so the first word matched is  the  one
+              closest to the end of the line.
        _x--_y    A range of words; "-_y" abbreviates "0-_y".
        **      All  of  the words but the zeroth.  This is a synonym for "_1_-_$".
               It is not an error to use ** if there is just  one  word  in  the
@@ -513,4 +515,4 @@ BBUUGG RREEPPOORRTTSS
        Comments and bug reports concerning this manual page should be directed
        to _c_h_e_t_._r_a_m_e_y_@_c_a_s_e_._e_d_u.
 
-GNU History 8.3                  2024 March 29                      _H_I_S_T_O_R_Y(3)
+GNU History 8.3                 2024 August 13                      _H_I_S_T_O_R_Y(3)

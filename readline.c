@@ -543,7 +543,11 @@ _rl_internal_char_cleanup (void)
     rl_vi_check ();
 #endif /* VI_MODE */
 
+#if defined (HANDLE_MULTIBYTE)
+  if (rl_num_chars_to_read && _rl_mbstrlen (rl_line_buffer) >= rl_num_chars_to_read)
+#else
   if (rl_num_chars_to_read && rl_end >= rl_num_chars_to_read)
+#endif
     {
       (*rl_redisplay_function) ();
       _rl_want_redisplay = 0;

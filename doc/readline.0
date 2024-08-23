@@ -571,9 +571,11 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
 
    CCoommmmaannddss ffoorr MMoovviinngg
        bbeeggiinnnniinngg--ooff--lliinnee ((CC--aa))
-              Move to the start of the current line.
+              Move  to  the start of the current line.  This may also be bound
+              to the Home key on some keyboards.
        eenndd--ooff--lliinnee ((CC--ee))
-              Move to the end of the line.
+              Move to the end of the line.  This may also be bound to the  End
+              key on some keyboards.
        ffoorrwwaarrdd--cchhaarr ((CC--ff))
               Move forward a character.
        bbaacckkwwaarrdd--cchhaarr ((CC--bb))
@@ -653,46 +655,48 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
               Search backward through the history for the string of characters
               between the start of the current line and the current cursor po-
               sition (the _p_o_i_n_t).  The search string must match at the  begin-
-              ning of a history line.  This is a non-incremental search.
+              ning of a history line.  This is a non-incremental search.  This
+              may be bound to the Page Up key on some keyboards.
        hhiissttoorryy--sseeaarrcchh--ffoorrwwaarrdd
               Search  forward through the history for the string of characters
               between the start of the current line and the point.  The search
               string must match at the beginning of a history line.  This is a
-              non-incremental search.
+              non-incremental search.  This may be bound to the Page Down  key
+              on some keyboards.
        hhiissttoorryy--ssuubbssttrriinngg--sseeaarrcchh--bbaacckkwwaarrdd
               Search backward through the history for the string of characters
               between the start of the current line and the current cursor po-
-              sition (the _p_o_i_n_t).  The search string may match anywhere  in  a
+              sition  (the  _p_o_i_n_t).  The search string may match anywhere in a
               history line.  This is a non-incremental search.
        hhiissttoorryy--ssuubbssttrriinngg--sseeaarrcchh--ffoorrwwaarrdd
-              Search  forward through the history for the string of characters
+              Search forward through the history for the string of  characters
               between the start of the current line and the point.  The search
-              string may match anywhere in a history line.  This is a  non-in-
+              string  may match anywhere in a history line.  This is a non-in-
               cremental search.
        yyaannkk--nntthh--aarrgg ((MM--CC--yy))
-              Insert  the  first argument to the previous command (usually the
+              Insert the first argument to the previous command  (usually  the
               second word on the previous line) at point.  With an argument _n,
-              insert the _nth word from the previous command (the words in  the
-              previous  command  begin  with word 0).  A negative argument in-
-              serts the _nth word from the end of the previous  command.   Once
-              the  argument _n is computed, the argument is extracted as if the
+              insert  the _nth word from the previous command (the words in the
+              previous command begin with word 0).  A  negative  argument  in-
+              serts  the  _nth word from the end of the previous command.  Once
+              the argument _n is computed, the argument is extracted as if  the
               "!_n" history expansion had been specified.
        yyaannkk--llaasstt--aarrgg ((MM--..,, MM--__))
-              Insert the last argument to the previous command (the last  word
+              Insert  the last argument to the previous command (the last word
               of the previous history entry).  With a numeric argument, behave
-              exactly  like  yyaannkk--nntthh--aarrgg.   Successive calls to yyaannkk--llaasstt--aarrgg
-              move back through the history list, inserting the last word  (or
-              the  word  specified  by the argument to the first call) of each
+              exactly like yyaannkk--nntthh--aarrgg.  Successive  calls  to  yyaannkk--llaasstt--aarrgg
+              move  back through the history list, inserting the last word (or
+              the word specified by the argument to the first  call)  of  each
               line in turn.  Any numeric argument supplied to these successive
-              calls determines the direction to move through the  history.   A
-              negative  argument  switches  the  direction through the history
+              calls  determines  the direction to move through the history.  A
+              negative argument switches the  direction  through  the  history
               (back or forward).  The history expansion facilities are used to
-              extract the last argument, as if the "!$" history expansion  had
+              extract  the last argument, as if the "!$" history expansion had
               been specified.
 
    CCoommmmaannddss ffoorr CChhaannggiinngg TTeexxtt
        _e_n_d_-_o_f_-_f_i_l_e ((uussuuaallllyy CC--dd))
-              The  character  indicating  end-of-file  as set, for example, by
+              The character indicating end-of-file as  set,  for  example,  by
               _s_t_t_y(1).  If this character is read when there are no characters
               on the line, and point is at the beginning of the line, readline
               interprets it as the end of input and returns EEOOFF.
@@ -701,10 +705,10 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
               same character as the tty EEOOFF character, as CC--dd commonly is, see
               above for the effects.
        bbaacckkwwaarrdd--ddeelleettee--cchhaarr ((RRuubboouutt))
-              Delete the character behind the cursor.  When  given  a  numeric
+              Delete  the  character  behind the cursor.  When given a numeric
               argument, save the deleted text on the kill ring.
        ffoorrwwaarrdd--bbaacckkwwaarrdd--ddeelleettee--cchhaarr
-              Delete  the  character under the cursor, unless the cursor is at
+              Delete the character under the cursor, unless the cursor  is  at
               the end of the line, in which case the character behind the cur-
               sor is deleted.
        qquuootteedd--iinnsseerrtt ((CC--qq,, CC--vv))
@@ -715,33 +719,34 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
        sseellff--iinnsseerrtt ((aa,, bb,, AA,, 11,, !!,, ...))
               Insert the character typed.
        ttrraannssppoossee--cchhaarrss ((CC--tt))
-              Drag the character before point forward over  the  character  at
-              point,  moving point forward as well.  If point is at the end of
-              the line, then this transposes the two characters before  point.
+              Drag  the  character  before point forward over the character at
+              point, moving point forward as well.  If point is at the end  of
+              the  line, then this transposes the two characters before point.
               Negative arguments have no effect.
        ttrraannssppoossee--wwoorrddss ((MM--tt))
-              Drag  the  word  before  point past the word after point, moving
-              point over that word as well.  If point is at  the  end  of  the
+              Drag the word before point past the  word  after  point,  moving
+              point  over  that  word  as well.  If point is at the end of the
               line, this transposes the last two words on the line.
        uuppccaassee--wwoorrdd ((MM--uu))
-              Uppercase  the current (or following) word.  With a negative ar-
+              Uppercase the current (or following) word.  With a negative  ar-
               gument, uppercase the previous word, but do not move point.
        ddoowwnnccaassee--wwoorrdd ((MM--ll))
-              Lowercase the current (or following) word.  With a negative  ar-
+              Lowercase  the current (or following) word.  With a negative ar-
               gument, lowercase the previous word, but do not move point.
        ccaappiittaalliizzee--wwoorrdd ((MM--cc))
               Capitalize the current (or following) word.  With a negative ar-
               gument, capitalize the previous word, but do not move point.
        oovveerrwwrriittee--mmooddee
-              Toggle  overwrite mode.  With an explicit positive numeric argu-
+              Toggle overwrite mode.  With an explicit positive numeric  argu-
               ment, switches to overwrite mode.  With an explicit non-positive
               numeric argument, switches to insert mode.  This command affects
-              only eemmaaccss mode; vvii mode does overwrite differently.  Each  call
+              only  eemmaaccss mode; vvii mode does overwrite differently.  Each call
               to _r_e_a_d_l_i_n_e_(_) starts in insert mode.  In overwrite mode, charac-
-              ters  bound to sseellff--iinnsseerrtt replace the text at point rather than
-              pushing the text  to  the  right.   Characters  bound  to  bbaacckk--
-              wwaarrdd--ddeelleettee--cchhaarr  replace  the  character  before  point  with a
-              space.  By default, this command is unbound.
+              ters bound to sseellff--iinnsseerrtt replace the text at point rather  than
+              pushing  the  text  to  the  right.   Characters  bound to bbaacckk--
+              wwaarrdd--ddeelleettee--cchhaarr replace  the  character  before  point  with  a
+              space.  By default, this command is unbound, but may be bound to
+              the Insert key on some keyboards.
 
    KKiilllliinngg aanndd YYaannkkiinngg
        kkiillll--lliinnee ((CC--kk))
@@ -749,123 +754,123 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
        bbaacckkwwaarrdd--kkiillll--lliinnee ((CC--xx RRuubboouutt))
               Kill backward to the beginning of the line.
        uunniixx--lliinnee--ddiissccaarrdd ((CC--uu))
-              Kill backward from point to the  beginning  of  the  line.   The
+              Kill  backward  from  point  to  the beginning of the line.  The
               killed text is saved on the kill-ring.
        kkiillll--wwhhoollee--lliinnee
-              Kill  all  characters on the current line, no matter where point
+              Kill all characters on the current line, no matter  where  point
               is.
        kkiillll--wwoorrdd ((MM--dd))
-              Kill from point the end of  the  current  word,  or  if  between
-              words,  to  the  end  of the next word.  Word boundaries are the
+              Kill  from  point  the  end  of  the current word, or if between
+              words, to the end of the next word.   Word  boundaries  are  the
               same as those used by ffoorrwwaarrdd--wwoorrdd.
        bbaacckkwwaarrdd--kkiillll--wwoorrdd ((MM--RRuubboouutt))
-              Kill the word behind point.  Word boundaries  are  the  same  as
+              Kill  the  word  behind  point.  Word boundaries are the same as
               those used by bbaacckkwwaarrdd--wwoorrdd.
        uunniixx--wwoorrdd--rruubboouutt ((CC--ww))
-              Kill  the  word behind point, using white space as a word bound-
+              Kill the word behind point, using white space as a  word  bound-
               ary.  The killed text is saved on the kill-ring.
        uunniixx--ffiilleennaammee--rruubboouutt
-              Kill the word behind point, using  white  space  and  the  slash
-              character  as  the word boundaries.  The killed text is saved on
+              Kill  the  word  behind  point,  using white space and the slash
+              character as the word boundaries.  The killed text is  saved  on
               the kill-ring.
        ddeelleettee--hhoorriizzoonnttaall--ssppaaccee ((MM--\\))
               Delete all spaces and tabs around point.
        kkiillll--rreeggiioonn
-              Kill the text between the point and  _m_a_r_k  (saved  cursor  posi-
+              Kill  the  text  between  the point and _m_a_r_k (saved cursor posi-
               tion).  This text is referred to as the _r_e_g_i_o_n.
        ccooppyy--rreeggiioonn--aass--kkiillll
               Copy the text in the region to the kill buffer.
        ccooppyy--bbaacckkwwaarrdd--wwoorrdd
-              Copy  the word before point to the kill buffer.  The word bound-
+              Copy the word before point to the kill buffer.  The word  bound-
               aries are the same as bbaacckkwwaarrdd--wwoorrdd.
        ccooppyy--ffoorrwwaarrdd--wwoorrdd
-              Copy the word following point to  the  kill  buffer.   The  word
+              Copy  the  word  following  point  to the kill buffer.  The word
               boundaries are the same as ffoorrwwaarrdd--wwoorrdd.
        yyaannkk ((CC--yy))
               Yank the top of the kill ring into the buffer at point.
        yyaannkk--ppoopp ((MM--yy))
-              Rotate  the kill ring, and yank the new top.  Only works follow-
+              Rotate the kill ring, and yank the new top.  Only works  follow-
               ing yyaannkk or yyaannkk--ppoopp.
 
    NNuummeerriicc AArrgguummeennttss
        ddiiggiitt--aarrgguummeenntt ((MM--00,, MM--11,, ...,, MM----))
-              Add this digit to the argument already accumulating, or start  a
+              Add  this digit to the argument already accumulating, or start a
               new argument.  M-- starts a negative argument.
        uunniivveerrssaall--aarrgguummeenntt
-              This  is another way to specify an argument.  If this command is
-              followed by one or more digits, optionally with a leading  minus
-              sign,  those digits define the argument.  If the command is fol-
+              This is another way to specify an argument.  If this command  is
+              followed  by one or more digits, optionally with a leading minus
+              sign, those digits define the argument.  If the command is  fol-
               lowed by digits, executing uunniivveerrssaall--aarrgguummeenntt again ends the nu-
               meric argument, but is otherwise ignored.  As a special case, if
               this command is immediately followed by a character that is nei-
               ther a digit or minus sign, the argument count for the next com-
-              mand is multiplied by four.  The  argument  count  is  initially
-              one,  so  executing this function the first time makes the argu-
+              mand  is  multiplied  by  four.  The argument count is initially
+              one, so executing this function the first time makes  the  argu-
               ment count four, a second time makes the argument count sixteen,
               and so on.
 
    CCoommpplleettiinngg
        ccoommpplleettee ((TTAABB))
               Attempt to perform completion on the text before point.  The ac-
-              tual completion performed is  application-specific.   BBaasshh,  for
-              instance,  attempts  completion  treating the text as a variable
-              (if the text begins with $$), username (if the text  begins  with
-              ~~),  hostname (if the text begins with @@), or command (including
-              aliases and functions) in turn.  If none  of  these  produces  a
-              match,  filename  completion  is  attempted.   GGddbb, on the other
-              hand, allows completion of program functions and variables,  and
+              tual  completion  performed  is application-specific.  BBaasshh, for
+              instance, attempts completion treating the text  as  a  variable
+              (if  the  text begins with $$), username (if the text begins with
+              ~~), hostname (if the text begins with @@), or command  (including
+              aliases  and  functions)  in  turn.  If none of these produces a
+              match, filename completion is  attempted.   GGddbb,  on  the  other
+              hand,  allows completion of program functions and variables, and
               only attempts filename completion under certain circumstances.
        ppoossssiibbllee--ccoommpplleettiioonnss ((MM--??))
-              List  the  possible  completions of the text before point.  When
+              List the possible completions of the text  before  point.   When
               displaying completions, readline sets the number of columns used
-              for display to the value of ccoommpplleettiioonn--ddiissppllaayy--wwiiddtthh, the  value
-              of  the  environment  variable  CCOOLLUUMMNNSS, or the screen width, in
+              for  display to the value of ccoommpplleettiioonn--ddiissppllaayy--wwiiddtthh, the value
+              of the environment variable CCOOLLUUMMNNSS, or  the  screen  width,  in
               that order.
        iinnsseerrtt--ccoommpplleettiioonnss ((MM--**))
-              Insert all completions of the text before point that would  have
+              Insert  all completions of the text before point that would have
               been generated by ppoossssiibbllee--ccoommpplleettiioonnss.
        mmeennuu--ccoommpplleettee
-              Similar  to ccoommpplleettee, but replaces the word to be completed with
-              a single match from the list of possible completions.   Repeated
-              execution  of  mmeennuu--ccoommpplleettee  steps through the list of possible
-              completions, inserting each match in turn.  At the  end  of  the
+              Similar to ccoommpplleettee, but replaces the word to be completed  with
+              a  single match from the list of possible completions.  Repeated
+              execution of mmeennuu--ccoommpplleettee steps through the  list  of  possible
+              completions,  inserting  each  match in turn.  At the end of the
               list of completions, the bell is rung (subject to the setting of
               bbeellll--ssttyyllee) and the original text is restored.  An argument of _n
               moves _n positions forward in the list of matches; a negative ar-
               gument may be used to move backward through the list.  This com-
               mand is intended to be bound to TTAABB, but is unbound by default.
        mmeennuu--ccoommpplleettee--bbaacckkwwaarrdd
-              Identical  to mmeennuu--ccoommpplleettee, but moves backward through the list
-              of possible completions, as if mmeennuu--ccoommpplleettee had  been  given  a
+              Identical to mmeennuu--ccoommpplleettee, but moves backward through the  list
+              of  possible  completions,  as if mmeennuu--ccoommpplleettee had been given a
               negative argument.  This command is unbound by default.
        ddeelleettee--cchhaarr--oorr--lliisstt
-              Deletes  the  character under the cursor if not at the beginning
-              or end of the line (like ddeelleettee--cchhaarr).  If at  the  end  of  the
+              Deletes the character under the cursor if not at  the  beginning
+              or  end  of  the  line (like ddeelleettee--cchhaarr).  If at the end of the
               line, behaves identically to ppoossssiibbllee--ccoommpplleettiioonnss.
 
    KKeeyybbooaarrdd MMaaccrrooss
        ssttaarrtt--kkbbdd--mmaaccrroo ((CC--xx (())
-              Begin  saving  the  characters  typed  into the current keyboard
+              Begin saving the characters  typed  into  the  current  keyboard
               macro.
        eenndd--kkbbdd--mmaaccrroo ((CC--xx ))))
               Stop saving the characters typed into the current keyboard macro
               and store the definition.
        ccaallll--llaasstt--kkbbdd--mmaaccrroo ((CC--xx ee))
-              Re-execute the last keyboard macro defined, by making the  char-
+              Re-execute  the last keyboard macro defined, by making the char-
               acters in the macro appear as if typed at the keyboard.
        pprriinntt--llaasstt--kkbbdd--mmaaccrroo (())
-              Print  the  last keyboard macro defined in a format suitable for
+              Print the last keyboard macro defined in a format  suitable  for
               the _i_n_p_u_t_r_c file.
 
    MMiisscceellllaanneeoouuss
        rree--rreeaadd--iinniitt--ffiillee ((CC--xx CC--rr))
-              Read in the contents of the _i_n_p_u_t_r_c file,  and  incorporate  any
+              Read  in  the  contents of the _i_n_p_u_t_r_c file, and incorporate any
               bindings or variable assignments found there.
        aabboorrtt ((CC--gg))
-              Abort  the  current editing command and ring the terminal's bell
+              Abort the current editing command and ring the  terminal's  bell
               (subject to the setting of bbeellll--ssttyyllee).
        ddoo--lloowweerrccaassee--vveerrssiioonn ((MM--AA,, MM--BB,, MM--_x,, ...))
-              If the metafied character _x is uppercase, run the  command  that
+              If  the  metafied character _x is uppercase, run the command that
               is bound to the corresponding metafied lowercase character.  The
               behavior is undefined if _x is already lowercase.
        pprreeffiixx--mmeettaa ((EESSCC))
@@ -873,80 +878,80 @@ EEDDIITTIINNGG CCOOMMMMAANNDDSS
        uunnddoo ((CC--__,, CC--xx CC--uu))
               Incremental undo, separately remembered for each line.
        rreevveerrtt--lliinnee ((MM--rr))
-              Undo  all changes made to this line.  This is like executing the
-              uunnddoo command enough times to return  the  line  to  its  initial
+              Undo all changes made to this line.  This is like executing  the
+              uunnddoo  command  enough  times  to  return the line to its initial
               state.
        ttiillddee--eexxppaanndd ((MM--&&))
               Perform tilde expansion on the current word.
        sseett--mmaarrkk ((CC--@@,, MM--<<ssppaaccee>>))
-              Set  the  mark to the point.  If a numeric argument is supplied,
+              Set the mark to the point.  If a numeric argument  is  supplied,
               the mark is set to that position.
        eexxcchhaannggee--ppooiinntt--aanndd--mmaarrkk ((CC--xx CC--xx))
-              Swap the point with the mark.  The current  cursor  position  is
-              set  to the saved position, and the old cursor position is saved
+              Swap  the  point  with the mark.  The current cursor position is
+              set to the saved position, and the old cursor position is  saved
               as the mark.
        cchhaarraacctteerr--sseeaarrcchh ((CC--]]))
               A character is read and point is moved to the next occurrence of
-              that character.  A negative argument searches for  previous  oc-
+              that  character.   A negative argument searches for previous oc-
               currences.
        cchhaarraacctteerr--sseeaarrcchh--bbaacckkwwaarrdd ((MM--CC--]]))
-              A  character  is  read and point is moved to the previous occur-
-              rence of that character.  A negative argument searches for  sub-
+              A character is read and point is moved to  the  previous  occur-
+              rence  of that character.  A negative argument searches for sub-
               sequent occurrences.
        sskkiipp--ccssii--sseeqquueennccee
-              Read  enough  characters to consume a multi-key sequence such as
-              those defined for keys like Home and End.  Such sequences  begin
+              Read enough characters to consume a multi-key sequence  such  as
+              those  defined for keys like Home and End.  Such sequences begin
               with a Control Sequence Indicator (CSI), usually ESC-[.  If this
-              sequence  is  bound  to "\[", keys producing such sequences will
-              have no effect unless explicitly bound to  a  readline  command,
-              instead  of  inserting stray characters into the editing buffer.
+              sequence is bound to "\[", keys producing  such  sequences  will
+              have  no  effect  unless explicitly bound to a readline command,
+              instead of inserting stray characters into the  editing  buffer.
               This is unbound by default, but usually bound to ESC-[.
        iinnsseerrtt--ccoommmmeenntt ((MM--##))
-              Without a numeric argument,  the  value  of  the  readline  ccoomm--
-              mmeenntt--bbeeggiinn  variable is inserted at the beginning of the current
+              Without  a  numeric  argument,  the  value  of the readline ccoomm--
+              mmeenntt--bbeeggiinn variable is inserted at the beginning of the  current
               line.  If a numeric argument is supplied, this command acts as a
-              toggle: if the characters at the beginning of the  line  do  not
-              match  the value of ccoommmmeenntt--bbeeggiinn, the value is inserted, other-
+              toggle:  if  the  characters at the beginning of the line do not
+              match the value of ccoommmmeenntt--bbeeggiinn, the value is inserted,  other-
               wise the characters in ccoommmmeenntt--bbeeggiinn are deleted from the begin-
-              ning of the line.  In either case, the line is accepted as if  a
-              newline  had  been  typed.   The  default value of ccoommmmeenntt--bbeeggiinn
-              makes the current line a shell comment.  If a  numeric  argument
+              ning  of the line.  In either case, the line is accepted as if a
+              newline had been typed.   The  default  value  of  ccoommmmeenntt--bbeeggiinn
+              makes  the  current line a shell comment.  If a numeric argument
               causes the comment character to be removed, the line will be ex-
               ecuted by the shell.
        dduummpp--ffuunnccttiioonnss
-              Print  all  of the functions and their key bindings to the read-
+              Print all of the functions and their key bindings to  the  read-
               line output stream.  If a numeric argument is supplied, the out-
-              put is formatted in such a way that it can be made  part  of  an
+              put  is  formatted  in such a way that it can be made part of an
               _i_n_p_u_t_r_c file.
        dduummpp--vvaarriiaabblleess
-              Print  all  of  the  settable  variables and their values to the
-              readline output stream.  If a numeric argument is supplied,  the
+              Print all of the settable variables  and  their  values  to  the
+              readline  output stream.  If a numeric argument is supplied, the
               output is formatted in such a way that it can be made part of an
               _i_n_p_u_t_r_c file.
        dduummpp--mmaaccrrooss
-              Print  all of the readline key sequences bound to macros and the
-              strings they output.  If a numeric  argument  is  supplied,  the
+              Print all of the readline key sequences bound to macros and  the
+              strings  they  output.   If  a numeric argument is supplied, the
               output is formatted in such a way that it can be made part of an
               _i_n_p_u_t_r_c file.
        eemmaaccss--eeddiittiinngg--mmooddee ((CC--ee))
-              When  in  vvii command mode, this causes a switch to eemmaaccss editing
+              When in vvii command mode, this causes a switch to  eemmaaccss  editing
               mode.
        vvii--eeddiittiinngg--mmooddee ((MM--CC--jj))
-              When in eemmaaccss editing mode, this causes a switch to  vvii  editing
+              When  in  eemmaaccss editing mode, this causes a switch to vvii editing
               mode.
 
 DDEEFFAAUULLTT KKEEYY BBIINNDDIINNGGSS
-       The  following is a list of the default emacs and vi bindings.  Charac-
-       ters with the eighth bit set are written as M-<character>, and are  re-
-       ferred  to  as _m_e_t_a_f_i_e_d characters.  The printable ASCII characters not
-       mentioned in the list of emacs  standard  bindings  are  bound  to  the
-       sseellff--iinnsseerrtt  function,  which just inserts the given character into the
+       The following is a list of the default emacs and vi bindings.   Charac-
+       ters  with the eighth bit set are written as M-<character>, and are re-
+       ferred to as _m_e_t_a_f_i_e_d characters.  The printable ASCII  characters  not
+       mentioned  in  the  list  of  emacs  standard bindings are bound to the
+       sseellff--iinnsseerrtt function, which just inserts the given character  into  the
        input line.  In vi insertion mode, all characters not specifically men-
        tioned are bound to sseellff--iinnsseerrtt.  Characters assigned to signal genera-
        tion by _s_t_t_y(1) or the terminal driver, such as C-Z or C-C, retain that
-       function.  Upper and lower case metafied characters are  bound  to  the
-       same  function in the emacs mode meta keymap.  The remaining characters
-       are unbound, which causes readline to ring the  bell  (subject  to  the
+       function.   Upper  and  lower case metafied characters are bound to the
+       same function in the emacs mode meta keymap.  The remaining  characters
+       are  unbound,  which  causes  readline to ring the bell (subject to the
        setting of the bbeellll--ssttyyllee variable).
 
    EEmmaaccss MMooddee
@@ -1162,14 +1167,14 @@ AAUUTTHHOORRSS
        chet.ramey@case.edu
 
 BBUUGG RREEPPOORRTTSS
-       If  you  find  a bug in rreeaaddlliinnee,, you should report it.  But first, you
-       should make sure that it really is a bug, and that it  appears  in  the
+       If you find a bug in rreeaaddlliinnee,, you should report it.   But  first,  you
+       should  make  sure  that it really is a bug, and that it appears in the
        latest version of the rreeaaddlliinnee library that you have.
 
-       Once  you have determined that a bug actually exists, mail a bug report
-       to _b_u_g_-_r_e_a_d_l_i_n_e@_g_n_u_._o_r_g.  If you have a fix, you are  welcome  to  mail
-       that  as  well!   Suggestions  and  `philosophical'  bug reports may be
-       mailed to  _b_u_g_-_r_e_a_d_l_i_n_e@_g_n_u_._o_r_g  or  posted  to  the  Usenet  newsgroup
+       Once you have determined that a bug actually exists, mail a bug  report
+       to  _b_u_g_-_r_e_a_d_l_i_n_e@_g_n_u_._o_r_g.   If  you have a fix, you are welcome to mail
+       that as well!  Suggestions  and  `philosophical'  bug  reports  may  be
+       mailed  to  _b_u_g_-_r_e_a_d_l_i_n_e@_g_n_u_._o_r_g  or  posted  to  the  Usenet newsgroup
        ggnnuu..bbaasshh..bbuugg.
 
        Comments and bug reports concerning this manual page should be directed
@@ -1178,4 +1183,4 @@ BBUUGG RREEPPOORRTTSS
 BBUUGGSS
        It's too big and too slow.
 
-GNU Readline 8.3                 2024 March 29                     _R_E_A_D_L_I_N_E(3)
+GNU Readline 8.3                  2024 May 11                      _R_E_A_D_L_I_N_E(3)

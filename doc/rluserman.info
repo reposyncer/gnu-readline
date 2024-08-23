@@ -2,7 +2,7 @@ This is rluserman.info, produced by makeinfo version 7.1 from
 rluserman.texi.
 
 This manual describes the end user interface of the GNU Readline Library
-(version 8.3, 19 January 2024), a library which aids in the consistency
+(version 8.3, 13 August 2024), a library which aids in the consistency
 of user interface across discrete programs which provide a command line
 interface.
 
@@ -1055,10 +1055,12 @@ File: rluserman.info,  Node: Commands For Moving,  Next: Commands For History,  
 -------------------------
 
 ‘beginning-of-line (C-a)’
-     Move to the start of the current line.
+     Move to the start of the current line.  This may also be bound to
+     the Home key on some keyboards.
 
 ‘end-of-line (C-e)’
-     Move to the end of the line.
+     Move to the end of the line.  This may also be bound to the End key
+     on some keyboards.
 
 ‘forward-char (C-f)’
      Move forward a character.
@@ -1150,26 +1152,28 @@ File: rluserman.info,  Node: Commands For History,  Next: Commands For Text,  Pr
      a string supplied by the user.  The search string may match
      anywhere in a history line.
 
-‘history-search-forward ()’
-     Search forward through the history for the string of characters
-     between the start of the current line and the point.  The search
-     string must match at the beginning of a history line.  This is a
-     non-incremental search.  By default, this command is unbound.
-
 ‘history-search-backward ()’
      Search backward through the history for the string of characters
      between the start of the current line and the point.  The search
      string must match at the beginning of a history line.  This is a
-     non-incremental search.  By default, this command is unbound.
+     non-incremental search.  By default, this command is unbound, but
+     may be bound to the Page Down key on some keyboards.
 
-‘history-substring-search-forward ()’
+‘history-search-forward ()’
      Search forward through the history for the string of characters
+     between the start of the current line and the point.  The search
+     string must match at the beginning of a history line.  This is a
+     non-incremental search.  By default, this command is unbound, but
+     may be bound to the Page Up key on some keyboards.
+
+‘history-substring-search-backward ()’
+     Search backward through the history for the string of characters
      between the start of the current line and the point.  The search
      string may match anywhere in a history line.  This is a
      non-incremental search.  By default, this command is unbound.
 
-‘history-substring-search-backward ()’
-     Search backward through the history for the string of characters
+‘history-substring-search-forward ()’
+     Search forward through the history for the string of characters
      between the start of the current line and the point.  The search
      string may match anywhere in a history line.  This is a
      non-incremental search.  By default, this command is unbound.
@@ -1292,7 +1296,8 @@ File: rluserman.info,  Node: Commands For Text,  Next: Commands For Killing,  Pr
      Characters bound to ‘backward-delete-char’ replace the character
      before point with a space.
 
-     By default, this command is unbound.
+     By default, this command is unbound, but may be bound to the Insert
+     key on some keyboards.
 
 
 File: rluserman.info,  Node: Commands For Killing,  Next: Numeric Arguments,  Prev: Commands For Text,  Up: Bindable Readline Commands
@@ -2062,30 +2067,30 @@ their use in free software.
 
 
 Tag Table:
-Node: Top906
-Node: Command Line Editing1428
-Node: Introduction and Notation2082
-Node: Readline Interaction3731
-Node: Readline Bare Essentials4924
-Node: Readline Movement Commands6747
-Node: Readline Killing Commands7749
-Node: Readline Arguments9732
-Node: Searching10794
-Node: Readline Init File12994
-Node: Readline Init File Syntax14171
-Node: Conditional Init Constructs38822
-Node: Sample Init File43192
-Node: Bindable Readline Commands46318
-Node: Commands For Moving47390
-Node: Commands For History49194
-Node: Commands For Text54247
-Node: Commands For Killing58043
-Node: Numeric Arguments60513
-Node: Commands For Completion61670
-Node: Keyboard Macros63704
-Node: Miscellaneous Commands64410
-Node: Readline vi Mode68790
-Node: GNU Free Documentation License69756
+Node: Top905
+Node: Command Line Editing1427
+Node: Introduction and Notation2081
+Node: Readline Interaction3730
+Node: Readline Bare Essentials4923
+Node: Readline Movement Commands6746
+Node: Readline Killing Commands7748
+Node: Readline Arguments9731
+Node: Searching10793
+Node: Readline Init File12993
+Node: Readline Init File Syntax14170
+Node: Conditional Init Constructs38821
+Node: Sample Init File43191
+Node: Bindable Readline Commands46317
+Node: Commands For Moving47389
+Node: Commands For History49320
+Node: Commands For Text54495
+Node: Commands For Killing58350
+Node: Numeric Arguments60820
+Node: Commands For Completion61977
+Node: Keyboard Macros64011
+Node: Miscellaneous Commands64717
+Node: Readline vi Mode69097
+Node: GNU Free Documentation License70063
 
 End Tag Table
 

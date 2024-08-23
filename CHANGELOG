@@ -1486,3 +1486,9 @@ configure.ac
 configure.ac
 	- add ncursesw as a possible value for TERMCAP_PKG_CONFIG_LIB, with
 	  corresponding changes to aclocal.m4, which is shared with bash
+
+				   7/24
+				   ----
+configure.ac,Makefile.in
+	- STYLE_CFLAGS: set like bash if we're using gcc or clang; add to
+	  CCFLAGS so we can compile -Wno-parentheses by default

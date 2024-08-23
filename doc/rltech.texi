@@ -496,7 +496,7 @@ setting @var{rl_input_available_hook} as well.
 @end deftypevar
 
 @deftypevar {rl_voidfunc_t *} rl_redisplay_function
-If non-zero, Readline will call indirectly through this pointer
+Readline will call indirectly through this pointer
 to update the display with the current contents of the editing buffer.
 By default, it is set to @code{rl_redisplay}, the default Readline
 redisplay function (@pxref{Redisplay}).

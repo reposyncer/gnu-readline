@@ -6,9 +6,9 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Fri Mar 29 12:03:51 EDT 2024
+.\"	Last Change: Tue Aug 13 14:29:23 EDT 2024
 .\"
-.TH HISTORY 3 "2024 March 29" "GNU History 8.3"
+.TH HISTORY 3 "2024 August 13" "GNU History 8.3"
 .\"
 .ie \n(.g \{\
 .ds ' \(aq
@@ -210,6 +210,9 @@ The first word matched by the most recent
 .Q ?\fIstring\fP?
 search,
 if the search string begins with a character that is part of a word.
+By default, searches begin at the end of each line and proceed to the
+beginning, so the first word matched is the one closest to the end of
+the line.
 .TP
 .I x\fB\-\fPy
 A range of words;

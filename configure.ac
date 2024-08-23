@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Readline 8.3, version 2.100])
+AC_REVISION([for Readline 8.3, version 2.101])
 
 AC_INIT(readline, 8.3, bug-readline@gnu.org)
 
@@ -328,6 +328,7 @@ AC_SUBST(CFLAGS)
 AC_SUBST(LOCAL_CFLAGS)
 AC_SUBST(LOCAL_LDFLAGS)
 AC_SUBST(LOCAL_DEFS)
+AC_SUBST(STYLE_CFLAGS)
 
 AC_SUBST(AR)
 AC_SUBST(ARFLAGS)

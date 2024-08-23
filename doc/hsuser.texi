@@ -468,6 +468,9 @@ The last argument.
 @item %
 The first word matched by the most recent @samp{?@var{string}?} search,
 if the search string begins with a character that is part of a word.
+By default, searches begin at the end of each line and proceed to the
+beginning, so the first word matched is the one closest to the end of
+the line.
 
 @item @var{x}-@var{y}
 A range of words; @samp{-@var{y}} abbreviates @samp{0-@var{y}}.

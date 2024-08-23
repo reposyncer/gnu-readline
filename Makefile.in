@@ -1,6 +1,6 @@
 ## -*- text -*- ##
 # Master Makefile for the GNU readline library.
-# Copyright (C) 1994-2018 Free Software Foundation, Inc.
+# Copyright (C) 1994-2024 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -78,6 +78,7 @@ CFLAGS = @CFLAGS@
 LOCAL_CFLAGS = @LOCAL_CFLAGS@ -DRL_LIBRARY_VERSION='"$(RL_LIBRARY_VERSION)"' @BRACKETED_PASTE@
 CPPFLAGS = @CPPFLAGS@
 
+STYLE_CFLAGS = @STYLE_CFLAGS@
 DEFS = @DEFS@ @CROSS_COMPILE@
 LOCAL_DEFS = @LOCAL_DEFS@
 
@@ -87,7 +88,7 @@ TERMCAP_LIB = @TERMCAP_LIB@
 INCLUDES = -I. -I$(srcdir)
 
 XCCFLAGS = $(ASAN_CFLAGS) $(DEFS) $(LOCAL_DEFS) $(INCLUDES) $(CPPFLAGS)
-CCFLAGS = $(XCCFLAGS) $(LOCAL_CFLAGS) $(CFLAGS)
+CCFLAGS = $(XCCFLAGS) $(LOCAL_CFLAGS) $(CFLAGS) $(STYLE_CFLAGS)
 
 # could add -Werror here
 GCC_LINT_FLAGS = -ansi -Wall -Wshadow -Wpointer-arith -Wcast-qual \
@@ -97,6 +98,9 @@ GCC_LINT_CFLAGS = $(XCCFLAGS) $(GCC_LINT_FLAGS) @CFLAGS@ @LOCAL_CFLAGS@
 
 ASAN_XCFLAGS = -fsanitize=address -fno-omit-frame-pointer
 ASAN_XLDFLAGS = -fsanitize=address
+
+UBSAN_XCFLAGS = -fsanitize=undefined -fsanitize-recover -fstack-protector
+UBSAN_XLDFLAGS = -fsanitize=undefined
 
 install_examples = @EXAMPLES_INSTALL_TARGET@
 

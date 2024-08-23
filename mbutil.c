@@ -147,6 +147,61 @@ _rl_utf8_mblen (const char *s, size_t n)
   return -1;
 }
 
+static size_t
+_rl_utf8_mbstrlen (const char *s)
+{
+  size_t clen, nc;
+  int mb_cur_max;
+
+  nc = 0;
+  mb_cur_max = MB_CUR_MAX;
+  while (*s && (clen = (size_t)_rl_utf8_mblen(s, mb_cur_max)) != 0)
+    {
+      if (MB_INVALIDCH (clen))
+	clen = 1;
+      s += clen;
+      nc++;
+    }
+  return nc;
+}
+
+static size_t
+_rl_gen_mbstrlen (const char *s)
+{
+  size_t clen, nc;
+  mbstate_t mbs = { 0 }, mbsbak = { 0 };
+  int f, mb_cur_max;
+
+  nc = 0;
+  mb_cur_max = MB_CUR_MAX;
+  while (*s && (clen = (f = _rl_is_basic (*s)) ? 1 : mbrlen(s, mb_cur_max, &mbs)) != 0)
+    {
+      if (MB_INVALIDCH(clen))
+	{
+	  clen = 1;     /* assume single byte */
+	  mbs = mbsbak;
+	}
+
+      if (f == 0)
+	mbsbak = mbs;
+
+      s += clen;
+      nc++;
+    }
+  return nc;
+}
+
+size_t
+_rl_mbstrlen (const char *s)
+{
+  if (MB_CUR_MAX == 1)
+    return (strlen (s));
+  else if (_rl_utf8locale)
+    return (_rl_utf8_mbstrlen (s));
+  else
+    return (_rl_gen_mbstrlen (s));
+}
+
 static int
 _rl_find_next_mbchar_internal (const char *string, int seed, int count, int find_non_zero)
 {
@@ -567,7 +622,7 @@ _rl_mb_strcaseeqn (const char *s1, size_t l1, const char *s2, size_t l2, size_t 
       s2 += v1;
       n -= v1;
       if ((flags & 1) && (wc1 == L'-' || wc1 == L'_') && (wc2 == L'-' || wc2 == L'_'))
-        continue;
+	continue;
       if (wc1 != wc2)
 	return 0;
     }
