@@ -14,4 +14,4 @@ jobs:
       uses: reposyncer/reposync@v2
       with:
         name: gnu-readline
-        url: http://git.savannah.gnu.org/cgit/readline.git
+        url: https://git.savannah.gnu.org/git/readline.git
