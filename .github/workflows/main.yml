@@ -13,5 +13,5 @@ jobs:
     - name: Sync repository
       uses: reposyncer/reposync@v2
       with:
-        name: name-here
-        url: url-here
+        name: gnu-readline
+        url: http://git.savannah.gnu.org/cgit/readline.git
